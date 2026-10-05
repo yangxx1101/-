@@ -122,6 +122,77 @@ footer{padding:42px 11px 11px;gap:3px}
 @media(max-height:700px){
   .txt{max-height:36%}.dm button{height:49px}.dmb{width:74px;height:74px}#nx{width:92px;height:92px}
 }
+
+
+/* ===== Responsive desktop + mobile layout ===== */
+@media (min-width:769px){
+  html,body{min-height:100%;}
+  body{min-height:100vh;overflow:hidden;display:flex;justify-content:center;}
+  #app{width:min(1100px,100vw);max-width:none;height:100vh;min-height:680px;box-shadow:0 0 60px rgba(15,45,35,.24)}
+  header{padding:16px 30px 12px}
+  .r1,.r2{max-width:1000px;margin-left:auto;margin-right:auto}
+  .r1{gap:16px}
+  .av{width:86px;height:86px;font-size:45px}
+  .nm{font-size:32px}
+  .sbt{font-size:14px}
+  .pills{font-size:15px;gap:7px}
+  .pills span{min-width:112px;padding:2px 14px}
+  .r2{margin-top:8px}
+  .dm{gap:4px}
+  .dm button{width:68px;height:68px;font-size:12px}
+  .goal{font-size:13px}
+  .txt{width:min(900px,calc(100% - 80px));max-height:36vh;margin:14px auto 0;padding:16px 20px}
+  .txt p{font-size:16px}
+  .txt b{font-size:21px}
+  #lifePanel{width:min(900px,calc(100% - 80px));margin:10px auto 0;padding:10px 14px}
+  .lpTop{font-size:13px}
+  .lpTrack{height:7px}
+  .lpActs{gap:8px}
+  .lpAct{padding:5px 4px;font-size:12px}
+  .lpAct strong{font-size:15px}
+  #nx{width:118px;height:118px;font-size:26px;margin-bottom:-40px}
+  footer{padding:48px 30px 18px;gap:20px;min-height:150px}
+  #bars{max-width:620px;margin-left:auto}
+  .b{font-size:13px;max-width:620px}
+  .ic{width:28px;height:28px;font-size:15px}
+  .tr{height:19px}
+  .tr i{line-height:19px;font-size:11px}
+  .cl2{margin-right:auto}
+  .cl2 div{margin-left:-7px}
+  .cl2 .dn{margin-top:44px}
+  .dmb{width:88px;height:88px;font-size:15px}
+  .dmb b{font-size:23px}
+  .cd{width:min(680px,calc(100vw - 48px));max-width:680px;padding:24px 22px}
+  .cd h2{font-size:24px}
+  .opt{padding:12px 15px}
+}
+
+@media (min-width:769px) and (max-height:820px){
+  #app{min-height:620px}
+  header{padding-top:10px;padding-bottom:7px}
+  .av{width:74px;height:74px;font-size:39px}
+  .nm{font-size:28px}
+  .dm button{width:58px;height:58px}
+  .txt{max-height:30vh;margin-top:8px;padding:11px 16px}
+  #lifePanel{margin-top:7px;padding:7px 10px}
+  #nx{width:96px;height:96px;font-size:22px;margin-bottom:-32px}
+  footer{padding-top:39px;padding-bottom:10px;min-height:125px}
+  .dmb{width:72px;height:72px;font-size:13px}
+  .dmb b{font-size:19px}
+}
+
+@media (max-width:420px){
+  #app{width:100%;}
+  header{padding-left:10px;padding-right:10px}
+  .av{width:68px;height:68px;font-size:36px}
+  .nm{font-size:24px}
+  .dm button{width:52px;height:52px}
+  .txt{margin-left:9px;margin-right:9px;padding:11px 13px}
+  #lifePanel{margin-left:9px;margin-right:9px}
+  footer{padding-left:8px;padding-right:8px}
+  .dmb{width:76px;height:76px}
+}
+
 </style></head><body><section id="seo-intro" aria-label="遊戲介紹" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
 <h1>浮生一夢・古代人生模擬器</h1>
 <p>免費線上古代人生模擬遊戲。從出生開始，你可以發展文才、武藝、財富、聲望與品德，選擇工作與仕途，經歷婚姻、孩子、房產、家族與隨機事件。</p>
