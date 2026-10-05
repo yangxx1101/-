@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://yangxx1101.github.io/-/sitemap.xml
