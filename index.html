@@ -193,6 +193,12 @@ footer{padding:42px 11px 11px;gap:3px}
   .dmb{width:76px;height:76px}
 }
 
+
+/* ===== v6 responsive desktop/mobile polish ===== */
+#app{width:min(100%,1100px);max-width:1100px;min-height:100dvh;height:100dvh}
+@media (min-width:700px){body{font-size:17px;overflow:hidden}#app{margin:0 auto;box-shadow:0 0 55px rgba(15,45,35,.22)}header{padding:18px 26px 12px}.av{width:88px;height:88px}.nm{font-size:32px}.txt{margin:12px 26px 0;max-height:38%;padding:18px 20px}.txt p{font-size:16px}.lifePanel{margin:10px 26px 0}.dm button{width:72px;height:72px;font-size:12px}.dmb{width:100px;height:100px;font-size:16px}.dmb b{font-size:25px}#nx{width:118px;height:118px;font-size:25px}footer{padding:48px 24px 18px}.cd{max-width:720px;padding:24px 24px}.cd h2{font-size:25px}.opt{padding:12px 16px}}
+@media (min-width:1200px){#app{max-width:1160px}.txt{max-height:40%}.cd{max-width:780px}}
+@media (max-width:699px){#app{width:100%;height:100dvh}.txt{max-height:40%}}
 </style></head><body><section id="seo-intro" aria-label="遊戲介紹" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
 <h1>浮生一夢・古代人生模擬器</h1>
 <p>免費線上古代人生模擬遊戲。從出生開始，你可以發展文才、武藝、財富、聲望與品德，選擇工作與仕途，經歷婚姻、孩子、房產、家族與隨機事件。</p>
@@ -894,4 +900,107 @@ window.menu=function(){
 };
 window.estate=function(){v5Estate()};
 window.kin=function(){v5Family()};
+/* ===== v6 國家・領土・家族身分・歷史貨幣系統 ===== */
+(function(){
+const V6_COUNTRIES=[
+ {n:'大梁',d:'重文治、設科舉，士大夫地位較高。',bonus:'文'},
+ {n:'大周',d:'尚武重軍，邊防與軍功尤其重要。',bonus:'武'},
+ {n:'南楚',d:'水網與商路發達，商貿繁盛。',bonus:'商'},
+ {n:'北燕',d:'北境多戰事，軍戶與屯田制度發達。',bonus:'軍'}
+];
+const V6_TERR=[
+ ['無領地','尚未取得正式領地',0],['村里','一座村落與周邊田地',1],['鄉里','數村組成的鄉里',2],['縣域','一縣之地，可設縣署',3],['州府','掌一州府之政，家族影響力大增',4],['封疆','一方重鎮，需同時處理軍政民政',5]
+];
+const V6_FAM_STATUS=[
+ ['平民','無官爵、無顯赫功名',0],['富戶','有產業與田宅，在地方有些聲望',1],['士紳','有功名、學業或地方公益聲望',2],['官宦','家中有人入仕，能影響地方政務',3],['將門','家中有人有軍功或掌兵',3],['名門','數代有功名、官爵或重大功勳',4],['宗室','與皇室有血親或宗族關係',5]
+];
+const V6_EVENTS=[
+ {a:[3,18],t:'家中分田',x:'祖父病後準備分配家中田產，族人各有盤算。',c:[['主張均分',{v:1,f:1,m:1},'你主張按人口與功勞分配，家人多半接受。'],['替父母留足養老田',{v:2,g:-1},'父母安心，族中也稱你有孝心。'],['暗中多留一份',{g:2,v:-2},'你得了些好處，卻讓兄弟間埋下嫌隙。']]},
+ {a:[8,25],t:'私塾延聘',x:'地方士紳願意出錢延聘先生，邀你家子弟入學。',c:[['送子入學',{money:-80,int:1,fame:1},'孩子得以受教，家族開始有了讀書人的名聲。'],['親自教導',{int:2,v:1},'你用自己的方式教孩子，家風漸成。'],['暫不讀書',{money:30},'你省下開支，把錢留作家用。']]},
+ {a:[12,40],t:'田契糾紛',x:'鄰族拿出一紙舊契，聲稱你家的田地原本屬於他們。',c:[['查驗契約',{int:1,f:1},'你找出契約漏洞，保住了祖田。'],['請族老調解',{v:2},'族老出面，兩家各退一步。'],['花錢息事',{money:-150,m:1},'你買來清靜，但族人覺得你太軟弱。']]},
+ {a:[16,35],t:'縣中徵役',x:'縣衙徵調壯丁修城，里正來你家登門。',c:[['親自出役',{m:1,v:1},'你與鄉人一同出力，里正對你另眼相看。'],['出錢代役',{money:-120,g:1},'你以錢糧代役，保留了經營時間。'],['設法免役',{f:-1,v:-1},'你保住清閒，卻留下了不好的名聲。']]},
+ {a:[18,45],t:'縣令召見',q:()=>S.rank>=1||S.family?.ext?.status==='士紳',x:'縣令聽聞你家在地方頗有聲望，召你入衙商議民情。',c:[['據實直言',{f:2,v:1},'你說出民間疾苦，縣令記住了你的名字。'],['只談家鄉好話',{f:1,m:1},'你說得圓滑，雙方都留了體面。'],['請託家事',{f:-1,money:-50},'你把公事變成私情，聲望略受損。']]},
+ {a:[20,50],t:'商路開通',q:()=>S.family?.ext?.status==='富戶'||S.s.gold>=5,x:'一條新商路通往鄰州，族中有人勸你投入本錢。',c:[['投資商隊',{money:-300,g:3,f:1},'商隊順利往返，家族財力明顯增加。'],['只投小股',{money:-100,g:1,m:1},'你分散風險，收益雖小卻穩。'],['不參與',{m:1},'你守住本業，沒有承擔風險。']]},
+ {a:[20,55],t:'族譜重修',x:'族老提議重修族譜，要求各房提供姓名、婚姻與功名。',c:[['出錢重修',{money:-120,f:2,v:1},'新族譜記下你的功名與家業，家族聲望提升。'],['親自整理',{int:2,f:1},'你查閱舊卷，補上失傳的支系。'],['不願出錢',{v:-1},'族老對你頗有微詞。']]},
+ {a:[22,60],t:'地方賑濟',x:'連月歉收，縣城糧價上漲，地方士紳號召開倉賑濟。',c:[['捐糧賑濟',{money:-250,v:3,f:2},'百姓度過饑荒，家族名望大增。'],['捐少量糧食',{money:-80,v:1,f:1},'你盡了一份力。'],['閉門自守',{g:1,v:-2},'家中糧食無缺，但鄉里對你議論紛紛。']]},
+ {a:[25,55],t:'軍情告急',q:()=>S.mrank>=1||S.army,x:'邊境軍報傳來，朝廷徵調糧秣與兵員。',c:[['親自領兵',{m:2,f:2},'你在軍中立下戰功，家族也被視為將門。'],['捐糧助軍',{money:-220,f:2,v:1},'軍需得到補充，朝廷記下你的名字。'],['請辭避戰',{v:-1,f:-1},'你保住性命，但軍中名聲受損。']]},
+ {a:[28,65],t:'婚盟聯族',q:()=>S.spouse,x:'一個地方望族提出婚姻聯盟，希望兩家結為姻親。',c:[['答應聯姻',{f:2,v:1,money:-100},'兩族結盟，往來與生意都更加便利。'],['先查對方家世',{int:1,f:1},'你沒有急著答應，避免了一場麻煩。'],['婉拒',{m:1},'你守住自主，不願讓婚姻變成交易。']]},
+ {a:[30,70],t:'族產分房',x:'家族日益壯大，族人要求重新分配祖產與店鋪。',c:[['按長幼分配',{v:1,f:1},'族人接受安排，家族秩序穩定。'],['按功勞分配',{f:2,m:1},'能者得到更多資源，但部分族人不滿。'],['保留族產共同經營',{g:2,v:1},'家族資產集中，長遠收益較高。']]},
+ {a:[35,70],t:'地方水利',x:'河道年久失修，春汛將至，縣里急需有人帶頭修堤。',c:[['出資修堤',{money:-300,v:3,f:2},'堤壩修成，百姓稱頌你的家族。'],['組織族人出力',{m:1,v:2,f:1},'你以人力代替大量花費，工程順利完成。'],['袖手旁觀',{m:-1,v:-1},'洪水之後，鄉人對你家頗有怨言。']]},
+ {a:[40,75],t:'家族封賞',q:()=>S.rank>=3||S.mrank>=3||S.family?.ext?.status==='名門',x:'朝廷因你的功勞或祖上功勳，準許家族登記功名與榮典。',c:[['接受封賞',{f:3,g:2},'家族正式進入地方名門之列。'],['請減免虛名',{v:1,m:1},'你不願過度張揚，反而得到清譽。'],['用封賞換資源',{money:250,f:1},'你將名望轉化為實際家產。']]},
+ {a:[45,80],t:'祖宅修繕',x:'祖宅年久失修，族老希望你主持大修。',c:[['重修祖堂',{money:-350,f:3,v:1},'祖堂煥然一新，後代都有了祭祀之所。'],['簡單修補',{money:-120,m:1},'你量力而為，祖宅仍可居住。'],['不再修繕',{f:-1},'老宅逐漸破敗，族人開始各奔東西。']]},
+ {a:[50,80],t:'家族後繼',q:()=>S.kids>=1,x:'你開始思考，誰最適合承擔家族未來。',c:[['重視長子嫡系',{f:1,v:1},'家族繼承順序明確，族人少了爭端。'],['以才能選繼承人',{int:1,f:2},'你不拘嫡庶，讓有能力的人承擔家業。'],['分散家產給子女',{g:-1,v:1},'各房都有根基，但家族資產較為分散。']]},
+ {a:[55,80],t:'地方祭祀',x:'鄉里準備重修地方祠廟，族老希望你主持祭典。',c:[['出資主持',{money:-100,v:2,f:2},'祭典順利，家族在鄉里的地位更穩。'],['親自主持',{v:1,m:1},'你親力親為，族人更加信服。'],['婉拒',{m:1},'你把資源留給家中晚輩。']]},
+ {a:[18,80],t:'國策變動',x:'朝廷宣布調整田賦與商稅，各地官府開始重新丈量田地。',c:[['如實申報',{v:1,f:1,money:-30},'你家帳目清楚，反而免去後患。'],['尋人疏通',{money:-100,f:-1,g:1},'眼前省了一點稅，卻留下把柄。'],['趁機擴田',{money:-200,g:2},'你買入幾畝好田，家產增加。']]},
+ {a:[18,80],t:'糧價波動',x:'今年雨水失常，米價忽高忽低，市井議論紛紛。',c:[['提前囤糧',{money:-120,g:2},'後來米價上漲，你的糧倉成了保障。'],['按需購買',{m:1},'你不冒險，平穩度過。'],['趁高價賣糧',{money:80,g:1,f:-1},'賺了差價，卻被人說趁災牟利。']]},
+ {a:[18,80],t:'驛路徵發',x:'官府修整驛路，沿途人家需提供車馬或人力。',c:[['提供車馬',{money:-60,f:1},'驛使記住了你家的名號。'],['出人出力',{m:1,v:1},'工程很快完成。'],['設法推辭',{f:-1},'你少了麻煩，卻少了官府的人情。']]},
+ {a:[18,80],t:'鹽商往來',x:'外地商人想借你家名義做鹽貨買賣，利潤可觀。',c:[['查清來源再做',{int:1,g:1},'你避開了來路不明的貨物。'],['小額合作',{money:-80,g:2},'商路順利，得到不錯回報。'],['拒絕合作',{v:1},'你不願涉入灰色生意。']]},
+ {a:[18,80],t:'旱災借糧',x:'鄰村前來借糧，說明年收成後必定歸還。',c:[['借出糧食',{money:-100,v:3,f:1},'來年對方如約還糧，兩村結下善緣。'],['只借一半',{money:-50,v:1},'你量力相助。'],['拒絕借糧',{g:1,v:-2},'你守住自家糧倉，鄉里卻記在心裡。']]},
+ {a:[18,80],t:'流民入境',x:'戰亂使流民湧入附近城鎮，官府人手不足。',c:[['開粥棚',{money:-180,v:3,f:2},'你家善名遠播。'],['招募做工',{money:-80,g:2,v:1},'你提供生計，也補足家中人手。'],['閉門不納',{f:-1,v:-1},'你守住家門，但名聲下降。']]},
+ {a:[18,80],t:'盜匪出沒',x:'山道盜匪猖獗，商旅不敢通行。',c:[['組織鄉勇',{m:2,f:1},'你帶人護路，商路逐漸恢復。'],['花錢請鏢局',{money:-150,g:1},'你用錢解決問題，商隊平安。'],['暫停外運',{m:1},'你減少損失，等待風聲過去。']]},
+ {a:[18,80],t:'官印失竊',q:()=>S.rank>=1,x:'縣衙官印失竊，縣令命你協助追查。',c:[['徹查線索',{int:2,f:2},'你找出線索，官印失而復得。'],['先護住文書',{m:1,v:1},'你先保全卷宗，避免事態擴大。'],['置身事外',{f:-1},'你不願惹麻煩，官府對你印象轉淡。']]},
+ {a:[18,80],t:'學官薦才',q:()=>S.s.int>=6,x:'地方學官看中你的才學，願意替你引薦上級。',c:[['接受薦舉',{f:3,int:1},'你的名聲傳到上級，仕途更順。'],['請薦族中子弟',{f:2,v:1},'你把機會讓給後輩，家族受益。'],['婉拒入仕',{v:1,m:1},'你更看重清閒與家業。']]},
+ {a:[18,80],t:'軍戶徵丁',q:()=>S.mrank>=1||S.army,x:'軍籍文書送到家門，族中男丁可能被徵調。',c:[['按令從軍',{m:2,f:1},'族中有人立下軍功，家族成為將門。'],['出錢代役',{money:-180,g:-1},'你保住家中人手，但花費不小。'],['逃避徵調',{v:-2,f:-2},'一旦查出，家族名聲受損。']]},
+ {a:[18,80],t:'鄉約成立',x:'地方士紳想訂立鄉約，約束盜竊、賭博與械鬥。',c:[['加入鄉約',{v:2,f:2},'你成為地方公議的一員。'],['只捐資助辦',{money:-80,f:1},'你不直接參與，但提供實際支持。'],['拒絕參與',{m:1},'你少了束縛，也少了些地方影響力。']]},
+ {a:[18,80],t:'河運漕糧',x:'官府徵集船戶運糧，沿河商路因此繁忙。',c:[['投資船運',{money:-250,g:4,f:1},'船隊往返順利，家財快速增長。'],['與船戶合作',{money:-100,g:2},'你分散風險，穩定獲利。'],['不涉水運',{m:1},'你守住熟悉的產業。']]},
+ {a:[18,80],t:'城牆修築',x:'邊城增築城牆，朝廷允許地方商戶捐資換取名望。',c:[['捐資修城',{money:-220,f:3,v:1},'城牆完工，你家被刻入功德名冊。'],['出人出力',{m:1,f:1},'你用人力換取名望。'],['不參與',{m:1},'你不願將家財投入公共工程。']]},
+ {a:[18,80],t:'國境互市',q:()=>S.nation&&S.nation.stability>=5,x:'邊境互市重新開放，商旅帶回北方馬匹與皮貨。',c:[['投入貿易',{money:-180,g:4},'貨物售出，家族財力增加。'],['買馬改善家業',{money:-120,m:2},'良馬提高了家族出行與運輸效率。'],['觀望行情',{m:1},'你沒有急著下注。']]},
+ {a:[18,80],t:'鄰國使者',x:'鄰國使團途經此地，地方官需要熟悉禮制的人接待。',c:[['出面接待',{chr:2,f:2},'你應對得體，名聲傳入上層。'],['請官府主辦',{f:1,v:1},'你提供協助，不搶功勞。'],['避而不見',{m:1},'你少惹事，但錯過了一次結識權貴的機會。']]},
+ {a:[18,80],t:'兵變傳聞',x:'城中流傳軍隊不滿糧餉的傳聞，街坊人心惶惶。',c:[['安撫鄉里',{v:2,f:1},'你穩住人心，地方秩序沒有失控。'],['囤糧避亂',{money:-100,g:1},'你先保住家中糧食。'],['散播消息',{f:-2,m:1},'你得到短暫好處，卻破壞了自己的名聲。']]},
+ {a:[18,80],t:'皇恩大赦',x:'朝廷頒布大赦，許多舊案重新審理，地方氣氛為之一變。',c:[['替人申冤',{v:2,f:2},'你替無辜者奔走，獲得清譽。'],['保守觀望',{m:1},'你不涉其中。'],['趁機追討舊債',{g:2,v:-1},'你收回了一些舊帳，但人情淡了。']]}
+];
+function v6MoneyFmt(n){n=Math.max(0,Math.round(n||0));let l=Math.floor(n/1000),w=n%1000;return l?`${l}兩${w?` ${w}文`:''}`:`${w}文`}
+function v6Init(){
+ if(!S.family)S.family={name:(S.name||'李氏').slice(0,1)+'氏',rep:3,members:[],heir:null};
+ if(!S.v6)S.v6={};
+ if(!S.v6.moneyReady){S.v6.money=Math.max(50,(S.s.gold||0)*100);S.v6.moneyReady=1}
+ if(!S.nation)S.nation={name:P(V6_COUNTRIES).n,stability:6,treasury:5000,pop:18000,power:6,diplomacy:5,year:1};
+ if(!S.territory)S.territory={name:S.prov||'本鄉',level:Math.max(0,(S.rank||0)>=1?1:0),land:Math.max(10,(S.s.gold||1)*2),people:180,fields:Math.max(8,(S.s.gold||1)*2),tax:70,loyalty:6,renovation:0};
+ if(!S.family.ext)S.family.ext={status:'平民',influence:3,land:Math.max(1,S.territory.land),treasury:Math.max(100,S.v6.money),honor:0,branches:1,memberStatus:{}};
+ v6FamilyRecalc();
+}
+function v6SyncFromGold(oldGold){
+ if(!S.v6)return;let d=(S.s.gold||0)-(oldGold||0);if(d)S.v6.money=Math.max(0,(S.v6.money||0)+d*100);
+}
+function v6FamilyRecalc(){
+ if(!S.family?.ext)return;let score=0;
+ if(S.rank>=4)score+=3;else if(S.rank>=1)score+=2;
+ if(S.mrank>=4)score+=3;else if(S.mrank>=1)score+=2;
+ if(S.job)score+=1;if(S.s.fame>=8)score+=2;if(S.estate?.lv>=3)score+=1;if(S.kids>=2)score+=1;if(S.legacy?.gens>=2)score+=2;
+ let st=score>=10?'名門':score>=7?(S.mrank>=2?'將門':'官宦'):score>=5?'士紳':(S.s.gold>=7?'富戶':'平民');
+ if(S.royal)st='宗室';S.family.ext.status=st;S.family.ext.influence=Math.max(1,Math.min(20,3+score+Math.floor((S.family.rep||0)/2)));S.family.ext.land=Math.max(S.family.ext.land||0,S.territory?.land||0);S.family.ext.treasury=Math.max(0,Math.round((S.v6?.money||0)+(S.estate?.lv||0)*180));S.family.ext.honor=Math.max(0,(S.legacy?.renown||0)+(S.s.fame||0));
+ if(S.kin)S.kin.forEach(k=>{let ks=st;if(k.c){let vals=Object.values(k.c);if((k.c.int||0)>=6)ks='讀書人';else if((k.c.mar||0)>=6)ks='武人';else if((k.c.vir||0)>=6)ks='善士';else if((k.c.gold||0)>=6)ks='商人'}k.familyStatus=ks});if(S.kc)S.kc.forEach(k=>{let c=k.c||{};k.status=(c.int||0)>=6?'才子':(c.mar||0)>=6?'武生':(c.vir||0)>=6?'善士':(c.chr||0)>=6?'藝人':'家中後輩'});
+}
+function v6Year(){
+ v6Init();
+ // 年度貨幣與家族經濟：把原本 gold 變動以 1 點 = 100 文同步到真實貨幣帳
+ S.v6.money=Math.max(0,S.v6.money||0);
+ const wage=S.rank&&!S.army?Math.max(20,Math.round((S.rank+1)*35)):S.army?Math.max(25,Math.round((S.mrank+1)*45)):0;
+ if(wage){S.v6.money+=wage;S.cur.push(`💰 本年俸祿入帳：${v6MoneyFmt(wage)}。`)}
+ // 生活支出與家庭人口
+ const familyCost=Math.max(10,Math.round(((S.kids||0)+1)*12+(S.estate?.lv||0)*8));S.v6.money=Math.max(0,S.v6.money-familyCost);
+ if(S.territory.level>0){let tax=Math.max(0,Math.round(S.territory.people*S.territory.tax/1000));S.nation.treasury+=tax;S.v6.money+=Math.round(tax*.08);S.territory.loyalty=Math.max(0,Math.min(10,S.territory.loyalty+(S.territory.loyalty>=5?0:-1)));}
+ S.nation.year++;
+ if(Math.random()<.12)S.nation.stability=Math.max(1,Math.min(10,S.nation.stability+(Math.random()<.5?-1:1)));
+ if(S.territory.level>0&&Math.random()<.18)S.territory.people+=R(20)-5;
+ v6FamilyRecalc();
+ const modal=$('sh')?.classList.contains('on');
+ if(!modal&&Math.random()<.82){let pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q()));if(pool.length){let e=P(pool);S.v6Event=e;sheet(e.t,`<p>${S.age}歲。${e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="v6Pick(${i})">${c[0]}</button>`).join(''),0);}}
+}
+function v6Pick(i){let e=S.v6Event,c=e.c[i],old=S.s.gold||0;let fx={};for(const k in c[1]){let v=c[1][k];if(k==='money'){S.v6.money=Math.max(0,(S.v6.money||0)+v);continue}if(k==='f')fx.fame=v;else if(k==='v')fx.vir=v;else if(k==='m')fx.mood=v;else fx[k]=v}apply(fx);v6FamilyRecalc();S.cur.push(`【${e.t}】你選擇「${c[0]}」。${c[2]}`);S.hist.push(`${S.age}歲 ${e.t}：${c[0]}。${c[2]}`);cls();render()}
+function v6Nation(){v6Init();let n=S.nation,t=S.territory;sheet('國家與領土',rows([['國家',n.name],['國家穩定',n.stability+'/10'],['國庫',v6MoneyFmt(n.treasury)],['國力',n.power+'/10'],['外交',n.diplomacy+'/10'],['領地',V6_TERR[t.level][0]],['領地名稱',t.name],['人口',t.people.toLocaleString()+' 人'],['耕地',t.fields+' 畝'],['田賦估值',t.tax+' 文/千人'],['民心',t.loyalty+'/10']])+`<button class="opt" onclick="v6CollectTax()" ${t.level<1?'disabled':''}>徵收田賦<small>增加家族收入，但民心可能下降</small></button><button class="opt" onclick="v6Develop()" ${t.level<1?'disabled':''}>修水利與墾田<small>約 300 文</small></button><button class="opt" onclick="v6Appoint()">爭取升任領地官<small>功名／家族聲望越高越容易</small></button>`+`<p style="margin-top:12px">國制基準：${n.name}採古代郡縣制架空設定；貨幣以文、貫、兩計價，數值依歷史貨幣結構設計，實際物價仍會隨地區與時代波動。</p>`)}
+function v6CollectTax(){v6Init();let t=S.territory;if(t.level<1)return;let amount=Math.max(10,Math.round(t.people*t.tax/1000));let share=Math.round(amount*.12);S.v6.money+=share;S.nation.treasury+=amount-share;t.loyalty=Math.max(0,t.loyalty-(amount>120?1:0));S.cur.push(`🏛️ 你完成年度徵收，領地共收 ${v6MoneyFmt(amount)}，家族可支配 ${v6MoneyFmt(share)}。`);render();cls()}
+function v6Develop(){v6Init();if(S.v6.money<300){sheet('資金不足',`<p>修水利與墾田至少需要 300 文，目前只有 ${v6MoneyFmt(S.v6.money)}。</p>`);return}S.v6.money-=300;S.territory.fields+=Math.max(2,Math.round(S.territory.people/80));S.territory.people+=R(30)+10;S.territory.loyalty=Math.min(10,S.territory.loyalty+1);S.family.ext.land=S.territory.land+Math.round(S.territory.fields*.2);S.cur.push('🌾 你投入資金修水利、墾荒，領地產出與民心提升。');render();cls()}
+function v6Appoint(){v6Init();let need=S.territory.level+1,score=(S.rank||0)+(S.mrank||0)+(S.family.ext.influence||0)/4+(S.s.fame||0)/4;if(score<need*2){sheet('尚未具備資格',`<p>你的功名、軍功或地方聲望還不足。</p><p>目前評分 ${score.toFixed(1)}，本級約需 ${need*2}。</p>`);return}if(S.territory.level>=5){sheet('已到封疆','<p>你已掌一方重鎮，暫無更高領地。</p>');return}S.territory.level++;S.territory.name=['本鄉','新授村','安民鄉','本縣','本州','鎮守一方'][S.territory.level];S.territory.people+=120;S.territory.fields+=20;S.territory.loyalty=7;S.nation.power=Math.min(10,S.nation.power+1);S.family.rep=Math.min(12,S.family.rep+1);S.cur.push(`🏯 你獲授「${V6_TERR[S.territory.level][0]}」管理權，家族身分提升為 ${S.family.ext.status}。`);v6FamilyRecalc();render();cls()}
+function v6Family(){v6Init();let ex=S.family.ext,estateName=['茅舍','瓦房','深宅','府邸','豪門','世家祖宅'][S.estate?.lv||0],member=(S.kin||[]).map(k=>[k.r+' '+k.n,k.familyStatus||ex.status]).concat((S.kc||[]).map(k=>['子女 '+k.n,k.status||'家中後輩']));sheet('家族制度',rows([['家族',S.family.name],['家族身分',ex.status],['家族影響力',ex.influence+'/20'],['家族田產',ex.land+' 畝'],['家族可動用資產',v6MoneyFmt(ex.treasury)],['家族榮譽',ex.honor],['家族分房',ex.branches+' 房'],['家族聲望',S.family.rep+'/12'],['家宅',estateName],['領地',S.territory.name+'・'+V6_TERR[S.territory.level][0]]])+`<h3>家人身分</h3>`+rows(member)+`<p style="margin-top:10px">家族身分會隨家主功名、軍功、財產、家宅、子女成就與歷代傳承改變；家中有人入仕、立軍功或成為名士，會提高整個家族的地方影響力。</p><button class="opt" onclick="v6Nation()">查看國家與領土</button>`)}
+function v6Economy(){v6Init();sheet('古代帳房',rows([['現銀／現錢',v6MoneyFmt(S.v6.money)],['換算',`1 貫 = 1000 文；1 兩約按 1000 文計帳`],['家族資產估值',v6MoneyFmt(S.family.ext.treasury)],['本年基本家用',v6MoneyFmt(Math.max(10,((S.kids||0)+1)*12+(S.estate?.lv||0)*8))],['田產',S.territory.fields+' 畝'],['稅制',S.territory.level?'按領地人口與田賦估值計算':'尚未有正式領地']])+`<p style="margin-top:10px">本作採「明代中後期白銀化」作為貨幣結構參考：小額交易以文、較大交易以兩計價。明代中後期白銀逐漸成為重要的市場與財政結算媒介；但不同時期、地區與物價差異很大，因此遊戲採近似模型而非宣稱每筆價格都是史實。</p>`)}
+const __v6Apply=apply,__v6Start=start,__v6Next=nextYear,__v6Render=render,__v6Menu=menu;
+apply=function(fx){let old=S?.s?.gold||0;if(S&&!S.v5act)S.v5act={study:0,kin:0,gold:0,work:0};__v6Apply(fx);if(S?.s){v6Init();v6SyncFromGold(old);v6FamilyRecalc()}};
+start=function(){__v6Start();v6Init();render()};
+nextYear=function(){v6Init();let old=S?.s?.gold||0;__v6Next();v6SyncFromGold(old);v6Year();render()};
+render=function(){__v6Render();if(!S)return;v6Init();$('coin').textContent=v6MoneyFmt(S.v6.money);$('prov').textContent=(S.territory?.name||S.prov||'本鄉').slice(0,5);};
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`) }
+window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;
+})();
+
 </script><noscript><div style="max-width:720px;margin:24px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.8"><h1>浮生一夢・古代人生模擬器</h1><p>這是一款免費的古代人生與家族世代養成網頁遊戲。請啟用 JavaScript 後重新整理，即可開始遊玩。</p></div></noscript></body></html>
