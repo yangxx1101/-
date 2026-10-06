@@ -91,7 +91,7 @@ header{padding:10px 14px 8px;backdrop-filter:blur(8px)}
 .goal{transition:.2s;opacity:.9}
 .goal:hover{transform:translateY(-1px)}
 .dm{gap:2px}
-.dm button{width:55px;height:55px;font-size:10px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.16))}
+.dm button{width:62px;height:62px;font-size:11px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.16))}
 .txt{max-height:43%;margin:8px 12px 0;padding:13px 15px;border-radius:18px;box-shadow:var(--shadow);background:rgba(255,253,245,.82)}
 .txt p{font-size:15px}
 .txt b{font-size:19px}
@@ -209,7 +209,7 @@ footer{padding:42px 11px 11px;gap:3px}
 <header><div class="r1"><div class="av" id="av"></div><div class="mid"><div class="nm" id="nm"></div><div class="sbt" id="sb"></div></div>
 <div class="pills"><span>🪙 <b id="coin">0</b></span><span id="prov"></span></div></div>
 <div class="r2"><button class="goal" onclick="goals()">📜<br>目標</button>
-<div class="dm"><button onclick="cart()">🛒<br>車馬</button><button onclick="bag()">🎒<br>行囊</button><button onclick="jobs()">💼<br>工作</button><button onclick="book()">📖<br>賬本</button><button onclick="menu()">⋯<br>菜單</button></div></div></header>
+<div class="dm"><button onclick="personMenu()">👤<br>人物</button><button onclick="familyMenu()">🏠<br>家族</button><button onclick="menu()">☰<br>選單</button></div></div></header>
 <div class="txt" id="txt"></div>
 <div id="lifePanel">
   <div class="lpTop"><span id="lpTitle">人生旅途</span><span id="lpAge">0 / 80</span></div>
@@ -230,8 +230,18 @@ const FAM=[
 ];
 const SUR=["李","王","張","趙","陸","沈","蕭","顧","柳","孟"],GIV=["昭","遠","清","衡","安","硯","書","霆","寧","川","瑜","遙"];
 const E=[
-{a:[1,2],t:"抓週",x:"親戚圍坐，桌上擺滿物件，等你伸手。",c:[
- ["抓起毛筆",{int:2},"眾人讚你有文曲星之相。"],["抓起小刀",{mar:2},"長輩笑說將來必是將才。"],["抓起銅錢",{gold:2},"父親大笑，說你是財神轉世。"]]},
+{a:[1,2],t:"抓週",x:"一周歲宴席擺開，祖母、父母與親族圍在席旁。紅布上擺著毛筆、書卷、算盤、銅錢、木劍、印章、藥草、琴弦、玉佩與小小的農具，眾人屏息等你伸手。",c:[
+ ["抓起毛筆",{int:2,fame:1},{ok:"你攥著毛筆不肯放手，父親當眾說要供你讀書。",okfx:{int:1,vir:1},no:"毛筆跌落在席上，親族仍笑稱你文氣十足。",nofx:{mood:1}}],
+ ["抓起書卷",{int:2,vir:1},{ok:"你把書卷抱在懷裡，祖父當即取字紙記下此事。",okfx:{int:1,fame:1},no:"書卷被你扯破一角，眾人鬨堂大笑。",nofx:{mood:1}}],
+ ["抓起算盤",{int:1,gold:1},{ok:"你兩手撥弄算珠，商賈親族眼睛一亮。",okfx:{gold:2,chr:1},no:"算珠滾了一地，父親笑著說你將來也是個會算帳的。",nofx:{chr:1}}],
+ ["抓起銅錢",{gold:2},{ok:"你把銅錢緊緊攥住，家人說你一生不愁衣食。",okfx:{gold:2,chr:1},no:"銅錢落地叮噹作響，反倒惹得大家哈哈大笑。",nofx:{mood:1}}],
+ ["抓起木劍",{mar:2},{ok:"你揮著木劍不肯撒手，將門親族拍手叫好。",okfx:{mar:2,fame:1},no:"木劍太重，你一屁股坐倒，眾人仍說你膽子不小。",nofx:{mood:1}}],
+ ["抓起小印章",{fame:1,int:1},{ok:"你把印章攥得牢牢的，父親笑說將來或掌一方印信。",okfx:{fame:2,int:1},no:"印章被你丟到一旁，母親暗笑你不愛拘束。",nofx:{mood:1}}],
+ ["抓起藥草",{int:1,vir:1},{ok:"你對苦澀藥草不嫌棄，旁人說你與醫者有緣。",okfx:{vir:2,int:1},no:"你聞到藥味便皺眉，大家笑你嘴刁。",nofx:{mood:-1}}],
+ ["抓起琴弦",{chr:2,int:1},{ok:"你撥弄琴弦，竟讓席間安靜片刻。",okfx:{chr:2,fame:1},no:"琴弦發出刺耳一聲，你嚇得縮回手。",nofx:{mood:-1}}],
+ ["抓起玉佩",{fame:1,chr:2},{ok:"你緊握玉佩，長輩說你氣度端正、將來有貴人相助。",okfx:{fame:2,chr:1},no:"玉佩被你甩到席邊，父親趕忙接住。",nofx:{mood:1}}],
+ ["抓起小農具",{hp:1,vir:1},{ok:"你抓著小木鋤往地上敲，農家親族笑得合不攏嘴。",okfx:{hp:1,vir:2},no:"小木鋤太沉，你很快便鬆手。",nofx:{mood:1}}]
+]},
 {a:[5,10],t:"啟蒙",x:"村口先生開了學堂，但你更想去河邊摸魚。",c:[
  ["乖乖讀書",{int:2,vir:1},"先生誇你勤勉。"],["偷偷摸魚",{hp:1,int:-1},"曬得黝黑，挨了一頓板子。"],["拜師習武",{mar:2,hp:1},"師父說你根骨不錯。"]]},
 {a:[10,40],t:"災荒",x:"大旱三月，鄰里斷糧，門外有流民叩門。",c:[
@@ -239,8 +249,8 @@ const E=[
 {a:[13,20],t:"遇見異人",x:"山中遇一老者，自稱雲遊道人，願傳你一門本事。",c:[
  ["學醫術",{int:2,vir:2},"從此識得百草。"],["學劍法",{mar:3},"三年苦練，劍氣初成。"],["學相術",{int:1,gold:2,fame:1},"你學會察言觀色，在市井如魚得水。"]]},
 {a:[16,26],t:"科舉",q:()=>!S.army&&!S.rank,x:"鄉試在即，你已準備多年。",c:[
- ["閉門苦讀",{int:2,hp:-2},{need:{int:7},ok:"金榜題名，一朝成名天下知。",okfx:{fame:5,gold:2,rank:1},no:"名落孫山，你悶悶不樂。",nofx:{vir:1}}],
- ["重金疏通關節",{gold:-3},{ok:"榜上有名，但此事成了你心頭的刺。",okfx:{fame:3,vir:-3,rank:1}}],
+ ["閉門苦讀",{int:2,hp:-2},{need:{int:8},ok:"金榜題名，一朝成名天下知。",okfx:{fame:5,gold:2,rank:1},no:"名落孫山，你悶悶不樂。",nofx:{vir:1}}],
+ ["重金疏通關節",{gold:-5},{ok:"榜上有名，但此事成了你心頭的刺。",okfx:{fame:3,vir:-3,rank:1}}],
  ["棄考從軍",{mar:2},{ok:"你投身邊軍，在風沙中磨出一身膽氣。",okfx:{mar:2,hp:-1,fame:1,enlist:1}}]]},
 {a:[18,35],t:"邊關告急",x:"北狄入寇，朝廷徵召壯丁。",c:[
  ["應召從軍",{mar:1,enlist:1},{need:{mar:6},ok:"你屢立戰功，升為校尉。",okfx:{fame:4,mar:2,gold:1,mrank:2},no:"你在亂軍中負傷，僥倖撿回一命。",nofx:{hp:-4,mar:1}}],
@@ -355,6 +365,43 @@ function offYear(){
   else if(v<5+Math.floor(f*.6)&&f>0){setMF(f-1);apply({fame:-1,mood:-2});S.cur.push(`兩年敘功，你屢有疏失，被降為「${mnp()}」。`)}
   else S.cur.push("兩年敘功，你守職無過，原職不動。")}}
 }
+function familyCareerInfo(){
+ const all=(S.kin||[]).filter(k=>k.c&&!k.x);
+ if(S.spouse&&S.sc)all.push({r:"配偶",c:S.sc});
+ const civil=all.filter(k=>k.c&&k.c.t==1).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const military=all.filter(k=>k.c&&k.c.t==2).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const trade=all.filter(k=>k.c&&k.c.t==3).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const craft=all.filter(k=>k.c&&k.c.t==0).length;
+ return {civil,military,trade,craft,highest:Math.max(civil,military,trade)};
+}
+function familyCareerYear(){
+ const f=familyCareerInfo(); S.familyCareer=f;
+ // 家人職業不是純背景，而會實際影響玩家：官場、人脈、軍旅、商業與家計。
+ if(f.civil>=1){S.s.int+=Math.random()<.18?1:0;S.s.fame+=Math.random()<.12?1:0;}
+ if(f.civil>=5){S.s.fame+=Math.random()<.22?1:0;S.famOfficeAid=Math.min(5,(S.famOfficeAid||0)+1);}
+ if(f.military>=3){S.s.mar+=Math.random()<.15?1:0;S.famMilitaryAid=Math.min(5,(S.famMilitaryAid||0)+1);}
+ if(f.military>=8){S.s.fame+=Math.random()<.16?1:0;}
+ if(f.trade>=3){if(Math.random()<.25)S.s.gold++;S.famTradeAid=Math.min(5,(S.famTradeAid||0)+1);}
+ if(f.trade>=8&&Math.random()<.3){S.s.gold++;S.cur.push("家中商脈深厚，親族替你牽成了一筆生意。（家財↑）");}
+ if(f.craft>=2&&Math.random()<.12){S.s.gold++;S.cur.push("家中匠戶親族相助，你省下一筆工料錢。（家財↑）");}
+}
+function familyCareerLabel(){
+ const f=familyCareerInfo();
+ if(f.civil>=10)return "世代官宦"; if(f.civil>=5)return "官宦親族";
+ if(f.military>=8)return "將門親族"; if(f.military>=3)return "軍戶親族";
+ if(f.trade>=8)return "巨賈親族"; if(f.trade>=3)return "商賈親族";
+ if(f.craft>=2)return "匠戶親族"; return "尋常家門";
+}
+function civilEligibility(){
+ const f=familyCareerInfo();
+ // 官職不再隨便拿：才學、名望或真正的官宦背景至少要有一項過硬。
+ return S.age>=16 && (S.s.int>=8 || S.s.fame>=8 || f.civil>=5 || (f.civil>=2&&S.s.int>=6));
+}
+function militaryEligibility(){
+ const f=familyCareerInfo();
+ return S.age>=16 && (S.s.mar>=7 || f.military>=5 || (f.military>=2&&S.s.mar>=5));
+}
+
 function famYear(){const cs=[];
  S.kin.forEach(k=>{const a=k.a+S.age;if(a>75||k.x)return;cs.push(k.c);if(!k.c&&a>=16){k.c=genC(k.r=="姐姐");S.cur.push(`${k.r}${k.n}已成年，做起了「${cj(k.c)}」。`)}else{const r=grow(k.c,a);if(r)S.cur.push(fm(k.r+k.n,k.c,r))}});
  if(S.spouse&&S.sc){cs.push(S.sc);{const r=grow(S.sc,S.age+S.so);if(r)S.cur.push(fm("配偶"+S.spouse,S.sc,r))}}
@@ -386,7 +433,7 @@ E.push(
 {a:[20,60],t:"江水氾濫",rep:1,x:"暴雨連下半月，堤壩岌岌可危。",c:[["上堤搶險",{hp:-1},{need:{hp:5},ok:"你和鄉親堵住了缺口。",okfx:{fame:2,vir:2},no:"你體力不支，被抬下堤。",nofx:{hp:-3}}],["帶家人到高處避險",{},"你保全了家人，家園卻泡了水。"],["捐銀助修",{gold:-2},{ok:"堤壩修好，鄉里安穩。",okfx:{vir:2,fame:1}}]]},
 {a:[25,65],t:"官場應酬",rep:1,q:()=>S.rank>=1&&!S.army,x:"同僚設宴，座中有上官的親信。",c:[["赴宴結交",{gold:-1,mood:1},{ok:"你多了一位人脈。",okfx:{fame:1}}],["推託不去",{vir:1},"你落得清靜，也少了往來。"],["席上直言時弊",{},{need:{vir:6,fame:4},ok:"眾人暗暗佩服。",okfx:{fame:2},no:"得罪了人，之後處處受冷眼。",nofx:{fame:-2}}]]},
 {a:[28,65],t:"升堂斷案",rep:1,q:()=>S.rank>=2&&!S.army,x:"一樁田產官司，一方是鄉紳，一方是貧農。",c:[["秉公而斷",{},{need:{int:6},ok:"你查明真相，百姓稱你青天。",okfx:{fame:3,vir:2},no:"你判錯了案，事後悔恨。",nofx:{vir:1,fame:-2}}],["偏袒鄉紳",{gold:2,vir:-3},"你得了謝禮，卻夜不能寐。"],["押後再審",{},"你拖到兩造都撤了狀。"]]},
-{a:[22,40],t:"再赴科場",rep:1,q:()=>S.rank==0&&!S.army&&S.done.has("科舉"),x:"又到三年一度的大比之年，你仍未放棄。",c:[["再戰一場",{hp:-1,int:1},{need:{int:7},ok:"終於金榜題名。",okfx:{rank:1,fame:4},no:"再度落榜，你黯然神傷。",nofx:{mood:-2}}],["捐納入仕",{gold:-4},{ok:"你花錢買了個小官。",okfx:{rank:1,vir:-1}}],["就此放棄",{},"你收起書卷，另謀生路。"]]},
+{a:[22,40],t:"再赴科場",rep:1,q:()=>S.rank==0&&!S.army&&S.done.has("科舉"),x:"又到三年一度的大比之年，你仍未放棄。",c:[["再戰一場",{hp:-1,int:1},{need:{int:8},ok:"終於金榜題名。",okfx:{rank:1,fame:4},no:"再度落榜，你黯然神傷。",nofx:{mood:-2}}],["捐納入仕",{gold:-7},{ok:"你花錢買了個小官。",okfx:{rank:1,vir:-1}}],["就此放棄",{},"你收起書卷，另謀生路。"]]},
 {a:[20,45],t:"賭坊誘惑",x:"友人拉你進了賭坊，骰子聲聲誘人。",c:[["下注一搏",{},{p:.35,ok:"手氣極好，贏了一大筆。",okfx:{gold:5},no:"輸得精光。",nofx:{gold:-4,mood:-2}}],["旁觀不賭",{vir:1},"你看清了這裡的門道，轉身離去。"],["勸友人收手",{},{need:{vir:6},ok:"友人聽勸，從此感激你。",okfx:{vir:2},no:"他惱羞成怒與你絕交。",nofx:{mood:-1}}]]},
 {a:[28,60],t:"小人詆毀",rep:1,q:()=>S.s.fame>=4,x:"有人散播你的流言，影響越來越大。",c:[["公開辯白",{},{need:{vir:6},ok:"清者自清，流言平息。",okfx:{fame:2},no:"越描越黑。",nofx:{fame:-2}}],["置之不理",{mood:-1},"風頭過後，沒人再提。"],["私下找對方談",{},{need:{int:6},ok:"化干戈為玉帛。",okfx:{vir:1,chr:1},no:"談崩了，對方更不依不饒。",nofx:{mood:-1}}]]},
 {a:[30,75],t:"舊友重逢",rep:1,x:"街頭偶遇少年時的玩伴，他已兩鬢斑白。",c:[["請他到家中小酌",{gold:-1,mood:2},"你們聊到深夜。"],["留下地址告別",{},"你們各自匆匆。"]]},
@@ -521,13 +568,13 @@ const WH="一位白髮老者,一個挑擔的貨郎,一位遊方道士,一名落�
 const pf=t=>{const o={};String(t).replace(/([a-z]+)(-?\d+)/g,(m,k,v)=>o[k]=+v);return o};
 PL.map(p=>["你行經"+p+"時，",p]).concat(TM.map(t=>["正值"+t+"，",t])).forEach(([pre,nm],ci)=>IN.forEach((r,ri)=>{const[t,x,a,b,c,s,g,ok,no,ag,fo,fn,fs,st]=r,[lo,hi]=ag.split("-").map(Number),k=(ci+ri)%3,at=(ci+ri)%3?AT[(ci*3+ri)%AT.length]:"";
  E.push({g:1,k:t,a:[lo,hi],t:nm+"・"+t,x:pre+at+x.replace("{w}",WH[(ci*5+ri*3)%WH.length])+"。",c:[[a,{},W({[s]:4+(ci*3+ri)%4},ok+"。",fo?pf(fo):{[g]:2,mood:1},no+"。",fn?pf(fn):{mood:-1})],[b,fs?pf(fs):{mood:1},(st||SF[k])+(st?"":"")],[c,{},SK[k]]]})}));
-const FE={a:[18,18],t:"弱冠抉擇",x:"你已年滿十八，朝廷開科取士：文有科舉，武有武舉。這一步，將決定你往後的路。",c:[["參加科舉",{},W({int:6},"放榜之日，你榜上有名，從此踏入仕途。",{rank:1,fame:3,int:1},"你在榜上遍尋不見自己的名字，只得待來年再考。",{mood:-2,int:1})],["參加武舉",{},W({mar:6},"你騎射俱佳，以武舉出身授校尉。",{enlist:1,mrank:2,fame:2},"你敗給了更強的對手，回鄉繼續磨練。",{mood:-1,mar:1})],["暫不赴考，另謀出路",{},"你決定先看看這世道，再作打算。"]]};
+const FE={a:[18,18],t:"弱冠抉擇",x:"你已年滿十八，朝廷開科取士：文有科舉，武有武舉。這一步，將決定你往後的路。",c:[["參加科舉",{},W({int:8},"放榜之日，你榜上有名，從此踏入仕途。",{rank:1,fame:3,int:1},"你在榜上遍尋不見自己的名字，只得待來年再考。",{mood:-2,int:1})],["參加武舉",{},W({mar:8},"你騎射俱佳，以武舉出身授校尉。",{enlist:1,mrank:2,fame:2},"你敗給了更強的對手，回鄉繼續磨練。",{mood:-1,mar:1})],["暫不赴考，另謀出路",{},"你決定先看看這世道，再作打算。"]]};
 const G=[["文官：考取功名",()=>S.rank>=1],["成家立業",()=>S.spouse],["子女二人以上",()=>S.kids>=2],["文官：官至知府",()=>cf()>=10],["富甲一方",()=>S.s.gold>=10],["壽過六十",()=>S.age>=60],["武官：升至校尉",()=>S.mrank>=3],["武官：出任將軍",()=>S.mrank>=5],["行業：出師為匠",()=>S.jl>=3],["行業：執一行之牛耳",()=>S.jl>=5]];
 const $=id=>document.getElementById(id),R=n=>Math.floor(Math.random()*n),P=a=>a[R(a.length)];
 let S;
 const stage=()=>S.age<3?0:S.age<12?1:S.age<18?2:S.age<35?3:S.age<55?4:5;
 const clamp=()=>K.forEach(([k])=>S.s[k]=Math.max(0,Math.min(12,S.s[k])));
-function __v5BaseApply(fx){for(const k in fx){if(k=="enlist"){S.army=1;S.job=0;S.jl=0;if(!S.mrank)S.mrank=1}else if(k=="job"){S.job=fx[k];S.jl=1;S.jx=0;S.js=0}else if(k=="quit"){S.job=0;S.jl=0}else if(k=="mrank"){if(S.army){S.mrank=Math.max(0,Math.min(6,S.mrank+fx[k]));S.ms=0}}else if(k=="discharge")S.army=0;else if(k=="rank"){S.rank=Math.max(0,Math.min(5,S.rank+fx[k]));S.rs=0;if(fx[k]>0){S.job=0;S.jl=0}}else if(k=="wed"){S.spouse=P(SUR)+"氏";S.sc=genC(1);S.so=R(5)-2;S.s.chr++}else if(k=="lose"){S.spouse=0;S.sc=null}else if(k=="kid"){S.kids+=fx[k];if(fx[k]>0)for(let n=0;n<fx[k];n++)(S.kc=S.kc||[]).push({n:S.name[0]+P(GIV),b:S.age,c:null});else if(S.kc)S.kc.splice(fx[k])}else if(k=="ns"||k=="pp"||k=="fav")S[k]=Math.max(0,Math.min(12,(S[k]||0)+fx[k]));else if(k=="king")becomeKing();else if(k=="doom")S.fall="你起兵事敗，兵敗身死，家族盡誅。";else S.s[k]+=fx[k]}clamp()}
+function __v5BaseApply(fx){for(const k in fx){if(k=="enlist"){S.army=1;S.job=0;S.jl=0;if(!S.mrank)S.mrank=1}else if(k=="job"){S.job=fx[k];S.jl=1;S.jx=0;S.js=0}else if(k=="quit"){S.job=0;S.jl=0}else if(k=="mrank"){if(S.army){let gain=fx[k];if(gain>0&&S.mrank<=1&&!militaryEligibility()){gain=0;S.cur.push("你雖有軍中機會，但武藝或家門軍籍尚不足，升遷未成。");}S.mrank=Math.max(0,Math.min(6,S.mrank+gain));S.ms=0}}else if(k=="discharge")S.army=0;else if(k=="rank"){let gain=fx[k];if(gain>0&&S.rank==0&&!civilEligibility()){gain=0;S.cur.push("你雖有入仕機會，但才學、名望或家門背景仍不足，未能真正授官。");}S.rank=Math.max(0,Math.min(5,S.rank+gain));S.rs=0;if(gain>0){S.job=0;S.jl=0}}else if(k=="wed"){S.spouse=P(SUR)+"氏";S.sc=genC(1);S.so=R(5)-2;S.s.chr++}else if(k=="lose"){S.spouse=0;S.sc=null}else if(k=="kid"){S.kids+=fx[k];if(fx[k]>0)for(let n=0;n<fx[k];n++)(S.kc=S.kc||[]).push({n:S.name[0]+P(GIV),b:S.age,c:null});else if(S.kc)S.kc.splice(fx[k])}else if(k=="ns"||k=="pp"||k=="fav")S[k]=Math.max(0,Math.min(12,(S[k]||0)+fx[k]));else if(k=="king")becomeKing();else if(k=="doom")S.fall="你起兵事敗，兵敗身死，家族盡誅。";else S.s[k]+=fx[k]}clamp()}
 const fxT=fx=>Object.entries(fx).map(([k,v])=>NM[k]+(v>0?"↑":"↓")).join(" ");
 function sheet(t,b,x=1){$("sh").innerHTML=`<div class="cd"><h2>${t}</h2>${b}${x?'<button class="opt" onclick="cls()">關閉</button>':''}</div>`;$("sh").classList.add("on")}
 const cls=()=>$("sh").classList.remove("on");
@@ -554,7 +601,7 @@ function render(){
 }
 function __v5BaseStart(){
   cls();const dyn=R(4),fi=pickFam(),fam=FAM[fi],sur=P(SUR),gv=P(GIV),g=()=>P(GIV)+P(GIV);
-  S={dyn,fam,rank:0,mrank:0,army:0,job:0,jl:0,jx:0,spouse:0,kids:0,age:0,name:sur+gv,prov:P(PV),s:{...fam.s,mood:3+R(5),chr:2+R(7)},done:new Set(),ik:{},last:{},deeds:[],hist:[],quiet:0,acted:0,
+  S={dyn,fam,rank:0,mrank:0,army:0,job:0,jl:0,jx:0,spouse:0,kids:0,age:0,name:sur+gv,prov:P(PV),s:{...fam.s,mood:3+R(5),chr:2+R(7)},done:new Set(),ik:{},last:{},deeds:[],hist:[],quiet:0,acted:0,eventHistory:[],causal:{仁:0,權:0,財:0,武:0},worldFlags:{},pending:[],eventCount:0,famOfficeAid:0,famMilitaryAid:0,famTradeAid:0,familyCareer:{civil:0,military:0,trade:0,craft:0},
    kin:[{r:"父親",n:sur+g(),a:20+R(10),c:{...FJC[fi]}},{r:"母親",n:P(SUR)+"氏",a:19+R(9),c:{...FMC[fi]}}]};
   for(let i=R(4);i>0;i--)S.kin.push({r:Math.random()<.5?"兄長":"姐姐",n:sur+P(GIV),a:1+R(8)});
   apply(DY[dyn].s);S.emp=newEmp(1);S.ns=6;S.pp=6;S.fav=4+R(4);S.fi=fi;S.royal=fi>=5?fi-4:0;
@@ -562,25 +609,67 @@ function __v5BaseStart(){
   render();
 }
 function __v5BaseNextYear(){
-  S.age++;S.acted=0;S.cur=[`<b>年齡 ${S.age}歲</b>`];
+  S.age++;S.acted=0;S.cur=[`<b>年齡 ${S.age}歲</b>`];processPending();
   if(S.age>45&&Math.random()<.12)S.s.hp--;
   S.s.mood+=R(3)-1;if(S.army){if(Math.random()<.15)S.s.hp--;if(Math.random()<.4)S.s.gold++}
   if(S.job){const J=JB[S.job-1];S.jx++;if(Math.random()<.15+.1*S.jl)S.s.gold++;if((S.jl<5||(S.js||0)<2)&&S.jx>=2+S.jl&&S.s[J.m]>=2+S.jl*1.5+(S.js||0)){if((S.js||0)<2)S.js=(S.js||0)+1;else{S.jl++;S.js=0}S.jx=0;S.cur.push(`你在${J.n}一行勤勉有成，晉為「${jn()}」。`)}}
-  offYear();famYear();famDeath();empYear();clamp();
+  offYear();famYear();familyCareerYear();famDeath();empYear();clamp();
   if(S.fall||S.s.hp<=0||(S.age>60&&Math.random()<(S.age-58)/70)||S.age>=95)return end();
-  const pool=E.filter(e=>(e.rep?S.age-(S.last[e.t]??-99)>=6:!S.done.has(e.t))&&S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.d||e.d.includes(S.dyn))&&(!e.q||e.q())&&!(e.k&&S.ik[e.k])&&(!S.king||e.kg||e.fam));
+  let pool=E.filter(e=>(e.rep?S.age-(S.last[e.t]??-99)>=(e.cd||8):!S.done.has(e.t))&&S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.d||e.d.includes(S.dyn))&&(!e.q||e.q())&&!(e.k&&S.ik[e.k])&&(!S.king||e.kg||e.fam||e.a[0]>=18));
+  // 皇帝不再只抽皇帝事件：一般事件與帝王事件混合，並避開最近幾次出現過的標題。
+  if(S.ev){const recent=(S.eventHistory||[]).slice(-8);const fresh=pool.filter(e=>!recent.includes(e.t));if(fresh.length>=3)pool=fresh;}
   render();
   const fe=S.age==18&&!S.army&&S.royal!=2&&!S.king&&!S.done.has("弱冠抉擇")?FE:null;
-  if(fe||pool.length&&(Math.random()<.55||S.quiet>=2)){S.quiet=0;const gp=pool.filter(x=>x.g),core=pool.filter(x=>!x.g),one=core.filter(x=>!x.rep),e=fe||(gp.length&&Math.random()<.5?P(gp):one.length&&Math.random()<.7?P(one):P(core.length?core:gp));S.done.add(e.t);S.last[e.t]=S.age;if(e.k)S.ik[e.k]=1;S.ev=e;
+  if(fe||pool.length&&(Math.random()<.62||S.quiet>=2)){S.quiet=0;const gp=pool.filter(x=>x.g),core=pool.filter(x=>!x.g),one=core.filter(x=>!x.rep);
+    let e=fe;
+    if(!e){
+      // 約 25% 偏向特殊／帝王事件，其餘優先一般事件，避免登基後畫面只剩宮廷事件。
+      const special=S.king?pool.filter(x=>x.kg):[];
+      const general=S.king?pool.filter(x=>!x.kg):pool;
+      e=(S.king&&special.length&&Math.random()<.25)?P(special):P(general.length?general:(gp.length?gp:pool));
+    }
+    S.eventHistory=S.eventHistory||[];S.eventHistory.push(e.t);if(S.eventHistory.length>12)S.eventHistory.shift();
+    S.done.add(e.t);S.last[e.t]=S.age;if(e.k)S.ik[e.k]=1;S.ev=e;
     sheet(e.t,`<p>${S.age}歲。${typeof e.x=="function"?e.x():e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="pick(${i})">${c[0]}</button>`).join(""),0)}
   else{S.quiet++;S.cur.push((S.army&&Math.random()<.7?P(FA):P(FL[stage()])));render()}
 }
+function applyChoiceConsequence(e,lab,fx){
+  S.choiceCount=(S.choiceCount||0)+1;
+  const c=S.causal||{仁:0,權:0,財:0,武:0};
+  if((fx.vir||0)>0){c.仁+=fx.vir;S.worldFlags.goodDeeds=(S.worldFlags.goodDeeds||0)+1;if(S.family?.rep!=null)S.family.rep=Math.min(20,S.family.rep+1);}
+  if((fx.fame||0)>0){c.權+=fx.fame;S.worldFlags.reputation=(S.worldFlags.reputation||0)+1;if(S.family?.rep!=null)S.family.rep=Math.min(20,S.family.rep+1);}
+  if((fx.gold||0)>0){c.財+=fx.gold;S.worldFlags.wealth=(S.worldFlags.wealth||0)+1;}
+  if((fx.mar||0)>0){c.武+=fx.mar;S.worldFlags.martial=(S.worldFlags.martial||0)+1;}
+  if(S.king){
+    if((fx.vir||0)>0)S.pp=Math.min(12,(S.pp||0)+1);
+    if((fx.fame||0)>0)S.ns=Math.min(12,(S.ns||0)+1);
+    if((fx.gold||0)<0)S.pp=Math.max(0,(S.pp||0)-1);
+    if((fx.mar||0)>0)S.ns=Math.min(12,(S.ns||0)+1);
+  }
+  // 重大選擇留下「因果」，數年後可能轉化為人物、家族或朝廷事件。
+  if(Math.max(Math.abs(fx.vir||0),Math.abs(fx.fame||0),Math.abs(fx.gold||0),Math.abs(fx.mar||0),Math.abs(fx.int||0))>=2){
+    S.pending=S.pending||[];S.pending.push({age:S.age+2+R(5),type:(fx.vir||0)>0?"仁":(fx.gold||0)>0?"財":(fx.mar||0)>0?"武":"權",title:e.t,choice:lab});
+    if(S.pending.length>8)S.pending.shift();
+  }
+  S.causal=c;
+}
+function processPending(){
+  if(!S.pending?.length)return;
+  const hit=S.pending.filter(x=>x.age<=S.age);S.pending=S.pending.filter(x=>x.age>S.age);
+  hit.forEach(x=>{
+    if(x.type==="仁"){S.s.fame++;S.s.mood++;S.cur.push(`因你當年在「${x.title}」中的選擇，舊日受助者的後人登門致謝。（名望↑ 心情↑）`)}
+    else if(x.type==="財"){S.s.gold++;S.cur.push(`當年在「${x.title}」留下的商業選擇如今開花結果，有人送來分紅。（家財↑）`)}
+    else if(x.type==="武"){S.s.mar++;S.s.fame++;S.cur.push(`當年在「${x.title}」中的膽識傳開，地方武人邀你主持比武。（武勇↑ 名望↑）`)}
+    else {S.s.int++;S.s.fame++;S.cur.push(`當年在「${x.title}」中的決定被人傳頌，朝中有人因此記住你的名字。（才學↑ 名望↑）`)}
+  });
+}
 function pick(i){
-  const e=S.ev,[lab,fx,r]=e.c[i];let txt;apply(fx);
+  const e=S.ev,[lab,fx,r]=e.c[i];let txt;apply(fx);let resultFx={...fx};
   const d0=S.s.hp+S.s.int+S.s.vir+S.s.fame+S.s.mar;
   if(typeof r==="string")txt=r;
   else{let ok=r.p!=null?Math.random()<r.p:true;if(r.need)for(const k in r.need)if(S.s[k]<r.need[k])ok=false;
-    if(ok){txt=r.ok;apply(r.okfx||{})}else{txt=r.no;apply(r.nofx||{})}}
+    if(ok){txt=r.ok;Object.assign(resultFx,r.okfx||{});apply(r.okfx||{})}else{txt=r.no;Object.assign(resultFx,r.nofx||{});apply(r.nofx||{})}}
+  applyChoiceConsequence(e,lab,resultFx);
   S.s.mood+=Math.sign(S.s.hp+S.s.int+S.s.vir+S.s.fame+S.s.mar-d0);clamp();
   S.cur.push(`【${e.t}】你選擇了「${lab}」。${txt}`);S.hist.push(`${S.age}歲 ${e.t}：${lab}。${txt}`);S.deeds.push(e.t+"・"+lab);
   cls();render();if(S.s.hp<=0||S.fall)end();
@@ -604,12 +693,14 @@ function kin(){
   sheet("親友",rows(l)+`<button class="opt" ${S.acted>=2?"disabled":""} onclick="visit()">探望親友<small>心情↑</small></button>`);
 }
 function estate(){const g=S.s.gold;sheet("家產",rows([["銅錢",g*100+" 文"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["居所",g<3?"茅屋":g<6?"瓦房":g<10?"大宅":"府邸"],["文職",S.rank?cnp()+(S.army?"・休職":""):"無"],["武職",S.mrank?mnp()+(S.army?"・現役":"・退役"):"無"],["文俸",S.rank&&!S.army?Math.round((cf()+1)*3.4)+" 石/年":"無"],["軍餉",S.army?Math.round((mf()+1)*3.6)+" 石/年":"無"]]))}
+function personMenu(){sheet("人物",rows([["姓名",S.name],["年齡",S.age+"歲"],["身分",tt()],["家族",S.family?.name||S.fam?.n||"—"],["家門背景",familyCareerLabel()],["家人職業影響",(()=>{const f=familyCareerInfo();return `文官${f.civil||0}級・武職${f.military||0}級・商業${f.trade||0}級`})()],["配偶",S.spouse||"未婚"],["子女",(S.kids||0)+"人"],["名望",S.s.fame],["心情",S.s.mood],["體魄",S.s.hp],["才學",S.s.int],["武勇",S.s.mar],["仁德",S.s.vir],["家財",S.s.gold+" 貫"]])+`<button class="opt" onclick="book()">查看生平紀錄</button>`)}
+function familyMenu(){sheet("家族",rows([["家族",S.family?.name||S.fam?.n||"—"],["家族聲望",S.family?.rep??"—"],["家族身分",S.family?.ext?.status||"—"],["家門背景",familyCareerLabel()],["官場助力",(S.famOfficeAid||0)+"級"],["商業助力",(S.famTradeAid||0)+"級"],["家宅",["茅舍","瓦房","深宅","府邸","豪門","世家祖宅"][S.estate?.lv||0]],["子女",(S.kids||0)+"人"],["配偶",S.spouse||"未婚"]])+`<button class="opt" onclick="kin()">查看親友</button><button class="opt" onclick="estate()">查看家產</button>`)}
 function cart(){sheet("車馬",rows([["代步",["徒步","一頭毛驢","一匹良馬","雕花馬車"][Math.min(3,S.s.gold>>2)]]]))}
 function bag(){sheet("行囊",rows(K.map(([k,n])=>[n,Math.round(S.s[k]/12*100)]).concat([["行業",S.job?jn():"無"],["文職",S.rank?cn():"無"],["武職",S.mrank?mn()+(S.army?"":"（退役）"):"無"]])))}
 function book(){sheet("賬本",S.hist.length?S.hist.slice().reverse().map(x=>`<p>${x}</p>`).join(""):"<p>還沒有任何記錄。</p>")}
 function goals(){sheet("目標",G.map(([n,f])=>`<p>${f()?"✅":"⬜"} ${n}</p>`).join(""))}
 function jobs(){const B=(t,d,f,ok)=>`<button class="opt" ${S.acted>=2||!ok?"disabled":""} onclick="work(${f})">${t}<small>${d}</small></button>`,free=!S.job&&!S.army&&!S.rank&&S.age>=12;
-sheet("工作",rows([["文官（科舉入仕）",S.rank?cn()+(S.army?"・休職":""):"尚未入仕"],["武官（從軍・武舉）",S.mrank?mn()+(S.army?"":"(退)"):"尚未從軍"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["下次考績",S.rank&&!S.army?(3-(S.rx||0))+" 年後（文官）":S.army&&S.mrank?(2-(S.mx||0))+" 年後（武官）":"—"]])+`<p>${S.acted?"今年已行動過，下一年再來。":"轉換工作會用掉今年的行動。文官須由科舉考取，武官可應武舉或從軍。"}</p>`+JB.map((j,i)=>B(j.n,S.job==i+1?"現職":"投身",i,free)).join("")+B("從軍","應徵入伍",-1,!S.army&&S.age>=16&&S.age<=45)+B("解甲歸田","退伍",-2,S.army)+B("辭去行當","辭業",-3,S.job))}
+sheet("工作",rows([["文官（科舉入仕）",S.rank?cn()+(S.army?"・休職":""):"尚未入仕"],["武官（從軍・武舉）",S.mrank?mn()+(S.army?"":"(退)"):"尚未從軍"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["下次考績",S.rank&&!S.army?(3-(S.rx||0))+" 年後（文官）":S.army&&S.mrank?(2-(S.mx||0))+" 年後（武官）":"—"]])+`<p>${S.acted?"今年已行動過，下一年再來。":"轉換工作會用掉今年的行動。文官須經科舉、蔭補等正途，且需有足夠才學、名望或家門背景；武官亦需具備相當武藝或軍旅背景。"}</p>`+JB.map((j,i)=>B(j.n,S.job==i+1?"現職":"投身",i,free)).join("")+B("從軍","應徵入伍",-1,!S.army&&S.age>=16&&S.age<=45)+B("解甲歸田","退伍",-2,S.army)+B("辭去行當","辭業",-3,S.job))}
 function work(i){if(S.acted>=2)return;S.acted=(S.acted||0)+1;let m;if(i>=0){apply({job:i+1});m="你投身"+JB[i].n+"之業，從"+JB[i].L[0]+"做起。"}else if(i==-1){apply({enlist:1});m="你應徵入伍，成了一名士卒。"}else if(i==-2){apply({discharge:1,mood:1});m="你解甲歸田，卸下一身重擔。"}else{apply({quit:1});m="你辭去行當，另作打算。"}S.cur.push(m);S.hist.push(S.age+"歲 "+m);cls();render()}
 
 function lifeScore(){
@@ -682,7 +773,7 @@ function empYear(){const e=S.emp,k=e.tr[0],r=Math.random(),m=t=>S.cur.push(t);if
 const fv=(t,a,q,x,c)=>({g:1,rep:1,a,t,q,x,c}),nm=(l,d)=>l[0]?l[0].r?l[0].r+l[0].n:"孩子"+l[0].n:d;
 E.push(
 fv("天子巡幸",[14,70],0,()=>`聖駕巡幸至${S.prov.slice(0,2)}，官道戒嚴，百姓夾道圍觀${S.emp.n}。`,[["擠到前排瞻仰天顏",{},W({chr:6},"天子目光掃過，對你頷首一笑。",{fame:3,mood:2},"你被侍衛推搡開來，鞋也擠掉了。",{mood:-1})],["獻上本地土產",{gold:-1},"官員記下了你的名字。"],["閉門不出",{},"你嫌人多，在家睡了一天。"]]),
-fv("開恩科",[16,40],()=>!S.rank&&!S.army,()=>`${S.emp.n}下詔加開恩科，各地舉子紛紛赴京。`,[["赴京應試",{},W({int:7},"你金榜題名，入朝為官。",{rank:1,fame:3},"你名落孫山，黯然而歸。",{mood:-2,int:1})],["再讀三年",{int:1},"你決定苦讀，待下一科。"]]),
+fv("開恩科",[16,40],()=>!S.rank&&!S.army,()=>`${S.emp.n}下詔加開恩科，各地舉子紛紛赴京。`,[["赴京應試",{},W({int:8},"你金榜題名，入朝為官。",{rank:1,fame:3},"你名落孫山，黯然而歸。",{mood:-2,int:1})],["再讀三年",{int:1},"你決定苦讀，待下一科。"]]),
 fv("天子召見",[30,75],()=>S.rank>=3,()=>`${S.emp.n}召你入宮問政，殿中百官屏息。`,[["直言進諫",{},W({vir:7,int:6},"天子默然良久，終於納了你的諫言。",{fame:3,vir:1},"龍顏不悅，你被冷落了一陣。",{fame:-2,mood:-2})],["順著聖意附和",{vir:-1},W({},"天子龍心大悅，賞你錦緞百匹。",{gold:2,fame:1},"你說得太過諂媚，同僚暗中鄙夷。",{fame:-1},.6)],["謹言慎行",{mood:-1},"你答得滴水不漏，平安退下。"]]),
 fv("朝廷徵兵",[16,40],()=>!S.army&&!S.mrank,()=>`${S.emp.n}下詔徵兵，縣衙貼出榜文，每戶需出一丁。`,[["應徵入伍",{enlist:1},"你背起行囊，隨隊遠赴邊關。"],["出錢免役",{gold:-2},"你破財消災，保住了清靜。"],["躲到外鄉",{},W({},"你在外鄉躲過風頭，平安歸來。",{mood:-1},"差役尋到你，你被打了二十板子。",{hp:-2,fame:-1},.5)]]),
 fv("天子命將",[25,65],()=>S.army&&S.mrank>=3,()=>`${S.emp.n}命你統兵出征，糧草已備，只待一聲令下。`,[["領命出征",{},W({mar:8,int:5},"你運籌帷幄，大破敵軍，天子親賜金帶。",{mrank:1,fame:3},"你兵敗而回，朝野譁然。",{fame:-3,hp:-2,mood:-2})],["上書請求緩兵",{},W({int:7},"天子准奏，你避開了一場險局。",{fame:1,vir:1},"天子斥你畏戰，記了你一筆。",{fame:-2})]]),
@@ -732,7 +823,7 @@ e2("太傅授課",[6,14],()=>S.royal==2&&!S.king,"太傅為皇嗣們講授帝王
 e2("奪嫡之爭",[14,45],()=>S.royal==2&&!S.king,"父皇年事漸高，諸皇子各自結黨，朝中暗流湧動。",[["拉攏朝臣",{gold:-1},W({fame:6,chr:5},"你廣結朝中重臣，聲望日隆。",{fav:2,fame:1},"拉攏之事被告到御前，父皇有些不悅。",{fav:-2})],["上策論討好父皇",{},W({int:6},"你呈上的策論深得聖心。",{fav:2,mood:1},"父皇覺得你言之無物。",{fav:-1})],["韜光養晦",{mood:1},"你閉門讀書，不爭不搶，落得清靜。"]]),
 e2("兄弟暗算",[16,45],()=>S.royal==2&&!S.king,"你察覺有兄弟暗中在父皇面前說你的壞話。",[["暗中防備",{},W({int:5},"你識破了暗算，反讓對方栽了跟頭。",{fav:1,fame:1},"你中了圈套，被父皇申斥。",{fav:-2,mood:-2})],["直接向父皇申訴",{vir:-1},W({},"父皇還了你清白。",{fav:1},"父皇斥你不顧兄弟之情。",{fav:-2},.5)],["一笑置之",{vir:1,mood:-1},"你不願摻和，只覺心寒。"]]),
 e2("宮宴",[16,70],()=>S.royal>=1&&!S.king,"宮中大宴宗親，百官列席，絲竹聲聲。",[["獻上厚禮",{gold:-1,fame:2},"天子龍顏大悅，記下了你的名字。"],["席間作詩助興",{},W({int:6},"你的詩贏得滿座喝彩。",{fame:2,chr:1,fav:1},"詩句平庸，被人客氣地點了點頭。",{mood:-1})],["推病不去",{mood:1},"你在府中樂得清閒。"]]),
-e2("蔭補入仕",[16,24],()=>S.fi==4&&!S.rank&&!S.army,"父親的同僚上門道賀，說可以憑父親的官蔭，替你補一個官職。",[["接受蔭補，入衙為官",{rank:1,fame:1},"你憑著父親的官蔭，補了個九品小官。"],["堅持科舉入仕",{int:2},"你婉拒蔭補，決心憑真才實學出頭。"],["不願為官",{mood:1},"你謝過好意，只想自在度日。"]],{rep:0}),
+e2("蔭補入仕",[16,24],()=>familyCareerInfo().civil>=5&&!S.rank&&!S.army,"父親的同僚上門道賀，說可以憑父親的官蔭，替你補一個官職。",[["接受蔭補，入衙為官",{rank:1,fame:1},"你憑著父親的官蔭，補了個九品小官。"],["堅持科舉入仕",{int:2},"你婉拒蔭補，決心憑真才實學出頭。"],["不願為官",{mood:1},"你謝過好意，只想自在度日。"]],{rep:0}),
 e2("父親遭彈劾",[14,45],()=>S.fi==4,"父親被政敵彈劾，家中人心惶惶，賓客也少了。",[["四處奔走疏通",{gold:-2},W({fame:5},"你託人疏通，父親有驚無險。",{fame:1,vir:1},"疏通無果，父親被貶官一級。",{fame:-1,mood:-2})],["閉門讀書以待",{int:1},"風波過後，父親只是被申斥一頓。"],["與父親共擔責任",{vir:2,mood:-1},"你陪父親跪在堂前，傳為孝名。"]]),
 e2("黃袍加身",[30,70],()=>S.army&&S.mrank>=5&&S.s.fame>=8&&!S.king,"你手握重兵，部下們暗中勸你：「這天下，該換個姓了。」",[["舉兵稱帝",{},W({mar:9,fame:8,int:6},"你兵臨城下，百官開城跪迎，黃袍加身。",{king:1},"你兵敗被擒，身死族滅。",{doom:1})],["斥退勸進者，效忠朝廷",{vir:2,fame:1},"你拒絕了部下勸進，傳為忠義佳話。"],["按兵不動",{mood:-1},"你壓下此事，夜裡卻久久難眠。"]]),
 );
@@ -994,6 +1085,88 @@ function v6Develop(){v6Init();if(S.v6.money<300){sheet('資金不足',`<p>修水
 function v6Appoint(){v6Init();let need=S.territory.level+1,score=(S.rank||0)+(S.mrank||0)+(S.family.ext.influence||0)/4+(S.s.fame||0)/4;if(score<need*2){sheet('尚未具備資格',`<p>你的功名、軍功或地方聲望還不足。</p><p>目前評分 ${score.toFixed(1)}，本級約需 ${need*2}。</p>`);return}if(S.territory.level>=5){sheet('已到封疆','<p>你已掌一方重鎮，暫無更高領地。</p>');return}S.territory.level++;S.territory.name=['本鄉','新授村','安民鄉','本縣','本州','鎮守一方'][S.territory.level];S.territory.people+=120;S.territory.fields+=20;S.territory.loyalty=7;S.nation.power=Math.min(10,S.nation.power+1);S.family.rep=Math.min(12,S.family.rep+1);S.cur.push(`🏯 你獲授「${V6_TERR[S.territory.level][0]}」管理權，家族身分提升為 ${S.family.ext.status}。`);v6FamilyRecalc();render();cls()}
 function v6Family(){v6Init();let ex=S.family.ext,estateName=['茅舍','瓦房','深宅','府邸','豪門','世家祖宅'][S.estate?.lv||0],member=(S.kin||[]).map(k=>[k.r+' '+k.n,k.familyStatus||ex.status]).concat((S.kc||[]).map(k=>['子女 '+k.n,k.status||'家中後輩']));sheet('家族制度',rows([['家族',S.family.name],['家族身分',ex.status],['家族影響力',ex.influence+'/20'],['家族田產',ex.land+' 畝'],['家族可動用資產',v6MoneyFmt(ex.treasury)],['家族榮譽',ex.honor],['家族分房',ex.branches+' 房'],['家族聲望',S.family.rep+'/12'],['家宅',estateName],['領地',S.territory.name+'・'+V6_TERR[S.territory.level][0]]])+`<h3>家人身分</h3>`+rows(member)+`<p style="margin-top:10px">家族身分會隨家主功名、軍功、財產、家宅、子女成就與歷代傳承改變；家中有人入仕、立軍功或成為名士，會提高整個家族的地方影響力。</p><button class="opt" onclick="v6Nation()">查看國家與領土</button>`)}
 function v6Economy(){v6Init();sheet('古代帳房',rows([['現銀／現錢',v6MoneyFmt(S.v6.money)],['換算',`1 貫 = 1000 文；1 兩約按 1000 文計帳`],['家族資產估值',v6MoneyFmt(S.family.ext.treasury)],['本年基本家用',v6MoneyFmt(Math.max(10,((S.kids||0)+1)*12+(S.estate?.lv||0)*8))],['田產',S.territory.fields+' 畝'],['稅制',S.territory.level?'按領地人口與田賦估值計算':'尚未有正式領地']])+`<p style="margin-top:10px">本作採「明代中後期白銀化」作為貨幣結構參考：小額交易以文、較大交易以兩計價。明代中後期白銀逐漸成為重要的市場與財政結算媒介；但不同時期、地區與物價差異很大，因此遊戲採近似模型而非宣稱每筆價格都是史實。</p>`)}
+
+/* ===== v9.1：大幅擴充通用事件／皇帝可觸發一般人生事件 ===== */
+/* 皇帝不再被限制只能看到 kg/fam 事件；18歲以上的一般事件也可發生。 */
+E.push(
+ {a:[18,80],t:'鄉里修橋',rep:1,x:'暴雨沖毀村口石橋，行人往來受阻，里正前來募資。',c:[['出資修橋',{gold:-2,vir:2,fame:1},'橋成之日，鄉民紛紛道謝。'],['號召鄉民出力',{vir:1,fame:1},'眾人合力修橋，省下不少錢。'],['置之不理',{vir:-1},'商旅繞道而行，鄉里對你頗有微詞。']]},
+ {a:[18,85],t:'糧價暴漲',rep:1,x:'今年糧價突然上漲，市井間人人談論米價。',c:[['趁高價售糧',{gold:3,vir:-2},'你賺了一筆，但鄰里對你頗有怨言。'],['平價出糧',{gold:-1,vir:3,fame:1},'百姓稱你有仁心。'],['囤糧觀望',{gold:1},'你暫時沒有損失，靜待市況。']]},
+ {a:[18,85],t:'名醫過境',rep:1,x:'一位名醫路過此地，願以一帖良方換取一點報酬。',c:[['請他診治',{gold:-1,hp:2},'你的身體好了許多。'],['請教醫理',{int:1,vir:1},'你學到不少養生之道。'],['不予理會',{mood:1},'你覺得自己一向身強體健。']]},
+ {a:[18,85],t:'古書流落民間',rep:1,x:'市集出現一本殘缺古籍，攤主不知其價值。',c:[['買下研讀',{gold:-1,int:2},'你從殘卷中悟得不少道理。'],['轉手賣出',{gold:2},'有人高價買走，你小賺一筆。'],['送給學堂',{vir:2,fame:1},'先生感激你的慷慨。']]},
+ {a:[18,80],t:'舊友來訪',rep:1,x:'多年未見的故友突然登門，帶著年少時的往事。',c:[['設宴款待',{gold:-1,mood:2,vir:1},'舊日情誼重新升溫。'],['促膝長談',{mood:2,fame:1},'你們談到深夜，心境開闊不少。'],['婉拒相見',{mood:-1},'故友失望離去，你心中略有遺憾。']]},
+ {a:[20,85],t:'門客求助',rep:1,x:'曾受你照顧的一名門客如今落難，請求你伸手相助。',c:[['慷慨相助',{gold:-2,vir:2},'他感激涕零，日後成了你的得力助手。'],['只給盤纏',{gold:-1,vir:1},'你盡了本分。'],['拒絕往來',{vir:-1},'你不願讓舊人情拖累自己。']]},
+ {a:[18,85],t:'商隊遇險',rep:1,x:'一支商隊在途中遇到盜匪，正尋求熟悉道路的人帶路。',c:[['出面護送',{mar:1,hp:-1,fame:2},'商隊平安抵達，眾人對你感激不已。'],['提供消息',{int:1,gold:1},'你提供的路線讓商隊避開了危險。'],['袖手旁觀',{mood:1},'你不想惹上麻煩。']]},
+ {a:[18,85],t:'寺觀募修',rep:1,x:'附近寺觀年久失修，主持向地方士紳募資。',c:[['捐資修繕',{gold:-2,vir:2,fame:1},'香火重新興盛，鄉人稱頌你的善舉。'],['捐些香火錢',{gold:-1,vir:1},'你略盡心意。'],['婉言謝絕',{mood:1},'你認為錢財應留作家用。']]},
+ {a:[18,85],t:'河道淤塞',rep:1,x:'河道泥沙堆積，商船難以通行，地方百姓盼望有人主持疏浚。',c:[['帶頭疏浚',{gold:-2,vir:2,fame:2},'河道暢通後，商旅重新聚集。'],['召集民夫',{int:1,vir:1},'你組織人手完成了工程。'],['不願插手',{vir:-1},'河道問題繼續困擾地方。']]},
+ {a:[18,85],t:'豪門宴請',rep:1,x:'地方豪族設宴邀請你赴席，席間賓客皆有來頭。',c:[['赴宴結交',{fame:2,chr:1,gold:-1},'你結識不少權貴與名士。'],['只談正事',{int:1,vir:1},'你沒有失禮，也沒有捲入私交。'],['推辭不去',{vir:1,mood:1},'你避開了複雜的人情往來。']]},
+ {a:[20,85],t:'賑濟流民',rep:1,x:'城外聚集流民，地方官府暫時無法安置。',c:[['開倉施粥',{gold:-2,vir:3,fame:2},'流民得到安置，城中秩序逐漸恢復。'],['召集鄉紳募糧',{vir:2,fame:1},'眾人共同出力，救濟了不少人。'],['閉門自守',{gold:1,vir:-2},'你保住家產，卻留下了冷酷的名聲。']]},
+ {a:[20,85],t:'盜匪求饒',rep:1,x:'一夥盜匪被官軍擊潰，其中一人跪地求饒，稱自己是被逼上山的。',c:[['查明實情',{int:2,vir:1},'你發現其中確有被逼無奈者。'],['嚴懲到底',{mar:1,vir:-1,fame:1},'你展現了強硬的一面。'],['暗中放走',{vir:1,fame:-1},'他向你叩首後消失在人群中。']]},
+ {a:[18,80],t:'鄉試名額',rep:1,x:'地方學子爭奪有限的科舉名額，請你出面主持公議。',c:[['秉公評定',{int:2,vir:2,fame:2},'眾人服氣，沒有人能指責你的決定。'],['照顧熟人',{gold:1,vir:-3},'你得到一點回報，清名卻受損。'],['交給地方官',{vir:1},'你避免了直接捲入爭端。']]},
+ {a:[18,85],t:'秋收豐年',rep:1,x:'今年風調雨順，田野一片金黃，百姓笑逐顏開。',c:[['減少租息',{gold:-1,vir:2,fame:1},'百姓過了個寬裕的冬天。'],['正常收取',{gold:2},'家中收入增加，日子更安穩。'],['多收一些',{gold:4,vir:-3},'你賺得更多，卻讓佃戶心生不滿。']]},
+ {a:[18,85],t:'雪災',rep:1,x:'大雪封路，幾戶人家缺少柴米，求助聲不絕於耳。',c:[['開門施粥',{gold:-1,vir:2,mood:1},'寒冬裡的人們記住了你的善意。'],['捐柴取暖',{gold:-1,vir:2},'幾戶老人因此熬過寒冬。'],['關門避災',{hp:1,vir:-1},'你保住自家安穩。']]},
+ {a:[18,85],t:'春祭祖先',rep:1,x:'春日祭祖，族中長輩希望你主持祭禮。',c:[['親自主持',{vir:2,fame:1},'族人對你的敬重增加。'],['請長輩主持',{vir:1,mood:1},'你尊重家中長幼秩序。'],['不參與祭禮',{mood:1,vir:-1},'你錯過了與族人團聚的機會。']]},
+ {a:[18,85],t:'族譜修訂',rep:1,x:'族中準備重修族譜，請你補錄近年的家族事蹟。',c:[['據實記錄',{int:1,vir:1,fame:1},'族譜留下了完整的一筆。'],['誇大功績',{fame:2,vir:-2},'後人或許會記得你的名字，卻未必相信。'],['婉拒參與',{mood:1},'你不願為名聲費心。']]},
+ {a:[18,85],t:'遠親投奔',rep:1,x:'多年未見的遠親因家鄉災亂，帶著一家老小來投奔。',c:[['收留安置',{gold:-2,vir:3,fame:1},'家宅雖擁擠，親族卻重新團聚。'],['提供盤纏',{gold:-1,vir:1},'你幫他們另尋安身之處。'],['婉拒收留',{vir:-2,gold:1},'你保住了家中資源，親族卻失望離去。']]},
+ {a:[18,85],t:'子弟爭執',rep:1,x:'族中兩名年輕子弟為田產爭執，雙方都請你評理。',c:[['公平裁決',{int:2,vir:2,fame:1},'兩邊雖不完全滿意，終究接受了裁決。'],['各打五十大板',{vir:1},'爭端暫時平息。'],['偏袒一方',{gold:1,vir:-3},'你得到一點好處，族中卻埋下怨氣。']]},
+ {a:[20,85],t:'船運遇風',rep:1,x:'你投資的貨物正在水路運輸，途中突然遇上暴風。',c:[['祈求平安',{mood:1},'船隊有驚無險地靠岸。'],['派人接應',{gold:-1,int:1},'你提前安排，減少了損失。'],['聽天由命',{gold:-2},'貨物受損，所幸沒有全軍覆沒。']]},
+ {a:[18,85],t:'市集失火',rep:1,x:'夜半市集突然起火，火勢沿著木造店鋪迅速蔓延。',c:[['帶人救火',{mar:1,hp:-1,fame:2,vir:1},'火勢被控制，許多商戶因此保住生計。'],['組織撤離',{int:1,vir:2},'你先疏散百姓，避免更多傷亡。'],['關門避火',{hp:1,vir:-1},'你自家沒有受損。']]},
+ {a:[18,85],t:'官道修整',rep:1,x:'官道年久失修，往來車馬顛簸不堪。',c:[['捐資修路',{gold:-2,vir:2,fame:1},'商旅稱便，地方往來更加興盛。'],['號召商旅分攤',{int:1,fame:1},'眾人共同出資，工程順利完成。'],['不願出錢',{gold:1,vir:-1},'道路仍舊破敗。']]},
+ {a:[18,85],t:'鄰縣械鬥',rep:1,x:'鄰縣兩村因水源問題爆發衝突，幾乎釀成大禍。',c:[['出面調停',{int:2,vir:2,fame:2},'雙方終於坐下談判。'],['協助守衛',{mar:1,fame:1},'你幫忙穩住局勢。'],['趁機牟利',{gold:3,vir:-3},'你賺到錢，卻留下惡名。']]},
+ {a:[18,85],t:'名士評點',rep:1,x:'一位名士路過，公開評點地方人物，眾人都想知道他如何看你。',c:[['坦然請教',{int:1,fame:2},'他的幾句話讓你受益匪淺。'],['與他辯論',{int:2,fame:1},'你們辯得面紅耳赤，旁觀者卻聽得津津有味。'],['不屑一顧',{mood:1,fame:-1},'你不願受他人評價左右。']]},
+ {a:[20,85],t:'書院邀請',rep:1,x:'地方書院邀你講述人生經驗，學子們早已坐滿講堂。',c:[['親自授課',{int:2,fame:2,vir:1},'學子們記下你的言談，視你為師。'],['談治家之道',{vir:2,fame:1},'許多家長也來旁聽。'],['婉拒邀請',{mood:1},'你認為自己還有許多事情要做。']]},
+ {a:[20,85],t:'武館求援',rep:1,x:'地方武館缺少兵器與糧食，希望你相助。',c:[['捐助武館',{gold:-2,mar:1,fame:1},'武館弟子日後常替地方維持治安。'],['贈送舊兵器',{mar:1,vir:1},'你把閒置兵器交給他們。'],['拒絕資助',{gold:1},'你不想再增加開支。']]},
+ {a:[18,85],t:'夜雨訪客',rep:1,x:'深夜大雨，一名陌生人敲門求宿，自稱只是過路讀書人。',c:[['留宿一晚',{vir:2,mood:1},'翌日他留下幾句感謝便離去。'],['給他乾糧',{gold:-1,vir:1},'你沒有讓陌生人進門。'],['拒絕開門',{vir:-1,hp:1},'你保住家宅安全。']]},
+ {a:[18,85],t:'古玩贗品',rep:1,x:'有人拿著一件古玉來找你，聲稱價值連城。',c:[['請人鑑定',{gold:-1,int:1},'鑑定後發現竟是贗品，你躲過一劫。'],['直接買下',{gold:-3},{ok:'後來證明是真品，你大喜過望。',okfx:{gold:5},no:'原來是贗品，你吃了大虧。',nofx:{gold:-2}}],['轉身離去',{mood:1},'你沒有被一時的誘惑打動。']]},
+ {a:[18,85],t:'田界糾紛',rep:1,x:'鄰家說你家的田界多占了他一小塊土地，雙方各執一詞。',c:[['查閱田契',{int:2,vir:1},'契約清楚，雙方終於釐清界線。'],['各退一步',{vir:2,gold:-1},'你以小利換長久和氣。'],['強硬爭到底',{gold:1,vir:-2},'官司雖贏，人情卻失了。']]},
+ {a:[18,85],t:'老僕請辭',rep:1,x:'服侍家中多年的老僕年事已高，想回鄉養老。',c:[['厚贈盤纏',{gold:-1,vir:2,mood:1},'他含淚告別，家中人都很感動。'],['安排退休',{vir:1},'你讓他安心回鄉。'],['要求繼續做事',{gold:1,vir:-2},'他雖留下，心中卻有了芥蒂。']]},
+ {a:[20,85],t:'門生報喜',rep:1,x:'你曾指點過的年輕人如今有所成就，特意登門報喜。',c:[['設宴祝賀',{gold:-1,mood:2,fame:1},'師徒之情更加深厚。'],['勉勵他繼續努力',{int:1,vir:1},'他將你的話牢牢記在心中。'],['收下賀禮',{gold:2,vir:-1},'你接受了他的心意。']]},
+ {a:[20,85],t:'地方募兵',rep:1,x:'邊患加劇，地方開始募兵，鄉勇希望你帶頭響應。',c:[['出資募兵',{gold:-2,fame:2,mar:1},'地方防務得到加強。'],['親自訓練',{mar:2,hp:-1},'你花了一段時間訓練鄉勇。'],['拒絕參與',{mood:1},'你不願涉入軍務。']]},
+ {a:[18,85],t:'春日踏青',rep:1,x:'春光正好，親友邀你到郊外踏青。',c:[['欣然前往',{mood:2,hp:1},'你難得放下公務，心情舒暢。'],['與友談學',{int:1,mood:1},'一路談古論今，頗有收穫。'],['留在家中',{mood:1},'你選擇安靜度日。']]},
+ {a:[18,85],t:'秋夜賞月',rep:1,x:'中秋夜月色清明，家人與鄰里邀你共聚。',c:[['與家人團聚',{mood:2,vir:1},'一家人難得其樂融融。'],['宴請鄰里',{gold:-1,fame:1,vir:1},'鄰里關係更加融洽。'],['獨自賞月',{int:1,mood:1},'你在月下想起許多往事。']]},
+ {a:[18,85],t:'冬日圍爐',rep:1,x:'寒冬夜裡，家人圍坐爐旁，談起這一年的是非得失。',c:[['聽家人訴說',{mood:2,vir:1},'你更了解家人的心思。'],['教導晚輩',{int:1,vir:1},'晚輩記住了你的教誨。'],['獨自處理公務',{int:1,hp:-1},'你又忙了一夜。']]},
+ {a:[25,85],t:'地方選舉',rep:1,x:'鄉里推舉新的里正，眾人請你評議候選人。',c:[['推薦賢者',{vir:2,fame:1},'新的里正果然辦事公允。'],['推薦能吏',{int:2,fame:1},'地方事務效率大增。'],['不涉其中',{mood:1},'你避免了人情糾葛。']]},
+ {a:[25,85],t:'家產分房',rep:1,x:'家中房產與田地增多，族人開始討論如何分配。',c:[['公平分配',{vir:2,fame:1,gold:-1},'族人雖各有得失，卻都服氣。'],['集中家產',{gold:2,vir:-2},'家產更集中，族中卻有人不滿。'],['交長輩裁決',{vir:1,mood:1},'你把難題交給最有威望的人。']]},
+ {a:[25,85],t:'家中藏金',rep:1,x:'老宅修繕時，工匠在牆中發現前人留下的一小匣財物。',c:[['如實上報',{vir:2,fame:1,gold:1},'你查清來源後妥善處理。'],['留作家用',{gold:4,vir:-1},'這筆意外之財讓家中寬裕不少。'],['分給工匠',{gold:2,vir:2},'工匠感念你的厚道。']]},
+ {a:[30,85],t:'地方水患',rep:1,x:'暴雨連日，河水暴漲，低窪村落開始進水。',c:[['組織撤離',{int:1,vir:2,fame:2,hp:-1},'百姓及時撤出，傷亡大減。'],['出資築堤',{gold:-3,vir:2,fame:2},'堤防勉強擋住洪水。'],['守住自家',{gold:1,vir:-2},'你保住了自家田產。']]},
+ {a:[30,85],t:'山林大火',rep:1,x:'山火沿著乾燥林地蔓延，附近村莊開始冒險救火。',c:[['帶人救火',{mar:2,hp:-2,fame:2,vir:1},'大火終於被撲滅。'],['供應糧水',{gold:-1,vir:2},'救火的人們得到補給。'],['遠離火場',{hp:1},'你避免了危險。']]},
+ {a:[30,85],t:'外鄉商人求見',rep:1,x:'外地商人帶著稀罕貨物，希望得到你的引薦。',c:[['替他引薦',{chr:1,fame:1,gold:1},'商路因此更加順暢。'],['先查貨物',{int:2},'你發現其中有幾件來路不明的貨物。'],['拒絕引薦',{vir:1},'你不想承擔未知風險。']]},
+ {a:[30,85],t:'地方學子請益',rep:1,x:'幾名年輕學子專程來向你請教人生與仕途。',c:[['耐心指點',{int:1,vir:2,fame:1},'他們把你的話當作人生準則。'],['勸他們腳踏實地',{vir:2},'學子們連連點頭。'],['簡短應付',{mood:1},'你沒有太多時間。']]},
+ {a:[30,85],t:'舊案重提',rep:1,x:'多年前的一樁舊案突然被人翻出，牽涉到你的故交。',c:[['重新查證',{int:2,vir:1,fame:1},'你找到了當年忽略的線索。'],['相信故交',{vir:1,fame:-1},'你選擇站在朋友這邊。'],['不再過問',{mood:1},'你不願再捲入往事。']]},
+ {a:[30,85],t:'恩人求助',rep:1,x:'當年曾幫過你的恩人如今家道中落，派人送信求助。',c:[['全力相助',{gold:-3,vir:3,fame:2},'你終於報答了多年前的恩情。'],['資助一些',{gold:-1,vir:1},'你盡力而為。'],['婉拒請求',{gold:1,vir:-2},'你選擇顧好自己的家業。']]},
+ {a:[35,85],t:'家族名士',rep:1,x:'家族中有一名晚輩文章出眾，逐漸在地方嶄露頭角。',c:[['全力栽培',{gold:-2,fame:2,int:1},'家族聲望因此更上一層。'],['讓他自行闖蕩',{vir:1,fame:1},'你相信真正的人才不需過度扶持。'],['壓下鋒芒',{fame:-1,mood:1},'你擔心太早成名反而招禍。']]},
+ {a:[35,85],t:'族中武人',rep:1,x:'族中一名年輕人投身軍伍，立下戰功後回鄉省親。',c:[['設宴迎接',{gold:-1,fame:1,mood:1},'族人以他為榮。'],['勉勵報國',{vir:1,fame:1},'他決心再赴邊關。'],['勸其歸田',{mood:1},'你希望他平安度日。']]},
+ {a:[35,85],t:'鄰國商路',rep:1,x:'新的商路開通，外地商人開始大量進入本地。',c:[['投資商路',{gold:-2,int:1},'商路繁榮，你獲得穩定收益。'],['維持觀望',{gold:1},'你沒有冒險投入。'],['協助維持秩序',{vir:1,fame:2},'商旅對地方治安信心大增。']]},
+ {a:[35,85],t:'寺院藏經',rep:1,x:'寺院整理藏經時發現失傳的古籍，主持邀你一同研讀。',c:[['閉門研讀',{int:2,mood:1},'你對古代思想有了新的理解。'],['請人抄錄',{gold:-1,int:1},'家中留下了一套珍貴抄本。'],['捐給書院',{vir:2,fame:2},'更多人因此受益。']]},
+ {a:[40,85],t:'老臣請教',rep:1,x:'一位德高望重的老臣退休後來到你府上，與你談論天下大勢。',c:[['虛心請益',{int:2,fame:1},'你從他的經驗中學到許多。'],['與他論道',{int:1,vir:1,fame:1},'你們相談甚歡。'],['只談家常',{mood:1},'你讓這次會面變得輕鬆許多。']]},
+ {a:[40,85],t:'故鄉召集',rep:1,x:'故鄉族老希望你出面主持一次大規模祭祖與族會。',c:[['親自回鄉',{gold:-2,mood:2,vir:2,fame:1},'族人對你的重視遠勝往年。'],['派人代辦',{gold:-1,vir:1},'你雖未親自前往，禮數仍周全。'],['不予理會',{mood:-1,fame:-1},'族人對你頗感失望。']]},
+ {a:[40,85],t:'晚輩求官',rep:1,x:'家族晚輩希望你出面替他求一個官職，引起你的兩難。',c:[['讓他憑本事',{vir:2,int:1},'你告訴他真正的功名只能靠自己。'],['替他引薦',{fame:1,gold:-1,vir:-1},'他得到機會，但也欠下你一份人情。'],['直接拒絕',{vir:1,mood:-1},'他雖失望，卻明白你的原則。']]},
+ {a:[40,85],t:'地方名產',rep:1,x:'地方商戶送來名產，希望與你建立長久往來。',c:[['照價購買',{gold:-1,vir:1},'你不願平白受人好處。'],['婉拒厚禮',{vir:2,fame:1},'你的清廉讓人敬佩。'],['欣然收下',{gold:2,vir:-2},'家中多了些稀罕物件。']]},
+ {a:[45,90],t:'回望故居',rep:1,x:'多年奔波後，你再次站在年少時住過的老宅前。',c:[['修繕祖屋',{gold:-2,mood:2,fame:1},'老宅重新有了昔日的模樣。'],['追憶往事',{int:1,mood:2},'你想起許多已故親人。'],['轉身離去',{mood:1},'你決定把目光放向未來。']]},
+ {a:[45,90],t:'舊臣遺孤',rep:1,x:'故去舊臣留下的孩子生活困頓，族人希望你收留照料。',c:[['收為門下',{gold:-2,vir:3,fame:2},'你替他重新安排了人生。'],['提供學費',{gold:-1,vir:2},'孩子得以繼續讀書。'],['交給親族',{vir:1},'你請他的親族負起責任。']]},
+ {a:[50,90],t:'退隱邀請',rep:1,x:'一群故交邀你遠離塵囂，到山林間過幾年清靜日子。',c:[['欣然赴約',{mood:3,hp:1,fame:-1},'你暫別俗務，身心得到休養。'],['偶爾往來',{mood:1,vir:1},'你仍保留自己的生活節奏。'],['婉拒邀請',{int:1},'你還有放不下的責任。']]},
+ {a:[50,90],t:'後輩成婚',rep:1,x:'家族中最受期待的晚輩今日成婚，族人請你主持婚禮。',c:[['親自主持',{gold:-1,mood:2,vir:1,fame:1},'婚禮圓滿，家族氣氛喜氣洋洋。'],['送上賀禮',{gold:-2,vir:1},'你把祝福化作實際的支持。'],['只送一句祝福',{mood:1},'你沒有鋪張。']]},
+ /* 皇帝也能遇到的非專屬天下事件 */
+ {a:[25,90],t:'民間讖語',rep:1,x:'民間流傳一則讖語，說天下將有大變，京城人心浮動。',c:[['公開安撫',{pp:1,fame:1,vir:1},'百姓漸漸恢復信心。'],['查明來源',{int:2,ns:1},'你發現只是有人故意散播謠言。'],['置之不理',{pp:-1,mood:1},'謠言一度愈演愈烈。']]},
+ {a:[25,90],t:'商路斷絕',rep:1,x:'連日暴雨導致主要商路中斷，城中物價開始上漲。',c:[['開放官道',{gold:-1,ns:1,pp:1},'商旅恢復通行，物價逐漸穩定。'],['暫緩徵稅',{pp:2,ns:-1},'百姓鬆了一口氣。'],['任其自理',{pp:-1},'市場短期內陷入混亂。']]},
+ {a:[25,90],t:'地方士紳請命',rep:1,x:'地方士紳聯名請求朝廷調整一項不合時宜的舊規。',c:[['允其改革',{ns:1,pp:1,fame:2},'新規施行後，地方運作更有效率。'],['派員查訪',{int:1,fame:1},'你決定先掌握實情。'],['維持舊制',{ns:1,pp:-1},'你選擇穩妥，不願輕易改制。']]},
+ {a:[25,90],t:'邊民互市',rep:1,x:'邊境百姓希望恢復有限互市，以交換糧食與生活用品。',c:[['開放互市',{pp:1,ns:1,gold:1},'邊境商貿活絡，百姓收入增加。'],['嚴格限制',{ns:1,pp:-1},'安全性提高，但邊民略有不滿。'],['暫緩決定',{int:1},'你要求官員繼續調查。']]},
+ {a:[30,90],t:'官員告老',rep:1,x:'一名勤勉多年的老臣請求告老還鄉，朝廷一時找不到合適接替者。',c:[['准其致仕',{vir:1,pp:1,fame:1},'老臣感激你的體恤。'],['再留三年',{ns:1,hp:-1},'朝廷暫時維持穩定。'],['安排接班人',{int:2,ns:1},'新舊交接順利完成。']]},
+ {a:[30,90],t:'糧倉盤點',rep:1,x:'地方糧倉帳目出現差異，官員互相推諉。',c:[['派員徹查',{int:2,ns:1,fame:1},'查出數筆虧空，責任終於明確。'],['限期補足',{ns:1,pp:1},'地方官員連夜補齊缺額。'],['暫不追究',{ns:-1,pp:-1},'問題暫時被壓下。']]},
+ {a:[30,90],t:'民間冤案',rep:1,x:'一樁多年未決的冤案再次被百姓敲鼓申訴，群情激動。',c:[['重審案件',{vir:2,fame:2,pp:1},'真相終於水落石出。'],['命三司會審',{int:1,ns:1,fame:1},'案件交由多方共同查辦。'],['維持原判',{pp:-2,vir:-1},'民間對朝廷的信任下降。']]},
+ {a:[35,90],t:'將領請功',rep:1,x:'邊將送來捷報，請求為麾下將士加功封賞。',c:[['厚賞將士',{gold:-2,mar:1,ns:1,fame:2},'軍心大振。'],['按功行賞',{mar:1,ns:1,vir:1},'賞罰分明，將士信服。'],['暫緩封賞',{ns:-1,pp:-1},'軍中開始出現怨言。']]},
+ {a:[35,90],t:'京師米價',rep:1,x:'京師米價連月上漲，百姓開始減少口糧。',c:[['調糧入京',{gold:-2,pp:2,ns:-1},'糧價很快回落。'],['平抑米價',{pp:1,gold:-1},'百姓暫時鬆了一口氣。'],['放任市場',{pp:-2,ns:1},'國庫沒有負擔，但民怨升高。']]},
+ {a:[35,90],t:'宮外失竊案',rep:1,x:'京城接連發生盜竊案，百姓懷疑地方治安失控。',c:[['整頓治安',{ns:1,pp:1,mar:1},'盜賊很快收斂。'],['暗中查訪',{int:2,fame:1},'你抓到幕後主使。'],['增加刑罰',{pp:-1,ns:1},'盜賊減少了，但百姓也開始害怕。']]},
+ {a:[40,90],t:'學官請建學',rep:1,x:'各地學官上奏，希望增建官學以培養更多人才。',c:[['撥款興學',{gold:-2,ns:1,fame:2},'讀書風氣大盛。'],['地方自籌',{int:1,pp:1},'士紳共同出資建學。'],['暫緩興建',{gold:1,ns:-1},'國庫暫時省下一筆。']]},
+ {a:[40,90],t:'宗室求封',rep:1,x:'宗室子弟請求增加封賞與歲祿，朝臣對此意見不一。',c:[['適度封賞',{gold:-2,pp:1,fame:1},'宗室滿意，朝廷也沒有太大負擔。'],['削減歲祿',{ns:1,gold:2,pp:-1},'國庫寬裕了，宗室卻頗有怨言。'],['召集議政',{int:1,ns:1},'你讓朝臣共同提出方案。']]},
+ {a:[40,90],t:'外使贈禮',rep:1,x:'外國使節入京，帶來珍奇異寶，希望改善兩國關係。',c:[['厚待使節',{gold:-1,fame:2,pp:1},'兩國關係更加融洽。'],['按禮接待',{vir:1,ns:1},'外交保持穩定。'],['拒收厚禮',{vir:2,fame:1},'你避免了被人指責貪圖外物。']]},
+ {a:[40,90],t:'地方疫病',rep:1,x:'一州出現疫病，官府請求朝廷支援藥材與醫者。',c:[['調撥藥材',{gold:-2,pp:2,vir:2},'疫病逐漸受到控制。'],['派醫官前往',{gold:-1,int:1,pp:1},'醫官找到有效的防治方法。'],['命地方自救',{pp:-2,ns:-1},'地方百姓對朝廷失望。']]},
+ {a:[45,90],t:'邊軍缺餉',rep:1,x:'邊軍上報糧餉不足，將士情緒開始不穩。',c:[['立即補餉',{gold:-2,ns:2,mar:1},'軍心穩定，邊防無虞。'],['查清虧空',{int:2,ns:1},'你發現問題出在地方糧官。'],['暫緩撥款',{ns:-2,pp:-1},'軍中開始出現怨言。']]},
+ {a:[45,90],t:'權貴求情',rep:1,x:'一名權貴為犯事親族求情，希望你網開一面。',c:[['依法處置',{vir:2,fame:2,ns:1},'朝野稱讚你賞罰分明。'],['從輕發落',{fame:1,vir:-1},'事情暫時平息。'],['完全赦免',{fame:-1,pp:-1,vir:-2},'百姓開始質疑你的公正。']]},
+ {a:[45,90],t:'朝野求賢',rep:1,x:'天下名士紛紛上書自薦，朝廷需要挑選真正有用的人才。',c:[['廣開言路',{int:2,fame:1,pp:1},'各地人才開始進入朝廷視野。'],['重點考察',{int:1,ns:1,fame:1},'你讓官員逐一查核履歷。'],['只用舊臣',{ns:-1,fame:-1},'朝廷缺乏新鮮血液。']]}
+);
+// 給所有新增事件更長冷卻；近期出現過的事件不再立即抽中。
+for(const e of E){if(e.rep)e.cd=e.cd||8;}
+
 const __v6Apply=apply,__v6Start=start,__v6Next=nextYear,__v6Render=render,__v6Menu=menu;
 apply=function(fx){let old=S?.s?.gold||0;if(S&&!S.v5act)S.v5act={study:0,kin:0,gold:0,work:0};__v6Apply(fx);if(S?.s){v6Init();v6SyncFromGold(old);v6FamilyRecalc()}};
 start=function(){__v6Start();v6Init();render()};
