@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>浮生一夢・古代人生模擬器｜古代人生模擬遊戲</title>
+<meta name="description" content="《浮生一夢・古代人生模擬器》是一款免費的古代人生與家族世代養成網頁遊戲。從出生開始，選擇仕途、經商、習武、婚姻、子女與家族發展，體驗隨機事件、多重成就、隱藏結局與世代繼承。手機與電腦都能直接遊玩。">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="googlebot" content="index, follow">
+<link rel="canonical" href="https://fusheng-life.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="浮生一夢・古代人生模擬器">
+<meta property="og:title" content="浮生一夢・古代人生模擬器｜免費古代人生遊戲">
+<meta property="og:description" content="免費古代人生模擬遊戲：仕途、經商、婚姻、孩子、房產、家族傳承、隨機事件與隱藏結局。直接用手機或電腦遊玩。">
+<meta property="og:url" content="https://fusheng-life.vercel.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浮生一夢・古代人生模擬器">
+<meta name="twitter:description" content="免費古代人生與家族世代養成網頁遊戲，直接開啟即可遊玩。">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"VideoGame",
+  "name":"浮生一夢・古代人生模擬器",
+  "url":"https://fusheng-life.vercel.app/",
+  "description":"免費的古代人生與家族世代養成網頁遊戲。玩家從出生開始，選擇仕途、經商、習武、婚姻、子女與家族發展，體驗隨機事件、成就、隱藏結局與世代繼承。",
+  "applicationCategory":"GameApplication",
+  "operatingSystem":"Web Browser",
+  "genre":["Simulation","Role-playing game","Life simulation"],
+  "inLanguage":"zh-Hant"
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--s1:#b7dccb;--s2:#f5f4e6;--ink:#1f3a33;--pn:#3a8a76;--pn2:#1f5a4b;--cd:#fbf8ec;--gd:#d3ae55;--mute:#4f7a6d;--m1:#a6d3be;--m2:#82bca5;--m3:#5da088;--sun:#fff0c4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--s1:#0b201b;--s2:#1c3f35;--ink:#e2f3ec;--pn:#2b6f5f;--pn2:#1a4a3f;--cd:#1c392f;--mute:#9cc8b8;--m1:#2a5a4b;--m2:#234d40;--m3:#1b4035;--sun:#e0f5e8}}
+:root[data-theme="dark"]{--s1:#0b201b;--s2:#1c3f35;--ink:#e2f3ec;--pn:#2b6f5f;--pn2:#1a4a3f;--cd:#1c392f;--mute:#9cc8b8;--m1:#2a5a4b;--m2:#234d40;--m3:#1b4035;--sun:#e0f5e8}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:linear-gradient(var(--s1),var(--s2));color:var(--ink);font-family:"Noto Serif TC","Songti TC",serif;font-size:16px;line-height:1.8}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:2px solid var(--gd);outline-offset:2px}
+#app{position:relative;max-width:480px;height:100%;margin:0 auto;display:flex;flex-direction:column;overflow:hidden}
+#app>*{position:relative;z-index:1}#app>.bg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.m1{fill:var(--m1)}.m2{fill:var(--m2)}.m3{fill:var(--m3)}.sun{fill:var(--sun)}.cl{fill:#fff;opacity:.55}
+header{padding:12px 14px 4px;background:radial-gradient(130% 150% at 0 0,transparent 0 52%,var(--gd) 52% 53.3%,transparent 54%),radial-gradient(130% 150% at 0 0,#2f7d6d 0 52%,transparent 53%)}
+.r1,.r2{display:flex;align-items:center;gap:10px}.r2{justify-content:space-between;margin-top:4px}
+.av{width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7fb3a2,#1f4f43);display:grid;place-items:center;font-size:40px;box-shadow:0 0 0 3px #fff3c9,0 0 0 6px var(--gd),0 6px 14px rgba(0,30,20,.4)}
+.nm{font-size:30px;font-weight:900;line-height:1.2;color:#fff;letter-spacing:.12em;text-shadow:0 2px 6px rgba(0,30,20,.5)}.sbt{font-size:13px;color:#e0f5ec}.mid{flex:1;min-width:0}
+.pills{display:flex;flex-direction:column;gap:5px;align-items:flex-end;font-size:14px}
+.pills span{background:linear-gradient(#3f8f7c,#1f5c4e);color:#fff;border:2px solid var(--gd);border-radius:20px;padding:0 14px;min-width:92px;text-align:center}
+.goal{background:none;border:0;font-size:12px;line-height:1.3;color:#fff;text-shadow:0 1px 3px rgba(0,30,20,.6)}
+.dm{display:flex}.dm button{width:60px;height:60px;margin-left:-7px;font-size:11px;line-height:1.25;padding:0}
+.dmb,.dm button{position:relative;isolation:isolate;border:0;color:#fff;background:linear-gradient(135deg,#f7e4a0,#b98a2b);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.dmb::before,.dm button::before{content:"";position:absolute;inset:5px;z-index:-1;background:linear-gradient(160deg,#56ab94,#1f6050);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.dmb:active,.dm button:active{filter:brightness(1.2)}
+.txt{flex:0 1 auto;max-height:46%;overflow-y:auto;margin:10px 14px 0;padding:12px 16px;background:rgba(250,249,240,.72);border:1px solid var(--gd);border-radius:16px;backdrop-filter:blur(5px);color:#1f3a33;box-shadow:0 6px 18px rgba(20,70,55,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .txt{background:rgba(16,46,38,.78);color:#e2f3ec}}
+:root[data-theme="dark"] .txt{background:rgba(16,46,38,.78);color:#e2f3ec}
+.txt p{margin:0 0 4px;animation:fi .5s both}.txt p:nth-child(2){animation-delay:.12s}.txt p:nth-child(3){animation-delay:.24s}
+.txt b{display:block;font-size:21px;color:#8a5a14;border-bottom:1px solid var(--gd);margin-bottom:6px;letter-spacing:.1em}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}}
+.sp{flex:1}
+#nx{align-self:center;width:108px;height:108px;margin-bottom:-36px;z-index:3;border-radius:50%;border:0;background:radial-gradient(circle at 35% 28%,#ffd9c4,#e0674a 70%);color:#fff;font-size:25px;font-weight:900;letter-spacing:.08em;line-height:1.3;text-shadow:0 2px 4px rgba(60,20,0,.5);box-shadow:0 0 0 5px #fff1e6,0 0 0 8px var(--gd),0 10px 22px rgba(60,20,0,.45)}
+#nx:active{filter:brightness(1.15)}
+footer{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='white' stroke-opacity='.15' stroke-width='2'%3E%3Ccircle cx='32' cy='32' r='9'/%3E%3Ccircle cx='32' cy='32' r='17'/%3E%3Cpath d='M0 32a16 16 0 0 1 16-16M64 32a16 16 0 0 0-16-16M0 32a16 16 0 0 0 16 16M64 32a16 16 0 0 1-16 16'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(var(--pn),var(--pn2));border-top:3px solid var(--gd);border-radius:42px 42px 0 0;padding:46px 14px 14px;display:flex;gap:4px;align-items:flex-end;box-shadow:0 -8px 24px rgba(10,60,45,.3)}
+#bars{flex:1}.b{display:flex;align-items:center;gap:6px;margin-bottom:7px;color:#fff;font-size:14px}
+.ic{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:16px;flex:none}.b span{width:2.2em;flex:none}
+.tr{flex:1;height:20px;background:rgba(8,40,32,.55);border-radius:10px;overflow:hidden;box-shadow:inset 0 2px 3px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.3)}
+.tr i{display:block;height:100%;min-width:34px;padding-right:8px;text-align:right;font-size:12px;font-style:normal;line-height:20px;border-radius:10px;transition:width .4s;color:#222;box-shadow:inset 0 6px 6px rgba(255,255,255,.35)}
+.cl2{display:flex}.cl2 div{display:flex;flex-direction:column;margin-left:-10px}.cl2 .dn{margin-top:44px}
+.dmb{width:90px;height:90px;margin-bottom:-6px;font-size:18px;font-weight:900;line-height:1.1;padding:0}.dmb b{display:block;font-size:24px;line-height:1.1;margin-bottom:1px}
+#sh{position:fixed;inset:0;background:rgba(8,32,26,.62);display:none;align-items:center;justify-content:center;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px));z-index:9}
+#sh.on{display:flex}#sh.on .cd{animation:pop .25s both}@keyframes pop{from{opacity:0;transform:scale(.94)}}
+.cd{background:linear-gradient(var(--cd),var(--cd));width:100%;max-width:440px;max-height:100%;overflow:auto;padding:20px 18px;border-radius:16px;box-shadow:0 0 0 3px var(--cd),0 0 0 5px var(--gd),0 20px 40px rgba(0,30,20,.45)}
+.cd h2{margin:0 0 10px;font-size:23px;text-align:center;letter-spacing:.25em;display:flex;align-items:center;gap:10px}.cd h2::before,.cd h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gd))}.cd h2::after{transform:scaleX(-1)}
+.cd p{margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;background:rgba(47,125,109,.09);border:1px solid var(--pn);border-radius:10px;padding:10px 14px;margin-top:9px}
+.opt:hover:not(:disabled){background:linear-gradient(135deg,#3f8f7c,#1f5c4e);color:#fff}.opt:disabled{opacity:.4}.opt small{float:right;color:var(--mute)}
+.seal{display:inline-block;border:3px solid #c0392b;color:#c0392b;font-weight:900;font-size:28px;letter-spacing:.1em;padding:4px 16px;transform:rotate(-4deg);margin:8px 0 14px;border-radius:4px}
+.row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed rgba(80,140,120,.4)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== v4 UI polish ===== */
+:root{
+  --paper:#fffdf5;--paper2:#f4ead5;--deep:#173d35;--accent:#b88935;
+  --red:#a7473d;--shadow:0 10px 30px rgba(23,61,53,.18);
+}
+body{background:radial-gradient(circle at 20% 5%,rgba(255,255,255,.65),transparent 28%),linear-gradient(145deg,var(--s1),var(--s2));}
+#app{box-shadow:0 0 45px rgba(15,45,35,.18);background:rgba(255,255,255,.06)}
+header{padding:10px 14px 8px;backdrop-filter:blur(8px)}
+.nm{font-size:27px;letter-spacing:.08em}
+.sbt{opacity:.9}
+.pills{gap:6px}
+.pills span{min-width:88px;padding:1px 11px;font-size:13px;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.goal{transition:.2s;opacity:.9}
+.goal:hover{transform:translateY(-1px)}
+.dm{gap:2px}
+.dm button{width:62px;height:62px;font-size:11px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.16))}
+.txt{max-height:43%;margin:8px 12px 0;padding:13px 15px;border-radius:18px;box-shadow:var(--shadow);background:rgba(255,253,245,.82)}
+.txt p{font-size:15px}
+.txt b{font-size:19px}
+#lifePanel{margin:7px 12px 0;padding:8px 10px;border:1px solid rgba(184,137,53,.65);border-radius:14px;background:rgba(255,253,245,.7);backdrop-filter:blur(5px);box-shadow:0 4px 12px rgba(30,70,55,.08)}
+.lpTop{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700}
+.lpTrack{height:5px;border-radius:8px;background:rgba(20,60,50,.14);overflow:hidden;margin-top:5px}
+.lpTrack i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--gd),#f0cf78);transition:width .4s}
+.lpActs{display:flex;gap:5px;margin-top:7px}
+.lpAct{flex:1;text-align:center;padding:4px 2px;border-radius:9px;background:rgba(47,125,109,.1);font-size:11px}
+.lpAct strong{display:block;font-size:14px}
+#nx{width:104px;height:104px;font-size:23px;transition:.2s}
+#nx:hover{transform:scale(1.035)}
+footer{padding:42px 11px 11px;gap:3px}
+.b{margin-bottom:5px;font-size:12px}
+.ic{width:25px;height:25px;font-size:14px}
+.tr{height:17px}
+.tr i{line-height:17px;font-size:10px}
+.dmb{width:82px;height:82px;font-size:14px;transition:.18s}
+.dmb b{font-size:21px}
+.dmb:hover{transform:translateY(-2px)}
+.cd{background:linear-gradient(160deg,var(--paper),var(--paper2));border-radius:20px;padding:19px 16px}
+.cd h2{font-size:22px}
+.opt{border-radius:13px;padding:11px 13px;margin-top:8px;background:rgba(47,125,109,.07);transition:.16s}
+.opt:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px rgba(31,90,75,.18)}
+.opt small{font-size:11px}
+.row{padding:7px 2px}
+#sh{background:rgba(5,25,20,.7);backdrop-filter:blur(3px)}
+@media(max-height:700px){
+  .txt{max-height:36%}.dm button{height:49px}.dmb{width:74px;height:74px}#nx{width:92px;height:92px}
+}
+
+
+/* ===== Responsive desktop + mobile layout ===== */
+@media (min-width:769px){
+  html,body{min-height:100%;}
+  body{min-height:100vh;overflow:hidden;display:flex;justify-content:center;}
+  #app{width:min(1100px,100vw);max-width:none;height:100vh;min-height:680px;box-shadow:0 0 60px rgba(15,45,35,.24)}
+  header{padding:16px 30px 12px}
+  .r1,.r2{max-width:1000px;margin-left:auto;margin-right:auto}
+  .r1{gap:16px}
+  .av{width:86px;height:86px;font-size:45px}
+  .nm{font-size:32px}
+  .sbt{font-size:14px}
+  .pills{font-size:15px;gap:7px}
+  .pills span{min-width:112px;padding:2px 14px}
+  .r2{margin-top:8px}
+  .dm{gap:4px}
+  .dm button{width:68px;height:68px;font-size:12px}
+  .goal{font-size:13px}
+  .txt{width:min(900px,calc(100% - 80px));max-height:36vh;margin:14px auto 0;padding:16px 20px}
+  .txt p{font-size:16px}
+  .txt b{font-size:21px}
+  #lifePanel{width:min(900px,calc(100% - 80px));margin:10px auto 0;padding:10px 14px}
+  .lpTop{font-size:13px}
+  .lpTrack{height:7px}
+  .lpActs{gap:8px}
+  .lpAct{padding:5px 4px;font-size:12px}
+  .lpAct strong{font-size:15px}
+  #nx{width:118px;height:118px;font-size:26px;margin-bottom:-40px}
+  footer{padding:48px 30px 18px;gap:20px;min-height:150px}
+  #bars{max-width:620px;margin-left:auto}
+  .b{font-size:13px;max-width:620px}
+  .ic{width:28px;height:28px;font-size:15px}
+  .tr{height:19px}
+  .tr i{line-height:19px;font-size:11px}
+  .cl2{margin-right:auto}
+  .cl2 div{margin-left:-7px}
+  .cl2 .dn{margin-top:44px}
+  .dmb{width:88px;height:88px;font-size:15px}
+  .dmb b{font-size:23px}
+  .cd{width:min(680px,calc(100vw - 48px));max-width:680px;padding:24px 22px}
+  .cd h2{font-size:24px}
+  .opt{padding:12px 15px}
+}
+
+@media (min-width:769px) and (max-height:820px){
+  #app{min-height:620px}
+  header{padding-top:10px;padding-bottom:7px}
+  .av{width:74px;height:74px;font-size:39px}
+  .nm{font-size:28px}
+  .dm button{width:58px;height:58px}
+  .txt{max-height:30vh;margin-top:8px;padding:11px 16px}
+  #lifePanel{margin-top:7px;padding:7px 10px}
+  #nx{width:96px;height:96px;font-size:22px;margin-bottom:-32px}
+  footer{padding-top:39px;padding-bottom:10px;min-height:125px}
+  .dmb{width:72px;height:72px;font-size:13px}
+  .dmb b{font-size:19px}
+}
+
+@media (max-width:420px){
+  #app{width:100%;}
+  header{padding-left:10px;padding-right:10px}
+  .av{width:68px;height:68px;font-size:36px}
+  .nm{font-size:24px}
+  .dm button{width:52px;height:52px}
+  .txt{margin-left:9px;margin-right:9px;padding:11px 13px}
+  #lifePanel{margin-left:9px;margin-right:9px}
+  footer{padding-left:8px;padding-right:8px}
+  .dmb{width:76px;height:76px}
+}
+
+
+/* ===== v6 responsive desktop/mobile polish ===== */
+#app{width:min(100%,1100px);max-width:1100px;min-height:100dvh;height:100dvh}
+@media (min-width:700px){body{font-size:17px;overflow:hidden}#app{margin:0 auto;box-shadow:0 0 55px rgba(15,45,35,.22)}header{padding:18px 26px 12px}.av{width:88px;height:88px}.nm{font-size:32px}.txt{margin:12px 26px 0;max-height:38%;padding:18px 20px}.txt p{font-size:16px}.lifePanel{margin:10px 26px 0}.dm button{width:72px;height:72px;font-size:12px}.dmb{width:100px;height:100px;font-size:16px}.dmb b{font-size:25px}#nx{width:118px;height:118px;font-size:25px}footer{padding:48px 24px 18px}.cd{max-width:720px;padding:24px 24px}.cd h2{font-size:25px}.opt{padding:12px 16px}}
+@media (min-width:1200px){#app{max-width:1160px}.txt{max-height:40%}.cd{max-width:780px}}
+@media (max-width:699px){#app{width:100%;height:100dvh}.txt{max-height:40%}}
+
+/* ===== v9.4 雅緻東方 UI 重製 ===== */
+:root{
+ --ink:#28241f;--ink2:#5d554b;--paper:#f7f2e7;--paper2:#eee5d4;
+ --jade:#344a43;--jade2:#22342f;--gold:#b18a4a;--gold2:#d5bd82;--red:#8f4038;
+ --line:rgba(83,68,49,.20);--shadow:0 18px 50px rgba(44,36,27,.16)
+}
+html,body{background:#ded6c7!important}
+body{font-family:"Noto Serif TC","Songti TC",serif;color:var(--ink);background:
+ radial-gradient(circle at 18% 8%,rgba(255,255,255,.72),transparent 28%),
+ radial-gradient(circle at 85% 90%,rgba(171,146,103,.16),transparent 30%),#ded6c7!important}
+#app{background:var(--paper);box-shadow:0 24px 70px rgba(48,39,29,.22)!important}
+#app:before{content:"";position:absolute;inset:12px;border:1px solid rgba(177,138,74,.28);pointer-events:none;z-index:8}
+header{background:linear-gradient(180deg,#2b403a 0%,#22342f 100%)!important;padding:22px 28px 14px!important;border-bottom:1px solid rgba(213,189,130,.45)}
+header:after{content:"";position:absolute;left:28px;right:28px;bottom:7px;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);opacity:.65}
+.av{width:72px;height:72px;background:linear-gradient(145deg,#68786f,#1e302b)!important;box-shadow:0 0 0 1px rgba(255,255,255,.35),0 0 0 4px rgba(177,138,74,.9),0 10px 24px rgba(0,0,0,.24)!important;font-size:34px}
+.nm{font-size:29px!important;letter-spacing:.16em!important;text-shadow:none!important}
+.sbt{color:#d7d1c3!important;letter-spacing:.08em}
+.pills span{background:transparent!important;border:1px solid rgba(213,189,130,.65)!important;border-radius:2px!important;color:#eee6d6!important;box-shadow:none!important;min-width:90px!important}
+.goal{color:#cfc7b7!important}
+.dm{gap:7px}
+.dm button{width:58px!important;height:58px!important;clip-path:none!important;border:1px solid rgba(213,189,130,.5)!important;background:rgba(255,255,255,.045)!important;color:#e8dfcf!important;filter:none!important;box-shadow:none}
+.dmb:before,.dm button:before{display:none!important}
+.dm button:hover{background:rgba(213,189,130,.12)!important;transform:translateY(-2px)}
+.txt{background:rgba(255,253,247,.92)!important;border:0!important;border-left:3px solid var(--gold)!important;border-radius:3px!important;box-shadow:0 8px 28px rgba(65,53,37,.10)!important;color:var(--ink)!important}
+.txt b{color:var(--jade)!important;border-bottom:1px solid var(--line)!important;font-size:19px!important;letter-spacing:.12em}
+.txt p{color:var(--ink2)}
+#lifePanel{background:rgba(247,242,231,.82)!important;border:1px solid var(--line)!important;border-radius:3px!important;box-shadow:none!important}
+.lpTop{color:var(--ink2)}
+.lpTrack{background:#ded6c8!important}.lpTrack i{background:linear-gradient(90deg,var(--gold),var(--gold2))!important}
+#nx{width:92px!important;height:92px!important;background:var(--jade)!important;border:1px solid var(--gold2)!important;border-radius:50%!important;box-shadow:0 0 0 5px var(--paper),0 0 0 6px var(--gold),0 12px 24px rgba(35,49,44,.25)!important;font-size:21px!important;text-shadow:none!important}
+#nx:hover{transform:translateY(-3px) scale(1.02)}
+footer{background:var(--jade)!important;border-top:1px solid var(--gold)!important;border-radius:0!important;box-shadow:none!important;padding:38px 26px 16px!important}
+.tr{background:rgba(0,0,0,.23)!important;box-shadow:none!important}.tr i{box-shadow:none!important;background:linear-gradient(90deg,#b28b4d,#d8c28d)!important;color:#30291f!important}
+.ic{background:rgba(255,255,255,.09)!important;border:1px solid rgba(255,255,255,.15)}
+.dmb{width:76px!important;height:76px!important;clip-path:none!important;border-radius:50%!important;border:1px solid var(--gold2)!important;background:transparent!important;color:#eee6d6!important;box-shadow:none!important}
+.dmb:hover{background:rgba(213,189,130,.1)!important}
+#sh{background:rgba(28,29,25,.68)!important;backdrop-filter:blur(8px)!important}
+.cd{background:linear-gradient(160deg,#fbf7ee,#eee5d4)!important;border:1px solid rgba(177,138,74,.55)!important;border-radius:4px!important;box-shadow:0 25px 70px rgba(20,22,19,.34)!important}
+.cd h2{color:var(--jade)!important;letter-spacing:.22em!important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,var(--gold))!important}
+.opt{background:rgba(52,74,67,.045)!important;border:1px solid var(--line)!important;border-radius:3px!important;color:var(--ink)!important}
+.opt:hover:not(:disabled){background:var(--jade)!important;color:#f6f0e4!important;box-shadow:0 7px 18px rgba(31,48,42,.15)!important;transform:translateX(2px)}
+.opt small{color:#817567!important}.opt:hover small{color:#ddd5c7!important}
+.row{border-bottom:1px solid rgba(83,68,49,.14)!important}
+.seal{border:2px solid var(--red)!important;color:var(--red)!important;border-radius:1px!important}
+@media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(880px,calc(100% - 150px))!important}.txt{margin-top:18px!important}.cd{max-width:720px!important}}
+@media(max-width:699px){header{padding:18px 18px 12px!important}.txt{margin-left:16px!important;margin-right:16px!important}.lifePanel{margin-left:16px!important;margin-right:16px!important}footer{padding-left:16px!important;padding-right:16px!important}}
+
+/* ===== v9.6 全面重新配色：霧米白 × 鼠尾草 × 淡藍灰 × 古金 ===== */
+:root{
+  --s1:#eef2ed !important; --s2:#f8f4ea !important;
+  --ink:#3d4944 !important; --ink2:#69736d !important;
+  --pn:#728d82 !important; --pn2:#5d766d !important;
+  --cd:#fbfaf5 !important; --gd:#b99a62 !important; --mute:#7b8781 !important;
+  --m1:#dce7df !important; --m2:#c9d9d1 !important; --m3:#b4c9bf !important;
+  --sun:#f4dfad !important;
+  --paper:#fbfaf5 !important; --paper2:#f0eadc !important;
+  --deep:#61796f !important; --accent:#b99a62 !important;
+  --red:#a96d63 !important; --line:rgba(94,111,102,.18) !important;
+  --shadow:0 14px 38px rgba(74,88,81,.12) !important;
+}
+html,body,body{background:#e9eee9 !important;color:#3d4944 !important}
+body{background:
+  radial-gradient(circle at 12% 6%,rgba(255,255,255,.9),transparent 30%),
+  radial-gradient(circle at 88% 88%,rgba(205,219,210,.55),transparent 34%),
+  linear-gradient(135deg,#e9eee9,#f7f3e9) !important;
+}
+#app{background:rgba(250,249,244,.96) !important;box-shadow:0 22px 65px rgba(76,88,82,.16) !important}
+#app:before{border:1px solid rgba(185,154,98,.18) !important}
+header{background:linear-gradient(135deg,#e7eee9 0%,#f7f2e7 100%) !important;border-bottom:1px solid rgba(120,139,129,.25) !important;padding:20px 26px 14px !important}
+header:after{background:linear-gradient(90deg,transparent,#b99a62,transparent) !important;opacity:.45 !important}
+.av{background:linear-gradient(145deg,#b6c8bf,#789187) !important;box-shadow:0 0 0 1px rgba(255,255,255,.9),0 0 0 4px rgba(185,154,98,.55),0 9px 22px rgba(80,98,90,.18) !important;color:#fff !important}
+.nm{color:#43544d !important;text-shadow:none !important}
+.sbt{color:#718078 !important}
+.pills span{background:#f9f7ef !important;color:#5e6d65 !important;border:1px solid rgba(185,154,98,.55) !important;border-radius:12px !important;box-shadow:0 3px 10px rgba(80,95,88,.06) !important}
+.goal{color:#6e7b74 !important;text-shadow:none !important}
+.dm button{background:#f8f6ef !important;color:#64736b !important;border:1px solid rgba(112,136,124,.3) !important;border-radius:14px !important;box-shadow:0 5px 14px rgba(70,88,80,.07) !important}
+.dm button:hover{background:#e7eee9 !important;color:#526960 !important}
+.dmb,.dm button{clip-path:none !important}
+.dmb:before,.dm button:before{display:none !important}
+.txt{background:rgba(255,254,249,.95) !important;color:#46534d !important;border:1px solid rgba(120,139,129,.2) !important;border-left:4px solid #b99a62 !important;border-radius:14px !important;box-shadow:0 9px 28px rgba(74,89,82,.08) !important}
+.txt b{color:#617a70 !important;border-bottom:1px solid rgba(185,154,98,.3) !important}
+.txt p{color:#69756f !important}
+#lifePanel{background:rgba(248,247,241,.92) !important;border:1px solid rgba(120,139,129,.18) !important;border-radius:14px !important;box-shadow:0 5px 18px rgba(74,89,82,.06) !important}
+.lpTop{color:#6b7771 !important}
+.lpTrack{background:#dfe5e0 !important}
+.lpTrack i{background:linear-gradient(90deg,#829b90,#c1a36c) !important}
+.lpAct{background:#edf1ed !important;color:#738078 !important;border:1px solid rgba(120,139,129,.12) !important}
+.lpAct strong{color:#53675e !important}
+#nx{background:linear-gradient(145deg,#829b90,#627d71) !important;color:#fff !important;border:2px solid #d2b77d !important;box-shadow:0 0 0 5px #fbfaf5,0 0 0 6px rgba(185,154,98,.6),0 12px 24px rgba(72,91,82,.18) !important;text-shadow:none !important}
+#nx:hover{filter:brightness(1.04) !important}
+footer{background:linear-gradient(135deg,#dfe9e3,#e9eee9) !important;border-top:1px solid rgba(120,139,129,.25) !important;border-radius:24px 24px 0 0 !important;box-shadow:0 -8px 24px rgba(74,89,82,.08) !important;padding:38px 24px 15px !important}
+.b{color:#65736c !important}.ic{background:#f8f7f1 !important;color:#6c7b73 !important;border:1px solid rgba(120,139,129,.18) !important}
+.tr{background:#d8e0db !important;box-shadow:inset 0 1px 2px rgba(70,85,78,.08) !important}.tr i{background:linear-gradient(90deg,#819a8e,#c1a36b) !important;color:#fff !important;box-shadow:none !important}
+.dmb{background:#f7f5ed !important;color:#65756c !important;border:1px solid rgba(120,139,129,.28) !important;border-radius:15px !important;box-shadow:0 5px 14px rgba(70,88,80,.07) !important}
+.dmb:hover{background:#e5ede8 !important;color:#536960 !important}
+#sh{background:rgba(93,108,100,.26) !important;backdrop-filter:blur(9px) !important}
+.cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;border:1px solid rgba(185,154,98,.4) !important;border-radius:18px !important;box-shadow:0 25px 65px rgba(69,82,76,.2) !important;color:#48544f !important}
+.cd h2{color:#60786e !important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,#b99a62) !important}
+.opt{background:#f4f6f2 !important;border:1px solid rgba(111,132,121,.2) !important;border-radius:12px !important;color:#4d5a54 !important}
+.opt:hover:not(:disabled){background:#718b80 !important;color:#fff !important;box-shadow:0 7px 18px rgba(80,102,92,.15) !important}
+.opt small{color:#8a948e !important}.opt:hover small{color:#edf3ef !important}
+.row{border-bottom:1px solid rgba(100,120,110,.13) !important}
+.seal{border-color:#b67b70 !important;color:#a66e64 !important}
+/* 強制覆蓋深色系統偏好，避免瀏覽器自動把整個遊戲變黑 */
+@media (prefers-color-scheme:dark){
+  html,body{background:#e9eee9 !important;color:#3d4944 !important}
+  .txt{background:rgba(255,254,249,.95) !important;color:#46534d !important}
+  .cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;color:#48544f !important}
+}
+:root[data-theme="dark"]{--s1:#eef2ed !important;--s2:#f8f4ea !important;--ink:#3d4944 !important;--cd:#fbfaf5 !important}
+:root[data-theme="dark"] body{background:#e9eee9 !important;color:#3d4944 !important}
+:root[data-theme="dark"] .txt{background:rgba(255,254,249,.95) !important;color:#46534d !important}
+:root[data-theme="dark"] .cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;color:#48544f !important}
+@media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(880px,calc(100% - 150px))!important}}
+
+</style></head><body><section id="seo-intro" aria-label="遊戲介紹" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+<h1>浮生一夢・古代人生模擬器</h1>
+<p>免費線上古代人生模擬遊戲。從出生開始，你可以發展文才、武藝、財富、聲望與品德，選擇工作與仕途，經歷婚姻、孩子、房產、家族與隨機事件。</p>
+<p>遊戲特色包括屬性天賦、性格、好感度、家族系統、房產升級、婚姻選擇、孩子培養、隨機任務、成就、隱藏結局，以及死亡後的家族繼承與多世代人生。</p>
+<p>支援手機與電腦瀏覽器，開啟網頁即可遊玩。</p>
+</section>
+<div id="app"><svg class="bg" viewBox="0 0 400 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><circle class="sun" cx="300" cy="250" r="48" opacity=".85"/><g class="cl"><ellipse cx="90" cy="210" rx="60" ry="12"/><ellipse cx="130" cy="200" rx="40" ry="11"/><ellipse cx="320" cy="330" rx="70" ry="12"/><ellipse cx="60" cy="380" rx="55" ry="10"/></g><path d="M110 150q6-6 12 0q6-6 12 0M150 128q5-5 10 0q5-5 10 0" stroke="#5d6a9a" stroke-width="2" fill="none"/><path class="m1" d="M0 430Q60 350 120 410T240 370T400 420V700H0Z"/><path class="m2" d="M0 480Q90 400 170 470T330 430T400 470V700H0Z"/><path class="m3" d="M64 470h16l-2-9h-12zM66 461h12l-2-9h-8zM68 452h8l-1-7h-6zM72 445v-9M0 540Q100 480 200 530T400 515V700H0Z"/></svg>
+<header><div class="r1"><div class="av" id="av"></div><div class="mid"><div class="nm" id="nm"></div><div class="sbt" id="sb"></div></div>
+<div class="pills"><span>🪙 <b id="coin">0</b></span><span id="prov"></span></div></div>
+<div class="r2"><button class="goal" onclick="goals()">📜<br>目標</button>
+<div class="dm"><button onclick="personMenu()">👤<br>人物</button><button onclick="familyMenu()">🏠<br>家族</button><button onclick="menu()">☰<br>選單</button></div></div></header>
+<div class="txt" id="txt"></div>
+<div id="lifePanel">
+  <div class="lpTop"><span id="lpTitle">人生旅途</span><span id="lpAge">0 / 80</span></div>
+  <div class="lpTrack"><i id="lpBar"></i></div>
+  <div class="lpActs"><div class="lpAct">今年行動<strong id="lpAct">0 / 2</strong></div><div class="lpAct">人生評分<strong id="lpScore">0</strong></div><div class="lpAct">目標<strong id="lpGoal">0 / 10</strong></div></div>
+</div>
+<div class="sp"></div>
+<button id="nx" onclick="nextYear()">下一年</button>
+<footer><div id="bars"></div><div class="cl2"><div class="dn"><button class="dmb" onclick="window.openEstate()"><b>🏠</b>家產</button><button class="dmb" onclick="acts('g')"><b>🎎</b>活動</button></div><div><button class="dmb" id="stg" onclick="acts('s')"></button><button class="dmb" onclick="kin()"><b>👥</b>親友</button></div></div></footer>
+</div><div id="sh"></div>
+<script>
+const K=[["hp","體"],["int","智"],["mar","武"],["vir","德"],["gold","財"],["fame","名"]];
+const FAM=[
+ {n:"農家",d:"世代耕田，粗茶淡飯。",s:{hp:7,int:3,mar:4,vir:6,gold:2,fame:1}},
+ {n:"商賈",d:"家中開著綢緞莊，算盤聲不斷。",s:{hp:5,int:5,mar:2,vir:3,gold:8,fame:3}},
+ {n:"書香門第",d:"滿屋藏書，父親是個落第秀才。",s:{hp:4,int:8,mar:2,vir:6,gold:4,fame:4}},
+ {n:"將門之後",d:"祖上隨軍征戰，院中擺著兵器架。",s:{hp:7,int:4,mar:8,vir:5,gold:4,fame:5}}
+];
+const SUR=["李","王","張","趙","陸","沈","蕭","顧","柳","孟"],GIV=["昭","遠","清","衡","安","硯","書","霆","寧","川","瑜","遙"];
+const E=[
+{a:[1,2],t:"抓週",x:"一周歲宴席擺開，祖母、父母與親族圍在席旁。紅布上擺著毛筆、書卷、算盤、銅錢、木劍、印章、藥草、琴弦、玉佩與小小的農具，眾人屏息等你伸手。",c:[
+ ["抓起毛筆",{int:2,fame:1},{ok:"你攥著毛筆不肯放手，父親當眾說要供你讀書。",okfx:{int:1,vir:1},no:"毛筆跌落在席上，親族仍笑稱你文氣十足。",nofx:{mood:1}}],
+ ["抓起書卷",{int:2,vir:1},{ok:"你把書卷抱在懷裡，祖父當即取字紙記下此事。",okfx:{int:1,fame:1},no:"書卷被你扯破一角，眾人鬨堂大笑。",nofx:{mood:1}}],
+ ["抓起算盤",{int:1,gold:1},{ok:"你兩手撥弄算珠，商賈親族眼睛一亮。",okfx:{gold:2,chr:1},no:"算珠滾了一地，父親笑著說你將來也是個會算帳的。",nofx:{chr:1}}],
+ ["抓起銅錢",{gold:2},{ok:"你把銅錢緊緊攥住，家人說你一生不愁衣食。",okfx:{gold:2,chr:1},no:"銅錢落地叮噹作響，反倒惹得大家哈哈大笑。",nofx:{mood:1}}],
+ ["抓起木劍",{mar:2},{ok:"你揮著木劍不肯撒手，將門親族拍手叫好。",okfx:{mar:2,fame:1},no:"木劍太重，你一屁股坐倒，眾人仍說你膽子不小。",nofx:{mood:1}}],
+ ["抓起小印章",{fame:1,int:1},{ok:"你把印章攥得牢牢的，父親笑說將來或掌一方印信。",okfx:{fame:2,int:1},no:"印章被你丟到一旁，母親暗笑你不愛拘束。",nofx:{mood:1}}],
+ ["抓起藥草",{int:1,vir:1},{ok:"你對苦澀藥草不嫌棄，旁人說你與醫者有緣。",okfx:{vir:2,int:1},no:"你聞到藥味便皺眉，大家笑你嘴刁。",nofx:{mood:-1}}],
+ ["抓起琴弦",{chr:2,int:1},{ok:"你撥弄琴弦，竟讓席間安靜片刻。",okfx:{chr:2,fame:1},no:"琴弦發出刺耳一聲，你嚇得縮回手。",nofx:{mood:-1}}],
+ ["抓起玉佩",{fame:1,chr:2},{ok:"你緊握玉佩，長輩說你氣度端正、將來有貴人相助。",okfx:{fame:2,chr:1},no:"玉佩被你甩到席邊，父親趕忙接住。",nofx:{mood:1}}],
+ ["抓起小農具",{hp:1,vir:1},{ok:"你抓著小木鋤往地上敲，農家親族笑得合不攏嘴。",okfx:{hp:1,vir:2},no:"小木鋤太沉，你很快便鬆手。",nofx:{mood:1}}]
+]},
+{a:[5,10],t:"啟蒙",x:"村口先生開了學堂，但你更想去河邊摸魚。",c:[
+ ["乖乖讀書",{int:2,vir:1},"先生誇你勤勉。"],["偷偷摸魚",{hp:1,int:-1},"曬得黝黑，挨了一頓板子。"],["拜師習武",{mar:2,hp:1},"師父說你根骨不錯。"]]},
+{a:[10,40],t:"災荒",x:"大旱三月，鄰里斷糧，門外有流民叩門。",c:[
+ ["分出半袋米",{vir:3,gold:-2},"你餓了幾天，卻贏得了人心。"],["緊閉門戶",{gold:1,vir:-3},"家中無虞，但你夜裡睡得不安穩。"],["帶人尋水源",{mar:1,fame:2,hp:-1},"你找到一處山泉，全村感念。"]]},
+{a:[13,20],t:"遇見異人",x:"山中遇一老者，自稱雲遊道人，願傳你一門本事。",c:[
+ ["學醫術",{int:2,vir:2},"從此識得百草。"],["學劍法",{mar:3},"三年苦練，劍氣初成。"],["學相術",{int:1,gold:2,fame:1},"你學會察言觀色，在市井如魚得水。"]]},
+{a:[16,26],t:"科舉",q:()=>!S.army&&!S.rank,x:"鄉試在即，你已準備多年。",c:[
+ ["閉門苦讀",{int:2,hp:-2},{need:{int:8},ok:"金榜題名，一朝成名天下知。",okfx:{fame:5,gold:2,rank:1},no:"名落孫山，你悶悶不樂。",nofx:{vir:1}}],
+ ["重金疏通關節",{gold:-5},{ok:"榜上有名，但此事成了你心頭的刺。",okfx:{fame:3,vir:-3,rank:1}}],
+ ["棄考從軍",{mar:2},{ok:"你投身邊軍，在風沙中磨出一身膽氣。",okfx:{mar:2,hp:-1,fame:1,enlist:1}}]]},
+{a:[18,35],t:"邊關告急",x:"北狄入寇，朝廷徵召壯丁。",c:[
+ ["應召從軍",{mar:1,enlist:1},{need:{mar:6},ok:"你屢立戰功，升為校尉。",okfx:{fame:4,mar:2,gold:1,mrank:2},no:"你在亂軍中負傷，僥倖撿回一命。",nofx:{hp:-4,mar:1}}],
+ ["輸糧助軍",{gold:-3},{ok:"朝廷嘉獎你的義舉。",okfx:{fame:2,vir:2}}],
+ ["避走他鄉",{},{ok:"你保住了性命，卻背上了逃兵之名。",okfx:{vir:-2,fame:-2}}]]},
+{a:[20,40],t:"街頭奇遇",x:"元宵燈會上，一位女子的紙燈被風吹走，她望向你。",c:[
+ ["幫她追燈",{},{ok:"你們交換了姓名，後來成為至交。",okfx:{vir:1,hp:1}}],
+ ["作詩相贈",{},{need:{int:6},ok:"一首詩傳遍全城。",okfx:{fame:2},no:"詩句平庸，惹來一陣笑聲。",nofx:{fame:-1}}],
+ ["低頭走開",{},{ok:"你錯過了，只在夜裡想起。",okfx:{}}]]},
+{a:[22,45],t:"商機",x:"有人邀你合夥販運絲綢，利潤豐厚，風險不小。",c:[
+ ["傾囊投資",{gold:-3},{need:{int:5},ok:"商隊平安歸來，大賺一筆。",okfx:{gold:7},no:"商隊遇盜，血本無歸。",nofx:{gold:-1}}],
+ ["小額試水",{gold:-1},{ok:"賺了些零用錢。",okfx:{gold:3}}],
+ ["婉拒",{},{ok:"你守著本分，日子平靜。",okfx:{hp:1}}]]},
+{a:[25,50],t:"朝堂風波",q:()=>S.rank>=1&&!S.army,x:"上官貪墨之事被你撞破，他私下召見你。",c:[
+ ["上書揭發",{},{need:{vir:6},ok:"你扳倒了貪官，名動朝野。",okfx:{fame:4,vir:2},no:"證據不足，你被貶往偏遠州縣。",nofx:{fame:-3,gold:-2}}],
+ ["收下好處",{},{ok:"你富了起來，但夜夜心驚。",okfx:{gold:5,vir:-4}}],
+ ["辭官歸隱",{},{ok:"你掛冠而去，山水間自在。",okfx:{hp:2,fame:-1,vir:1}}]]},
+{a:[30,60],t:"收徒",x:"一個衣衫單薄的少年跪在門外，求你收留。",c:[
+ ["收下並傾囊相授",{gold:-1},{ok:"多年後他成了棟樑，常來探望你。",okfx:{vir:3,fame:2}}],
+ ["給些盤纏打發",{gold:-1},{ok:"少年叩了三個頭離去。",okfx:{vir:1}}],
+ ["關門謝客",{},{ok:"門外的哭聲漸漸遠去。",okfx:{vir:-2}}]]},
+{a:[35,65],t:"瘟疫",x:"疫病蔓延，城中十室九空。",c:[
+ ["留下救治",{hp:-2},{need:{int:6},ok:"你配出藥方，救活了許多人。",okfx:{vir:4,fame:3},no:"你力有不逮，自己也染了病。",nofx:{hp:-4,vir:2}}],
+ ["攜家出城",{},{ok:"你避過一劫，回頭看見城門緊閉。",okfx:{vir:-1}}],
+ ["閉戶祈禱",{},{ok:"你熬過了這一季。",okfx:{hp:-1}}]]},
+{a:[45,80],t:"晚年",x:"鬢髮已白，你坐在院裡曬太陽，想起往事。",c:[
+ ["寫下回憶錄",{},{ok:"你一筆一畫寫完平生。",okfx:{int:1,fame:2}}],
+ ["散盡家財濟貧",{gold:-4},{ok:"鄉人為你立了一塊功德碑。",okfx:{vir:4,fame:2}}],
+ ["雲遊四方",{},{ok:"你走過許多山水，把名字留在了路上。",okfx:{hp:-1,int:1}}]]}
+,
+{a:[18,30],t:"提親",q:()=>!S.spouse,x:"媒人上門，說起一戶人家的姑娘，賢淑端莊。",c:[
+ ["應下婚事",{wed:1,vir:1},"洞房花燭，從此有了牽掛。"],["要先見一面",{wed:1,hp:1},"元宵偶遇，彼此都紅了臉，終成眷屬。"],["先立業再成家",{fame:1},"你婉拒了，專心奔前程。"]]},
+{a:[28,42],t:"遲來的姻緣",q:()=>!S.spouse,x:"年過而立，鄰里都替你著急，有位寡居的女子常來幫忙縫補。",c:[
+ ["託人提親",{wed:1,vir:1},"她點了頭，家裡總算有了煙火氣。"],["繼續獨身",{int:1},"你覺得一個人也自在。"]]},
+{a:[22,40],t:"添丁",q:()=>S.spouse&&S.kids<1,x:"妻子產下一個孩子，產婆在門外報喜。",c:[
+ ["親自教養",{kid:1,int:1},"你教他識字，也教他做人。"],["重金請名師",{kid:1,gold:-2,fame:1},"他進步神速，你頗為得意。"],["放任長大",{kid:1,hp:1},"孩子在田野間瘋跑，倒也健壯。"]]},
+{a:[28,48],t:"再添新丁",q:()=>S.spouse&&S.kids==1,x:"家中又添一口，飯桌上更熱鬧了。",c:[
+ ["一視同仁",{kid:1,vir:2},"兄妹和睦，家風漸成。"],["偏愛長子",{kid:1,vir:-1},"次子沉默寡言。"]]},
+{a:[35,60],t:"妻子病重",q:()=>S.spouse,x:"結髮之妻臥病不起，郎中搖頭。",c:[
+ ["傾家延醫",{gold:-3},{need:{int:5},ok:"你翻遍醫書，配合良方，將她救了回來。",okfx:{vir:2,hp:-1},no:"她終究沒熬過去，你默默守了三天。",nofx:{hp:-2,vir:2,lose:1}}],
+ ["順其自然",{},{ok:"她安靜離世，你痛悔當時沒多陪陪她。",okfx:{vir:-1,hp:-1,lose:1}}]]},
+{a:[45,70],t:"兒女前程",q:()=>S.kids>=1,x:"孩子長大了，來問你該走哪條路。",c:[
+ ["讓孩子讀書應考",{gold:-1,fame:1},{need:{int:5},ok:"他中了舉，你比自己中舉還高興。",okfx:{fame:3,vir:1}}],
+ ["讓孩子經商",{gold:-1},{ok:"他很會做生意，家業添了一份。",okfx:{gold:3}}],
+ ["隨孩子自己",{},{ok:"他選了個你想不到的行當，卻過得很好。",okfx:{vir:1}}]]},
+{a:[20,45],t:"縣衙事務",q:()=>S.rank==1&&!S.army,x:"你初入縣衙，堆積的案卷無人處理。",c:[
+ ["徹夜清理",{hp:-1,int:1},{ok:"你理清積案，縣令對你另眼相看。",okfx:{fame:3}}],
+ ["與同僚打好關係",{gold:-1},{ok:"你在衙門裡有了人脈。",okfx:{fame:1,gold:1}}],
+ ["敷衍了事",{},{ok:"案卷越堆越高。",okfx:{vir:-1}}]]},
+{a:[28,55],t:"考績",rep:1,q:()=>S.rank>=1&&S.rank<=3&&!S.army,x:"三年一度的考績到了，吏部派人巡查。",c:[
+ ["以政績說話",{},{need:{fame:6,vir:5},ok:"你政績卓著，升任一級。",okfx:{rank:1,fame:2},no:"政績平平，原地踏步。",nofx:{}}],
+ ["送禮巴結上官",{gold:-3},{ok:"上官替你說了好話，你升了官，卻覺得手髒。",okfx:{rank:1,vir:-2}}],
+ ["安於現狀",{},{ok:"你守著本職，不求聞達。",okfx:{hp:1}}]]},
+{a:[40,65],t:"黨爭",rep:1,q:()=>S.rank>=2&&!S.army,x:"朝中兩派相爭，各自拉攏你。",c:[
+ ["投靠得勢一派",{},{ok:"你得了勢，也得罪了人。",okfx:{rank:1,vir:-2}}],
+ ["保持中立",{},{need:{int:7},ok:"兩邊都不得罪，你穩坐其位。",okfx:{fame:2},no:"兩邊都不信你，被邊緣化。",nofx:{fame:-2}}],
+ ["上書勸和",{},{need:{vir:7,fame:5},ok:"你的奏疏感動了朝野。",okfx:{fame:4,vir:2},no:"奏疏石沉大海。",nofx:{fame:-1}}]]},
+{a:[50,70],t:"入閣之議",q:()=>S.rank>=3&&!S.army,x:"天子欲拜你為相，群臣議論紛紛。",c:[
+ ["欣然接受",{},{need:{fame:8,int:7},ok:"你登上相位，位極人臣。",okfx:{rank:2,fame:3,hp:-2},no:"群臣反對，此事作罷。",nofx:{fame:-1}}],
+ ["再三推辭",{},{ok:"你的謙退傳為美談。",okfx:{vir:2,fame:1}}]]},
+{a:[18,30],t:"察舉孝廉",d:[0],x:"鄉里推舉孝廉，縣令派人來訪。",c:[
+ ["謙讓不受",{vir:1},"鄉人更敬重你。"],["欣然就道",{fame:1},{need:{vir:6},ok:"你被舉為孝廉，入郡為吏。",okfx:{rank:1,fame:2},no:"有人說你德行有虧，此事作罷。",nofx:{fame:-1}}]]},
+{a:[18,40],t:"長安詩會",d:[1],x:"曲江宴上，才子雲集，眾人邀你賦詩。",c:[
+ ["當場賦詩",{},{need:{int:7},ok:"一詩驚四座，名傳京城。",okfx:{fame:4},no:"思路卡住，只好以酒遮羞。",nofx:{fame:-1}}],
+ ["與友對飲",{gold:-1},{ok:"你結交了幾位知己。",okfx:{vir:1,hp:-1}}]]},
+{a:[30,55],t:"安史之亂",d:[1],x:"漁陽鼙鼓動地來，長安陷落，百姓四散逃亡。",c:[
+ ["隨皇室南逃",{},{ok:"你保住了性命，一路顛沛。",okfx:{hp:-2,gold:-2}}],
+ ["組織鄉勇",{},{need:{mar:6},ok:"你護住一方鄉里。",okfx:{fame:4,mar:1},no:"鄉勇潰散，你負傷逃離。",nofx:{hp:-3}}],
+ ["隱居山林",{},{ok:"你避開了亂世，與山林為伴。",okfx:{hp:1,fame:-1}}]]},
+{a:[20,50],t:"汴京夜市",d:[2],x:"夜市燈火通明，店鋪林立，你萌生做生意的念頭。",c:[
+ ["開間小茶坊",{gold:-1},{ok:"茶坊生意興隆。",okfx:{gold:4,fame:1}}],
+ ["寫話本賣文",{},{need:{int:6},ok:"話本大賣，名聲遠播。",okfx:{gold:2,fame:3}}],
+ ["只逛不買",{},{ok:"你看了個熱鬧。",okfx:{hp:1}}]]},
+{a:[20,45],t:"倭寇侵擾",d:[3],x:"倭寇登岸燒殺，海邊村落求援。",c:[
+ ["投入戚家軍",{},{need:{mar:7},ok:"你隨軍殺敵，立下赫赫戰功。",okfx:{fame:4,mar:2,enlist:1,mrank:2},no:"你負傷而歸。",nofx:{hp:-3,mar:1}}],
+ ["捐資築堡",{gold:-3},{ok:"堡壘築成，鄉里安然。",okfx:{vir:3,fame:2}}],
+ ["內遷避禍",{},{ok:"你遠離海岸，生活重新開始。",okfx:{gold:-1}}]]},
+{a:[18,45],t:"山路遇劫",x:"趕路時，林中跳出幾個持刀的漢子。",c:[
+ ["拔腿就跑",{},{ok:"你跑得快，只丟了行李。",okfx:{gold:-1}}],
+ ["與之周旋",{},{need:{mar:6},ok:"你擊退了他們，在鄉里傳開了。",okfx:{fame:2,mar:1},no:"你被打傷，錢財盡失。",nofx:{hp:-3,gold:-2}}],
+ ["破財消災",{gold:-2},{ok:"他們放了你一馬。",okfx:{}}]]},
+{a:[18,35],t:"義結金蘭",x:"酒館裡結識一位豪爽的兄弟，非要與你結拜。",c:[
+ ["斬雞頭燒黃紙",{},{ok:"多年後他在危難中救過你一命。",okfx:{vir:2,fame:1}}],
+ ["婉拒",{},{ok:"各自走各自的路。",okfx:{}}]]},
+{a:[35,70],t:"重病",x:"一場大病，讓你在床上躺了數月。",c:[
+ ["遍求良醫",{gold:-2},{ok:"你慢慢康復了。",okfx:{hp:3}}],
+ ["靜養調息",{},{need:{hp:6},ok:"你靠底子挺過來了。",okfx:{hp:1},no:"病勢拖延，身體大不如前。",nofx:{hp:-4}}]]}
+,
+{a:[3,5],t:"牙牙學語",x:"你開始學著說話，家中長輩每天都逗你開口。",c:[["學著叫人",{vir:1,chr:1},"你很快學會稱呼長輩，家中笑聲不斷。"],["只愛玩耍",{mood:1,hp:1},"你滿院子跑，大家都說你活潑。"],["盯著書頁",{int:1},"你對桌上的書頁格外好奇。"]]},
+{a:[6,9],t:"私塾初學",x:"你正式進入私塾，先生教你認字、習禮，也教你如何與同窗相處。",c:[["認真識字",{int:2},"你一天比一天認得更多字。"],["與同窗遊戲",{chr:1,mood:1},"你結交了幾個玩伴，學堂也不再陌生。"],["偷懶挨罰",{int:-1,vir:1},"先生敲了敲你的書桌，你只好收起玩心。"]]},
+{a:[8,12],t:"鄉野玩伴",x:"放學後，你和鄰里孩子在田埂、河邊玩耍，開始懂得什麼叫朋友。",c:[["一起幫忙",{vir:1,hp:1},"你們互相照應，感情越來越好。"],["比試跑跳",{mar:1,hp:1},"你跑得飛快，身子也越來越結實。"],["坐在樹下讀書",{int:1,mood:1},"你少了些玩樂，卻多懂了幾分道理。"]]},
+{a:[10,14],t:"第一次幫家裡做事",x:"你年紀漸長，家人開始讓你做一些力所能及的家務。",c:[["下田幫忙",{hp:1,vir:1},"你第一次真正體會到一家人的辛苦。"],["幫忙算帳",{int:1,gold:1},"你撥著算盤，漸漸學會家中收支。"],["照顧弟妹",{vir:2,chr:1},"長輩對你的懂事很是欣慰。"]]},
+{a:[12,15],t:"少年試膽",x:"幾名同窗約你到城外探險，第一次真正離開熟悉的街坊。",c:[["結伴前往",{mar:1,chr:1},"你學會了判斷路況，也更加獨立。"],["留在家中讀書",{int:2},"你沒有冒險，反而把心思放在學業上。"],["勸大家不要胡來",{vir:2,fame:1},"大家雖然失望，卻開始佩服你的穩重。"]]}
+
+];
+
+K.push(["mood","心情"],["chr","魅力"]);
+const DY=[{n:"漢",s:{vir:1},d:"天下初定，察舉入仕。"},{n:"唐",s:{int:1,fame:1},d:"盛世長安，詩酒風流。"},{n:"宋",s:{gold:1,mar:-1},d:"商業繁榮，重文輕武。"},{n:"明",s:{mar:1},d:"海禁嚴厲，倭患未平。"}];
+const RK=["白身","縣尉","知縣","知府","侍郎","宰相"],SN=["嬰兒","孩童","少年","青年","壯年","老年"],AV=["👶","🧒","🧑","👨","🧔","👴"];
+const PV=["黔省德銅府","蜀州成都府","吳郡蘇州府","秦川長安府","楚地江陵府","燕北順天府"],NH=["皓庭","永寧","天佑","承平","景和"];
+const FJ=["務農","經商","教書","從軍"],FM=["織布","打理店鋪","操持家務","縫補軍衣"];
+const RF="典史,主簿,縣丞,縣尉,縣令,知縣,通判,員外郎,同知,知州,知府,道台,布政使,侍郎,巡撫,尚書,大學士,宰相".split(","),RP="從九品,正九品,從八品,正八品,從七品,正七品,從六品,正六品,從五品,正五品,從四品,正四品,從三品,正三品,從二品,正二品,從一品,正一品".split(","),MF="士卒,什長,隊正,伍長,旅帥,營正,校尉,都尉,中郎將,偏將,副將,將軍,驃騎將軍,大將軍,大元帥".split(","),MS=[0,0,3,6,9,11,13],JSU=["","（資深）","（首席）"];
+const cf=()=>S.rank?(S.rank<5?(S.rank-1)*4:16)+(S.rs||0):-1,mf=()=>S.mrank?MS[S.mrank]+(S.ms||0):-1;
+const setCF=f=>{if(f<0){S.rank=0;S.rs=0;return}f=Math.min(17,f);S.rank=f<16?Math.floor(f/4)+1:5;S.rs=f<16?f%4:f-16;S.job=0;S.jl=0};
+const setMF=f=>{f=Math.max(0,Math.min(14,f));let t=6;while(MS[t]>f)t--;S.mrank=t;S.ms=f-MS[t]};
+const cn=()=>RF[cf()],mn=()=>MF[mf()],cnp=()=>cn()+"（"+RP[cf()]+"）",mnp=()=>mn()+(MKP[S.mrank]?"（"+MKP[S.mrank]+"）":""),jn=()=>JB[S.job-1].L[S.jl-1]+JSU[S.js||0];
+const C=(t,l,i,w)=>({t,l,i,w}),FJC=[C(0,0,0,"務農"),C(3,4,0),C(3,4,3),C(2,7)],FMC=[C(3,4,1),C(3,4,0),C(0,0,0,"操持家務"),C(3,4,1)];
+const genC=f=>{const r=Math.random();return!f&&r<.1?C(1,1):!f&&r<.22?C(2,1):r<.8?C(3,1,R(6)):C(0,0,0,P(["務農","操持家務","幫工","打理田產"]))};
+const cj=c=>!c?"":c.t==1?RF[c.l-1]+"（"+RP[c.l-1]+"）":c.t==2?MF[c.l-1]:c.t==3?JB[c.i].L[Math.ceil(c.l/3)-1]+JSU[(c.l-1)%3]:c.w;
+const grow=(c,a)=>{if(!c||!c.t||a<16||a>62)return 0;const mx=[0,18,15,15][c.t];if(c.l<mx&&Math.random()<Math.max(.025,.1-.005*c.l)){c.l++;return 1}if(Math.random()<.04){if(c.l>1){c.l--;return -1}if(c.t<3){c.t=0;c.l=0;c.w="賦閒在家";return -2}}return 0};
+const fm=(w,c,r)=>r==1?`${w}晉為「${cj(c)}」。`:r==-1?`${w}被降為「${cj(c)}」。`:`${w}被革去職務，賦閒在家。`;
+function offYear(){
+ if(S.rank&&!S.army){S.rx=(S.rx||0)+1;if(S.rx>=3){S.rx=0;const f=cf(),v=S.s.int+S.s.vir+S.s.fame+R(7)-3+empB(0);
+  if(v>=11+f&&f<17){setCF(f+1);apply({fame:1,mood:1});S.cur.push(`三年考績，你政績優異，擢升為「${cnp()}」。`)}
+  else if(v<5+Math.floor(f*.6)){setCF(f-1);apply({fame:-1,mood:-2});S.cur.push(S.rank?`三年考績，你政績不佳，被降為「${cnp()}」。`:"三年考績，你政績不佳，被革去官職，歸為白身。")}
+  else S.cur.push("三年考績，你得了個「平」字，原職留任。")}}
+ if(S.army&&S.mrank){S.mx=(S.mx||0)+1;if(S.mx>=2){S.mx=0;const f=mf(),v=S.s.mar+S.s.hp+S.s.fame+R(7)-3+empB(1);
+  if(v>=10+f&&f<14){setMF(f+1);apply({fame:1,mood:1});S.cur.push(`兩年敘功，你戰功卓著，晉為「${mnp()}」。`)}
+  else if(v<5+Math.floor(f*.6)&&f>0){setMF(f-1);apply({fame:-1,mood:-2});S.cur.push(`兩年敘功，你屢有疏失，被降為「${mnp()}」。`)}
+  else S.cur.push("兩年敘功，你守職無過，原職不動。")}}
+}
+function familyCareerInfo(){
+ const all=(S.kin||[]).filter(k=>k.c&&!k.x);
+ if(S.spouse&&S.sc)all.push({r:"配偶",c:S.sc});
+ const civil=all.filter(k=>k.c&&k.c.t==1).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const military=all.filter(k=>k.c&&k.c.t==2).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const trade=all.filter(k=>k.c&&k.c.t==3).map(k=>k.c.l).sort((a,b)=>b-a)[0]||0;
+ const craft=all.filter(k=>k.c&&k.c.t==0).length;
+ return {civil,military,trade,craft,highest:Math.max(civil,military,trade)};
+}
+function familyCareerYear(){
+ const f=familyCareerInfo(); S.familyCareer=f;
+ // 家人職業不是純背景，而會實際影響玩家：官場、人脈、軍旅、商業與家計。
+ if(f.civil>=1){S.s.int+=Math.random()<.18?1:0;S.s.fame+=Math.random()<.12?1:0;}
+ if(f.civil>=5){S.s.fame+=Math.random()<.22?1:0;S.famOfficeAid=Math.min(5,(S.famOfficeAid||0)+1);}
+ if(f.military>=3){S.s.mar+=Math.random()<.15?1:0;S.famMilitaryAid=Math.min(5,(S.famMilitaryAid||0)+1);}
+ if(f.military>=8){S.s.fame+=Math.random()<.16?1:0;}
+ if(f.trade>=3){if(Math.random()<.25)S.s.gold++;S.famTradeAid=Math.min(5,(S.famTradeAid||0)+1);}
+ if(f.trade>=8&&Math.random()<.3){S.s.gold++;S.cur.push("家中商脈深厚，親族替你牽成了一筆生意。（家財↑）");}
+ if(f.craft>=2&&Math.random()<.12){S.s.gold++;S.cur.push("家中匠戶親族相助，你省下一筆工料錢。（家財↑）");}
+}
+function familyCareerLabel(){
+ const f=familyCareerInfo();
+ if(f.civil>=10)return "世代官宦"; if(f.civil>=5)return "官宦親族";
+ if(f.military>=8)return "將門親族"; if(f.military>=3)return "軍戶親族";
+ if(f.trade>=8)return "巨賈親族"; if(f.trade>=3)return "商賈親族";
+ if(f.craft>=2)return "匠戶親族"; return "尋常家門";
+}
+function civilEligibility(){
+ const f=familyCareerInfo();
+ // 官職不再隨便拿：才學、名望或真正的官宦背景至少要有一項過硬。
+ return S.age>=16 && (S.s.int>=8 || S.s.fame>=8 || f.civil>=5 || (f.civil>=2&&S.s.int>=6));
+}
+function militaryEligibility(){
+ const f=familyCareerInfo();
+ return S.age>=16 && (S.s.mar>=7 || f.military>=5 || (f.military>=2&&S.s.mar>=5));
+}
+
+function famYear(){const cs=[];
+ S.kin.forEach(k=>{const a=k.a+S.age;if(a>75||k.x)return;cs.push(k.c);if(!k.c&&a>=16){k.c=genC(k.r=="姐姐");S.cur.push(`${k.r}${k.n}已成年，做起了「${cj(k.c)}」。`)}else{const r=grow(k.c,a);if(r)S.cur.push(fm(k.r+k.n,k.c,r))}});
+ if(S.spouse&&S.sc){cs.push(S.sc);{const r=grow(S.sc,S.age+S.so);if(r)S.cur.push(fm("配偶"+S.spouse,S.sc,r))}}
+ (S.kc||[]).forEach(d=>{const a=S.age-d.b;cs.push(d.c);if(!d.c&&a>=16){d.c=genC();S.cur.push(`孩子${d.n}長大成人，做起了「${cj(d.c)}」。`)}else{const r=grow(d.c,a);if(r)S.cur.push(fm("孩子"+d.n,d.c,r))}});
+ if(cs.some(c=>c&&(c.t==1||c.t==2)&&c.l>=3)&&Math.random()<.2){S.s.gold++;S.cur.push("家中有人身居要職，你沾了些光。（家財↑）")}}
+const RKP=["","九品","七品","四品","二品","一品"],MKP=["","","","六品","四品","二品","一品"];
+const MK=["","士卒","伍長","校尉","都尉","將軍","大將軍"],FA=["號角聲中，你隨隊操練了一整年。","邊塞風沙撲面，你守著烽燧度日。","夜裡營火旁，袍澤們講起家鄉。"];
+const NM={hp:"體魄",int:"學識",mar:"武藝",vir:"德行",gold:"家財",fame:"處世",mood:"心情",chr:"魅力",enlist:"從軍",job:"入行",quit:"辭業",mrank:"武階",discharge:"退伍",rank:"文階",wed:"成婚",kid:"子女",ns:"國力",pp:"民心",fav:"聖眷"};
+const BARS=[["mood","心情","#f48fb1","🌸"],["hp","體魄","#e8d25c","🏺"],["chr","魅力","#f5a962","🪞"],["fame","處世","#6fd19b","🤝"],["int","學識","#6fb3f5","📚"],["vir","德行","#a98cf7","📿"]];
+const SI=["🍼","🎋","📖","🗡️","🏮","🍵"];
+const FL=[["你在襁褓中咿呀學語。","母親抱著你曬了一整天太陽。"],["你在村頭追著雞鴨跑。","先生誇你記性不錯。"],["少年心事，說不清道不明。","你開始懂得世事艱難。"],["日子在奔忙中流過。","你與友人縱談天下事。"],["家中事務繁忙，你漸漸沉穩。","你替鄰里調解了一樁糾紛。"],["你在院裡看了一整年的落葉。","舊友零落，你偶有感傷。"]];
+const SA=[[["啼哭撒嬌",{mood:1,chr:1}],["安然入睡",{hp:1}]],[["讀書認字",{int:1}],["河邊玩耍",{hp:1,mood:1}],["幫忙家務",{vir:1}]],[["苦讀經書",{int:1,mood:-1}],["拜師習武",{mar:1,hp:1}],["學做生意",{gold:1}]],[["閉門備考",{int:1}],["投軍歷練",{mar:1,hp:-1}],["四處行商",{gold:1,hp:-1}]],[["處理公務",{fame:1},()=>S.rank>=1&&!S.army],["經營家業",{gold:1}],["教導子女",{vir:1,mood:1},()=>S.kids]],[["含飴弄孫",{mood:2},()=>S.kids],["靜坐養生",{hp:1}],["著書立說",{int:1,fame:1}]]];
+const GA=[["散步賞景",{hp:1,mood:1}],["宴飲歡聚",{mood:2,gold:-1},0,6],["埋頭讀書",{int:1},0,6],["行善積德",{vir:1,gold:-1},0,10],["拜訪名士",{fame:1,chr:1,gold:-1},0,16],["習練拳腳",{mar:1,hp:1},0,6],["打零工",{gold:1,hp:-1},0,12]];
+E.push(
+{a:[6,12],t:"玩伴打架",x:"村裡兩個孩子扭打起來，圍了一圈人。",c:[["上前勸架",{},{need:{vir:4},ok:"你把兩人拉開，大家服氣。",okfx:{vir:1,fame:1},no:"你被誤推一把，摔得鼻青臉腫。",nofx:{hp:-1}}],["加入打鬥",{mar:1,hp:-1},"你贏了，也掛了彩。"],["跑去叫大人",{int:1},"事情很快平息。"]]},
+{a:[8,15],t:"私塾比試",x:"先生要學生當堂背書，背得最好的有賞。",c:[["全力以赴",{},{need:{int:5},ok:"你一字不差，得了先生的賞。",okfx:{int:1,fame:1,mood:1},no:"背到一半卡住，被罰站。",nofx:{mood:-1}}],["藏拙",{},"你低調過關，沒人注意你。"]]},
+{a:[5,20],t:"廟會",rep:1,x:"鎮上辦廟會，鑼鼓喧天。",c:[["猜燈謎",{},{need:{int:5},ok:"你猜中數題，贏得彩頭。",okfx:{gold:1,mood:1},no:"一題沒中，悻悻而歸。",nofx:{}}],["看雜耍",{mood:2},"你看得入迷，笑聲不斷。"],["買糖人",{gold:-1,mood:1},"甜味在嘴裡留了一整天。"]]},
+{a:[10,35],t:"農忙時節",rep:1,q:()=>S.fam.n=="農家",x:"秋收在即，田裡的活堆成了山。",c:[["下田幫忙",{hp:-1,vir:1,gold:1},"一家人忙到天黑，收成不錯。"],["偷懶溜走",{mood:1,vir:-1},"你躲了清閒，被父親數落。"],["幫鄰居搶收",{vir:2,hp:-1},"鄰里記了你的好。"]]},
+{a:[10,20],t:"賬房學藝",q:()=>S.fam.n=="商賈",x:"家中賬房先生肯教你打算盤。",c:[["認真學",{int:1,gold:1},"你很快能獨立對賬。"],["只學皮毛",{},"你覺得枯燥，學了個大概。"]]},
+{a:[9,17],t:"父親教槍",q:()=>S.fam.n=="將門之後",x:"清晨院中，父親遞給你一桿長槍。",c:[["咬牙苦練",{mar:2,hp:-1},"你虎口磨出血泡，槍法漸穩。"],["要求學兵法",{int:1,mar:1},"父親頗為意外，從頭教起。"]]},
+{a:[9,16],t:"父親考問",q:()=>S.fam.n=="書香門第",x:"父親要你默寫昨日讀過的篇章。",c:[["默寫完整",{},{need:{int:6},ok:"父親撫須點頭。",okfx:{int:1,fame:1},no:"漏寫了幾句，被罰抄十遍。",nofx:{mood:-1}}],["請父親講解",{int:1,vir:1},"父親耐心為你講了一個時辰。"]]},
+{a:[17,28],t:"遊學",x:"聽聞百里外有位名儒開館授徒，你想去拜師。",c:[["帶足盤纏前往",{gold:-2},{need:{int:5},ok:"名儒收你為弟子，學問大進。",okfx:{int:3,fame:2},no:"名儒嫌你根基太淺，只讓你旁聽。",nofx:{int:1}}],["自學不出門",{int:1},"你在家啃書，進展緩慢。"],["改往軍中遊歷",{mar:1,hp:-1},"你見識了邊塞風光。"]]},
+{a:[16,32],t:"詩社雅集",rep:1,x:"同窗邀你加入詩社，題目是「秋」。",c:[["即席作詩",{},{need:{int:6},ok:"一首佳作博得滿堂彩。",okfx:{fame:2,chr:1},no:"詩成了笑談。",nofx:{mood:-1}}],["只聽不作",{int:1},"你聽了許多好句，默默記下。"]]},
+{a:[22,60],t:"友人借錢",rep:1,x:"多年好友上門，說家中急用，想借些銀兩。",c:[["慷慨相借",{gold:-2},{p:.6,ok:"他日後如數歸還，還送了謝禮。",okfx:{vir:1,gold:2},no:"他一直沒還，還躲著你。",nofx:{mood:-1}}],["借一半",{gold:-1},"他道了謝，似乎有些尷尬。"],["婉言謝絕",{vir:-1},"他沉默離開，往來漸少。"]]},
+{a:[20,70],t:"鄰里糾紛",rep:1,x:"兩戶鄰居為一道田埂爭得面紅耳赤，來請你評理。",c:[["秉公調解",{},{need:{vir:5},ok:"兩家心服口服，你在鄉里名聲更好。",okfx:{vir:1,fame:2},no:"兩邊都不領情，你吃力不討好。",nofx:{mood:-1}}],["袖手旁觀",{vir:-1},"他們鬧到官府，你落得清靜。"]]},
+{a:[16,70],t:"年成好壞",rep:1,x:"今年雨水反常，鄉里議論紛紛。",c:[["囤糧待價",{gold:-1},{p:.55,ok:"糧價果然上漲，你賺了一筆。",okfx:{gold:4},no:"糧食霉爛，血本無歸。",nofx:{mood:-1}}],["照常過日子",{},{ok:"今年收成尚可。",okfx:{gold:1}}],["開倉賑濟",{gold:-2},{ok:"鄉人感念你的恩德。",okfx:{vir:3,fame:2}}]]},
+{a:[20,60],t:"騙子上門",rep:1,x:"一個口才極好的人上門，說有穩賺不賠的買賣。",c:[["細問底細",{},{need:{int:5},ok:"你識破了騙局，順手報了官。",okfx:{fame:1,vir:1},no:"你被說動，交了定金，人就沒了。",nofx:{gold:-2,mood:-2}}],["直接趕走",{},"你不理會，繼續過日子。"],["投錢試試",{gold:-2},{p:.15,ok:"竟真有回報。",okfx:{gold:5},no:"騙子捲款而逃。",nofx:{mood:-2}}]]},
+{a:[16,80],t:"佳節團圓",rep:1,x:"中秋將至，家家張燈結彩。",c:[["闔家團聚",{gold:-1,mood:2},"月下賞桂，笑語不斷。"],["與友人登高飲酒",{mood:1,chr:1,gold:-1},"酒後談興大發。"],["獨自靜坐",{int:1},"你借著月光讀了半卷書。"]]},
+{a:[20,60],t:"江水氾濫",rep:1,x:"暴雨連下半月，堤壩岌岌可危。",c:[["上堤搶險",{hp:-1},{need:{hp:5},ok:"你和鄉親堵住了缺口。",okfx:{fame:2,vir:2},no:"你體力不支，被抬下堤。",nofx:{hp:-3}}],["帶家人到高處避險",{},"你保全了家人，家園卻泡了水。"],["捐銀助修",{gold:-2},{ok:"堤壩修好，鄉里安穩。",okfx:{vir:2,fame:1}}]]},
+{a:[25,65],t:"官場應酬",rep:1,q:()=>S.rank>=1&&!S.army,x:"同僚設宴，座中有上官的親信。",c:[["赴宴結交",{gold:-1,mood:1},{ok:"你多了一位人脈。",okfx:{fame:1}}],["推託不去",{vir:1},"你落得清靜，也少了往來。"],["席上直言時弊",{},{need:{vir:6,fame:4},ok:"眾人暗暗佩服。",okfx:{fame:2},no:"得罪了人，之後處處受冷眼。",nofx:{fame:-2}}]]},
+{a:[28,65],t:"升堂斷案",rep:1,q:()=>S.rank>=2&&!S.army,x:"一樁田產官司，一方是鄉紳，一方是貧農。",c:[["秉公而斷",{},{need:{int:6},ok:"你查明真相，百姓稱你青天。",okfx:{fame:3,vir:2},no:"你判錯了案，事後悔恨。",nofx:{vir:1,fame:-2}}],["偏袒鄉紳",{gold:2,vir:-3},"你得了謝禮，卻夜不能寐。"],["押後再審",{},"你拖到兩造都撤了狀。"]]},
+{a:[22,40],t:"再赴科場",rep:1,q:()=>S.rank==0&&!S.army&&S.done.has("科舉"),x:"又到三年一度的大比之年，你仍未放棄。",c:[["再戰一場",{hp:-1,int:1},{need:{int:8},ok:"終於金榜題名。",okfx:{rank:1,fame:4},no:"再度落榜，你黯然神傷。",nofx:{mood:-2}}],["捐納入仕",{gold:-7},{ok:"你花錢買了個小官。",okfx:{rank:1,vir:-1}}],["就此放棄",{},"你收起書卷，另謀生路。"]]},
+{a:[20,45],t:"賭坊誘惑",x:"友人拉你進了賭坊，骰子聲聲誘人。",c:[["下注一搏",{},{p:.35,ok:"手氣極好，贏了一大筆。",okfx:{gold:5},no:"輸得精光。",nofx:{gold:-4,mood:-2}}],["旁觀不賭",{vir:1},"你看清了這裡的門道，轉身離去。"],["勸友人收手",{},{need:{vir:6},ok:"友人聽勸，從此感激你。",okfx:{vir:2},no:"他惱羞成怒與你絕交。",nofx:{mood:-1}}]]},
+{a:[28,60],t:"小人詆毀",rep:1,q:()=>S.s.fame>=4,x:"有人散播你的流言，影響越來越大。",c:[["公開辯白",{},{need:{vir:6},ok:"清者自清，流言平息。",okfx:{fame:2},no:"越描越黑。",nofx:{fame:-2}}],["置之不理",{mood:-1},"風頭過後，沒人再提。"],["私下找對方談",{},{need:{int:6},ok:"化干戈為玉帛。",okfx:{vir:1,chr:1},no:"談崩了，對方更不依不饒。",nofx:{mood:-1}}]]},
+{a:[30,75],t:"舊友重逢",rep:1,x:"街頭偶遇少年時的玩伴，他已兩鬢斑白。",c:[["請他到家中小酌",{gold:-1,mood:2},"你們聊到深夜。"],["留下地址告別",{},"你們各自匆匆。"]]},
+{a:[30,60],t:"孩子闖禍",rep:1,q:()=>S.kids>=1,x:"孩子在外與人起了衝突，對方登門討說法。",c:[["嚴加管教",{mood:-1,vir:1},"孩子知錯，往後收斂許多。"],["賠禮了事",{gold:-1,vir:1},"對方消了氣。"],["護短到底",{vir:-2},"孩子越發不知收斂。"]]},
+{a:[50,90],t:"故人離世",rep:1,x:"多年老友的訃告送到你手上。",c:[["親往弔唁",{mood:-1,vir:1},"你在靈前站了很久。"],["寄去輓聯",{mood:-1},"你在案前寫了很久。"]]},
+{a:[20,50],t:"山中古洞",x:"打獵途中，你發現一個被藤蔓遮住的古洞。",c:[["進洞探查",{},{p:.5,ok:"洞中有前人留下的書卷與銀兩。",okfx:{int:2,gold:3},no:"洞中毒蟲出沒，你被咬傷。",nofx:{hp:-3}}],["喚人同行",{},{ok:"眾人合力探查，分得一些舊物。",okfx:{gold:1,fame:1}}],["不去招惹",{},"你記住地點，轉身離開。"]]}
+);
+GA.push(["登高望遠",{mood:1,hp:1},0,8],["對弈",{int:1,mood:1},0,10],["撫琴",{chr:1,mood:1},0,10],["練字",{int:1,chr:1},0,6],["垂釣",{mood:2},0,8],["結交朋友",{fame:1,chr:1},0,12],["鑽研兵法",{mar:1,int:1},0,14],["上山採藥",{hp:1,gold:1},0,12],["趕集貿易",{gold:1,mood:1},0,10],["抄經靜心",{vir:1,mood:1},0,10],["遊歷山川",{mood:2,int:1,gold:-1},0,16]);
+SA[2].push(["同窗切磋",{mar:1,int:1}]);SA[3].push(["遊學訪友",{int:1,fame:1,gold:-1}]);SA[4].push(["拜會上官",{fame:1,gold:-1},()=>S.rank>=1&&!S.army],["置辦田產",{gold:1}]);SA[5].push(["訪舊友",{mood:2}],["立家訓",{vir:1},()=>S.kids]);
+E.push(
+{a:[16,22],t:"父命從軍",q:()=>S.fam.n=="將門之後"&&!S.army,x:"父親說，將門之後豈能不上戰場，軍中已為你備好位置。",c:[["遵命入伍",{enlist:1,mar:1},"你換上軍裝，踏進軍營大門。"],["懇請先讀書",{int:1},"父親沉默良久，終於點頭。"]]},
+{a:[16,50],t:"初入軍營",q:()=>S.army&&S.mrank==1,x:"教頭一嗓子吼得你耳朵嗡嗡響，新兵們站成一排。",c:[["拼命操練",{mar:1,hp:-1},"你磨出一手老繭，教頭對你點了點頭。"],["結交袍澤",{chr:1,mood:1},"幾個兄弟與你同鋪而眠，無話不談。"],["偷懶耍滑",{mood:1},{p:.5,ok:"沒人發現，你蒙混過去。",okfx:{},no:"被教頭抓個正著，罰跑十里。",nofx:{hp:-1,fame:-1}}]]},
+{a:[18,55],t:"邊境交鋒",rep:1,q:()=>S.army&&S.mrank<6,x:"敵騎突襲邊哨，號角聲急促響起。",c:[["衝鋒陷陣",{},{need:{mar:6},p:.75,ok:"你斬敵立功，被記上一筆軍功。",okfx:{mrank:1,fame:3,mar:1},no:"你在亂戰中受了傷。",nofx:{hp:-3}}],["列陣固守",{},{need:{int:5},ok:"你穩住陣腳，擊退了來犯之敵。",okfx:{fame:2,mar:1},no:"陣型散亂，傷亡慘重。",nofx:{hp:-2,mood:-2}}],["後撤保命",{},{ok:"你保住了性命，卻被人看輕。",okfx:{fame:-2,mood:-1}}]]},
+{a:[22,55],t:"攻城拔寨",rep:1,q:()=>S.army&&S.mrank>=2&&S.mrank<6,x:"大軍圍城半月，主將下令總攻。",c:[["率先登城",{},{need:{mar:7},p:.6,ok:"你第一個登上城頭，立下大功。",okfx:{mrank:1,fame:4,mar:1},no:"你從雲梯上摔落，險些喪命。",nofx:{hp:-4}}],["督造攻城器械",{},{need:{int:6},ok:"器械奏效，主將記你一功。",okfx:{mrank:1,fame:2,int:1},no:"器械被毀，你受了責罰。",nofx:{fame:-1}}],["守在後陣",{},"你平安度過這一戰。"]]},
+{a:[24,55],t:"敵軍設伏",rep:1,q:()=>S.army&&S.mrank>=2,x:"行軍途中，山林間忽然鴉雀驚飛。",c:[["察覺不對，示警",{},{need:{int:6},ok:"你及時示警，全軍避過一劫。",okfx:{fame:3,mrank:1},no:"示警太遲，隊伍損失慘重。",nofx:{mood:-2,fame:-1}}],["率親兵突圍",{},{need:{mar:6},ok:"你殺出重圍，救出數十人。",okfx:{fame:3,vir:1,mar:1},no:"你負傷突圍，折損了不少兄弟。",nofx:{hp:-3,mood:-2}}],["隨大隊撤退",{hp:-1},"你狼狽逃出，慶幸活了下來。"]]},
+{a:[18,60],t:"軍餉被扣",rep:1,q:()=>S.army,x:"發餉的日子，上官卻說軍餉遲了，士兵們怨聲載道。",c:[["聯名上告",{},{need:{vir:6},p:.6,ok:"事情鬧大，軍餉補發，你得了人心。",okfx:{vir:2,fame:2,gold:1},no:"你被冠以煽動之名，挨了軍棍。",nofx:{hp:-2,fame:-2}}],["忍氣吞聲",{gold:-1},"你默默等了下去。"],["自掏腰包貼補弟兄",{gold:-2},{ok:"弟兄們都服你。",okfx:{vir:2,fame:1}}]]},
+{a:[20,60],t:"論功行賞",rep:1,q:()=>S.army,x:"戰事告一段落，主將在帳中論功行賞。",c:[["領賞謝恩",{gold:2},"你領了賞銀，心中踏實。"],["把功勞讓給戰友",{vir:2,fame:1},"戰友紅了眼眶，欠你一份情。"],["據理力爭",{},{need:{fame:5},ok:"你爭得應得的封賞。",okfx:{gold:2,mrank:1},no:"主將不悅，賞銀縮水。",nofx:{fame:-1}}]]},
+{a:[18,60],t:"戰友陣亡",rep:1,q:()=>S.army&&S.mrank>=1,x:"與你並肩多年的戰友倒在戰場上。",c:[["背他回營安葬",{mood:-2,vir:2,hp:-1},"你在他墳前灑了一壺酒。"],["報仇雪恨",{mood:-1},{need:{mar:6},ok:"你殺了仇敵，為他報了仇。",okfx:{mar:1,fame:2},no:"你衝動行事，反倒負了傷。",nofx:{hp:-3}}],["撫恤其家人",{gold:-2,vir:2},"你寄去銀兩與一封信。"]]},
+{a:[20,55],t:"軍中比武",rep:1,q:()=>S.army,x:"軍中大比，各營好手同場較技。",c:[["報名參加",{},{need:{mar:7},p:.7,ok:"你奪得魁首，全營傳頌。",okfx:{fame:3,mar:1,gold:2},no:"你敗下陣來，臉上掛彩。",nofx:{hp:-1,fame:-1}}],["當觀眾",{mood:1},"你看得熱血沸騰。"]]},
+{a:[30,60],t:"兵變",q:()=>S.army&&S.mrank>=3,x:"部將不滿，夜裡有人鼓動士卒嘩變。",c:[["連夜平亂",{},{need:{mar:7,vir:5},ok:"你當機立斷，平息了兵變。",okfx:{mrank:1,fame:4,vir:1},no:"局勢失控，你被亂兵所傷。",nofx:{hp:-4,fame:-2}}],["安撫士卒",{},{need:{int:6},ok:"你曉以利害，兵變消弭於無形。",okfx:{fame:3,vir:2},no:"士卒不聽，鬧了好幾天。",nofx:{mood:-2}}],["隨波逐流",{vir:-3,fame:-3},"你因此背上了污名。"]]},
+{a:[35,65],t:"獨領一軍",q:()=>S.army&&S.mrank>=4,x:"朝廷任命你獨領一軍，鎮守要塞。",c:[["整肅軍紀",{},{need:{vir:6,int:6},ok:"你治軍嚴明，軍中風氣一新。",okfx:{mrank:1,fame:4},no:"手段過嚴，士卒怨言四起。",nofx:{fame:-1,mood:-1}}],["與士卒同甘共苦",{vir:2,fame:1,mood:1},"軍心凝聚，都願為你效死。"],["廣積糧草",{gold:2,int:1},"你把後勤打理得井井有條。"]]},
+{a:[18,60],t:"負傷抉擇",q:()=>S.army&&S.s.hp<=5,x:"舊傷復發，軍醫勸你好好休養。",c:[["堅持留軍",{hp:-1},{ok:"你咬牙撐著，弟兄們更敬佩你。",okfx:{fame:1}}],["請辭還鄉",{discharge:1,hp:2,mood:1},"你解甲歸家，傷也慢慢好轉。"]]},
+{a:[45,70],t:"告老還鄉",q:()=>S.army,x:"你已兩鬢斑白，是時候考慮解甲了。",c:[["解甲歸田",{discharge:1,mood:2,gold:1},"你領了一筆退伍錢，回鄉種田養老。"],["再守一程",{},{ok:"你還想再守邊關幾年。",okfx:{fame:1,hp:-1}}]]}
+);
+GA.push(["應徵入伍",{enlist:1},()=>!S.army&&S.age<=45,16],["操練士卒",{mar:1,fame:1},()=>S.army,16],["巡營戍邊",{mar:1,gold:1,hp:-1},()=>S.army,16],["研讀兵書",{int:1,mar:1},()=>S.army,16],["軍中比試",{mar:2,hp:-1},()=>S.army,16],["解甲歸田",{discharge:1,mood:1},()=>S.army,16]);
+E.push(
+{a:[18,30],t:"武舉",q:()=>!S.army&&S.mrank==0,x:"朝廷開武舉取士，考騎射與兵法。",c:[["下場應試",{},{need:{mar:7},p:.8,ok:"你騎射俱佳，以武舉出身授校尉。",okfx:{enlist:1,mrank:2,fame:2},no:"你敗給了更強的對手，黯然而歸。",nofx:{mood:-1}}],["託人引薦入軍",{gold:-3},{ok:"你憑人情入了軍籍，從伍長做起。",okfx:{enlist:1,mrank:1}}],["不去",{},"你繼續過自己的日子。"]]},
+{a:[25,55],t:"武官考課",rep:1,q:()=>S.army&&S.mrank>=1&&S.mrank<=4,x:"兵部派員核查軍功，決定誰該升遷。",c:[["以戰功說話",{},{need:{mar:6,fame:5},ok:"你戰功彪炳，獲得擢升。",okfx:{mrank:1,fame:2},no:"戰功不夠，原地踏步。",nofx:{mood:-1}}],["向上官送禮",{gold:-3},{p:.7,ok:"上官替你美言，你升了一級，卻覺得不踏實。",okfx:{mrank:1,vir:-2},no:"禮收了，事沒辦成。",nofx:{mood:-1}}],["安守本職",{},"你守著職責，不爭不搶。"]]},
+{a:[24,45],t:"棄武從文",q:()=>S.army&&S.s.int>=6,x:"你在軍中讀書不輟，同僚勸你轉走科舉之路。",c:[["解甲應試",{discharge:1},{need:{int:7},p:.7,ok:"你考中功名，改走文官之路。",okfx:{rank:1,fame:2},no:"你落榜了，只好再作打算。",nofx:{mood:-2}}],["留在軍中",{int:1},"你繼續在營中苦讀兵書。"]]},
+{a:[35,65],t:"文武相輕",rep:1,q:()=>S.rank>=3||S.mrank>=4,x:"朝中文臣與武將為軍費與兵權爭得不可開交。",c:[["居中調停",{},{need:{int:6,vir:6},ok:"你兩邊都不得罪，兩派都敬重你。",okfx:{fame:3,vir:1},no:"兩邊都嫌你多事。",nofx:{fame:-1}}],["為文臣說話",{fame:1},"文臣們視你為同道，武將們冷眼相看。"],["為武將說話",{mar:1},"武將們欣賞你的耿直，文臣們暗自記恨。"]]}
+);
+const JB=[{n:"商賈",m:"int",L:["販夫","坐賈","掌櫃","大賈","鉅賈"]},{n:"裁縫",m:"chr",L:["學徒","針匠","裁匠","繡坊東家","尚衣供奉"]},{n:"鐵匠",m:"mar",L:["爐下學徒","鐵匠","匠頭","鑄坊主","軍器監匠"]},{n:"塾師",m:"int",L:["蒙師","塾師","教諭","書院山長","國子監博士"]},{n:"郎中",m:"int",L:["藥童","走方郎中","坐堂郎中","名醫","太醫"]},{n:"庖人",m:"chr",L:["灶下童","廚子","掌勺","酒樓大廚","御膳廚"]}];
+const JOB_META=[
+ {power:["只能跑腿、議價與招攬客人","可獨立買賣，能代表東家談價","掌管店帳與伙計，可決定貨物進出","可調度商隊、借貸與簽大宗契約","地方鉅賈，可動用商號、門客與人脈影響地方商路"]},
+ {power:["只能接零碎針線活","可獨立接單與交付衣物","可帶學徒、驗貨與議工價","可掌繡坊、接貴人訂單","可入內廷供奉，掌高級衣料與御用差事"]},
+ {power:["只能拉風箱、做雜活","可獨立鍛造農具","可帶學徒、驗鋼與定工價","可主持鑄坊、承接軍器訂單","可入軍器監供奉，掌軍器鑄造與工匠調度"]},
+ {power:["只能教蒙童識字","可獨立授課與收束脩","可主持學堂、考校學生","可主持書院、推薦門生","可入國子監授業，能舉薦人才與參議學政"]},
+ {power:["只能隨師採藥與抓藥","可坐堂問診、治常見病","可開堂坐診並收徒","名醫可受官府與士紳延請","太醫級可入宮診治，掌醫案與御藥差事"]},
+ {power:["只能燒火、切菜與跑堂","可獨立掌勺","可定菜單、帶廚房伙計","可掌酒樓宴席與貴客","御膳廚可承接宮廷宴饗，掌御膳差事"]}
+];
+function jobInfo(){if(!S.job)return {name:'無業',level:0,title:'無',power:'尚未入行'};let j=JB[S.job-1],lv=Math.max(1,Math.min(5,S.jl||1));return {name:j.n,level:lv,title:j.L[lv-1],power:JOB_META[S.job-1].power[lv-1]};}
+function jobMenu(){const z=jobInfo();if(!S.job){sheet('職業','<p>目前尚未投身固定行當。</p>');return}sheet('職業與權力',rows([['行當',z.name],['職業階級',z.level+'／5'],['職位',z.title],['實際權力',z.power],['升級進度',(S.jx||0)+' 年']])+`<p class="jobnote">職級不只是稱號：每升一級，你能接觸的客戶、能調度的人手、能簽的契約與能接的官府／權貴差事都會提高。</p>`)}
+
+const W=(need,ok,okfx,no,nofx,p)=>({need,ok,okfx,no,nofx,p}),ev=(a,t,q,x,c)=>({a,t,q,x,c,rep:1}),jq=(k,lo,hi)=>()=>S.job==k&&S.jl>=lo&&S.jl<=hi;
+const CA=[0,[["謄抄公文",{int:1}],["巡視街巷",{fame:1,mood:1}]],[["審理訟案",{fame:1,vir:1}],["勸課農桑",{vir:1,gold:1}]],[["巡閱屬縣",{fame:1,int:1}],["興修水利",{fame:2,gold:-1}]],[["上疏言事",{fame:2,int:1}],["會審大案",{vir:1,fame:1}]],[["參議朝政",{fame:2,int:1}],["提點百官",{fame:1,vir:1}]]];
+const MA=[0,[["守夜巡營",{mar:1}],["挖壕築壘",{hp:1,mar:1}]],[["操練伍卒",{mar:1,fame:1}],["督查器械",{int:1}]],[["演練陣法",{int:1,mar:1}],["校閱士卒",{fame:1,vir:1}]],[["籌畫糧草",{gold:1,int:1}],["巡視烽燧",{fame:1,mar:1}]],[["升帳議事",{int:1,fame:1}],["犒賞三軍",{fame:2,gold:-1,vir:1}]],[["總攬軍機",{int:1,fame:2}],["入朝面聖",{fame:1,chr:1}]]];
+const JA=[[[1,"沿街叫賣",{gold:1,hp:-1}],[2,"採買貨物",{gold:1,int:1}],[3,"結交同行",{fame:1,chr:1}],[4,"開設分號",{gold:2,fame:1}]],[[1,"穿針引線",{chr:1}],[2,"裁剪衣裳",{chr:1,gold:1}],[3,"繡製錦帕",{chr:1,fame:1}],[4,"為貴人量體",{fame:1,gold:1}]],[[1,"拉動風箱",{hp:1,mar:1}],[2,"鍛打農具",{gold:1,hp:-1}],[3,"淬煉刀劍",{mar:1,fame:1}],[4,"監造兵器",{fame:1,mar:1,gold:1}]],[[1,"教蒙童識字",{int:1,vir:1}],[2,"批改課業",{int:1}],[3,"開壇講學",{fame:1,int:1}],[4,"著書立說",{fame:2,int:1}]],[[1,"採藥製丸",{int:1,hp:1}],[2,"望聞問切",{int:1,fame:1}],[3,"義診施藥",{vir:2,gold:-1}],[4,"研習醫案",{int:2}]],[[1,"燒火切菜",{hp:1}],[2,"掌勺烹調",{chr:1,gold:1}],[3,"研創新菜",{fame:1,chr:1}],[4,"設宴款待貴客",{fame:1,gold:1}]]];
+CA.forEach((a,r)=>a&&a.forEach(x=>GA.push([x[0],x[1],()=>S.rank==r&&!S.army,16])));
+MA.forEach((a,m)=>a&&a.forEach(x=>GA.push([x[0],x[1],()=>S.army&&S.mrank==m,16])));
+JA.forEach((a,k)=>a.forEach(x=>GA.push([x[1],x[2],()=>S.job==k+1&&S.jl>=x[0],12])));
+JB.forEach((j,i)=>GA.push(["投身"+j.n+"之業",{job:i+1},()=>!S.job&&!S.army&&S.rank==0,12]));
+GA.push(["辭去行當",{quit:1},()=>S.job,12]);
+for(let i=GA.length-1;i>=0;i--)if(/^投身/.test(GA[i][0])||["辭去行當","應徵入伍","解甲歸田"].includes(GA[i][0]))GA.splice(i,1);
+const JOB_EVENTS=[
+ {a:[12,80],t:'掌櫃盤帳',q:()=>S.job==1&&S.jl>=2,x:'你已能獨立掌帳，東家把本月貨款與帳冊交到你手上。',c:[['整頓賬目',{int:1,gold:1,fame:1},'你查出一筆漏帳，東家開始把你當可靠的掌櫃。'],['私下挪用',{gold:3,vir:-2},{p:.35,ok:'你暫時得手，卻留下把柄。',okfx:{},no:'東家查出帳目不對，你被降職。',nofx:{fame:-2}}],['拒絕接手',{mood:-1},'你仍只想做普通夥計。']]},
+ {a:[20,80],t:'商號議價',q:()=>S.job==1&&S.jl>=3,x:'你已是掌櫃，東家允許你代表商號與布商議價。',c:[['壓價成交',{int:1,gold:2,fame:1},'你替商號省下一筆本錢，手下夥計也開始聽你的。'],['公平成交',{vir:1,gold:1,fame:1},'你保住長久商路，對方願意再合作。']]},
+ {a:[28,80],t:'商隊調度',q:()=>S.job==1&&S.jl>=4,x:'你手下已有夥計與腳夫，東家讓你決定一支商隊是否出發。',c:[['押運出發',{gold:4,fame:2},'商隊平安抵達，你第一次真正掌握一筆大生意。'],['暫緩出貨',{int:1,gold:1},'你判斷行情不佳，替商號避開損失。']]},
+ {a:[35,80],t:'鉅賈商約',q:()=>S.job==1&&S.jl>=5,x:'你已成地方鉅賈，兩州商號請你主持一紙大宗貨契。',c:[['親自主持',{gold:6,fame:3,int:1},'雙方都認你的面子，商路與信用因此擴大。'],['扶植後輩',{gold:3,vir:2,fame:2},'你把一部分商權交給後輩，商號更加穩固。']]},
+ {a:[12,70],t:'裁縫接單',q:()=>S.job==2&&S.jl>=2,x:'你已能獨立接活，鄰里富戶把一套衣裳交給你。',c:[['按期精工',{chr:1,gold:1,fame:1},'客人滿意，開始介紹更多訂單。'],['偷工減料',{gold:2,vir:-1},'你多賺一點，口碑卻有裂痕。']]},
+ {a:[20,80],t:'繡坊收徒',q:()=>S.job==2&&S.jl>=3,x:'你已有資格帶學徒，兩名年輕人來請你收下。',c:[['收一人入門',{chr:1,vir:1,fame:1},'你開始真正承擔師傅的責任。'],['收下兩人',{gold:2,chr:1,fame:1},'繡坊效率提高，你的名聲也傳開。']]},
+ {a:[28,80],t:'貴人訂衣',q:()=>S.job==2&&S.jl>=4,x:'地方貴人親自下帖，要你主持一批高級衣料。',c:[['親自監工',{chr:2,gold:3,fame:2},'成衣送到後，貴人對你的手藝大加稱讚。'],['交給徒弟',{fame:1,gold:2,vir:1},'你把機會變成培養徒弟的考驗。']]},
+ {a:[35,80],t:'內廷供奉',q:()=>S.job==2&&S.jl>=5,x:'宮中傳下差事，請你製作御用衣物。',c:[['接下供奉',{fame:4,gold:5,chr:1},'你正式列入供奉名冊，地方官也對你另眼相看。'],['謹慎辭謝',{vir:1,mood:1},'你避開宮門風險，但失去一次登天機會。']]},
+ {a:[12,70],t:'鐵匠出師',q:()=>S.job==3&&S.jl>=2,x:'你已能獨立打製農具，鄉里開始直接找你訂貨。',c:[['精鍛農具',{mar:1,gold:1,fame:1},'農戶口碑漸起。'],['偷省炭火',{gold:2,mar:-1,vir:-1},'雖省了本錢，品質卻下降。']]},
+ {a:[20,80],t:'匠頭點徒',q:()=>S.job==3&&S.jl>=3,x:'師傅讓你挑選兩名學徒，從此工坊由你帶隊。',c:[['嚴格選人',{mar:1,fame:1},'你挑中手腳勤快的人，工坊效率提升。'],['照顧窮徒',{vir:2,fame:1},'你收下一名窮孩子，他日後對你忠心耿耿。']]},
+ {a:[28,80],t:'鑄坊承軍器',q:()=>S.job==3&&S.jl>=4,x:'官府下令採辦兵器，鑄坊主讓你負責一批軍器。',c:[['按規鑄造',{mar:1,fame:3,gold:3},'官府驗收合格，你獲准承接更多軍器。'],['偷減材料',{gold:5,vir:-3},'軍器斷裂，你被官府追查責任。']]},
+ {a:[35,80],t:'軍器監供奉',q:()=>S.job==3&&S.jl>=5,x:'軍器監點名召你入監，讓你掌一批工匠與兵器鑄造。',c:[['入監掌事',{fame:4,mar:2,gold:4},'你有權調度工匠與物料，真正進入官營軍器體系。'],['留在民坊',{gold:3,vir:1},'你保留自由，卻放棄了官身般的權勢。']]},
+ {a:[12,70],t:'塾師收束脩',q:()=>S.job==4&&S.jl>=2,x:'你已能獨立授課，家長開始把孩子交給你。',c:[['耐心教學',{int:1,vir:1,fame:1},'學生進步，家長願意多送束脩。'],['敷衍度日',{gold:1,int:-1,fame:-1},'收入有了，名聲卻慢慢下降。']]},
+ {a:[20,80],t:'學堂考校',q:()=>S.job==4&&S.jl>=3,x:'你已有資格主持學堂月考，學生的升等由你評定。',c:[['公正考校',{int:1,vir:2,fame:2},'士子開始敬重你的公正。'],['偏袒門生',{fame:1,vir:-2},'你讓一名門生得利，卻留下口實。']]},
+ {a:[28,80],t:'書院延聘',q:()=>S.job==4&&S.jl>=4,x:'地方書院請你主持教務，並允許你推薦優秀學生。',c:[['接受山長之職',{int:2,fame:3,vir:1},'你可以決定課程與推薦名額，門生遍及鄉里。'],['只做講師',{int:1,fame:1,mood:1},'你少了權力，但也少了許多俗務。']]},
+ {a:[35,80],t:'國子監薦才',q:()=>S.job==4&&S.jl>=5,x:'上級學官來信，請你推薦人才入國子監。',c:[['秉公薦才',{int:2,fame:4,vir:2},'你的推薦能改變一名士子的前途，朝廷開始記住你的名字。'],['薦自己門生',{fame:3,vir:-1},'門生得勢，你也因此擴大了學脈。']]},
+ {a:[12,70],t:'郎中坐堂',q:()=>S.job==5&&S.jl>=2,x:'你已能獨立問診，今日病人特別多。',c:[['仔細診治',{int:1,vir:2,fame:1},'病人痊癒後，鄰里開始信任你的醫術。'],['草草開方',{gold:1,fame:-1},'雖快些收錢，口碑卻受損。']]},
+ {a:[20,80],t:'名醫會診',q:()=>S.job==5&&S.jl>=3,x:'兩位醫者請你共同會診一名重病士紳。',c:[['慎重會診',{int:2,fame:2,vir:1},'你的判斷救回病人，地方士紳對你十分看重。'],['推給前輩',{mood:1},'你避開風險，但也少了成名機會。']]},
+ {a:[28,80],t:'官府延醫',q:()=>S.job==5&&S.jl>=4,x:'縣府邀你處理疫病與官署醫療，並給你調配藥材的權限。',c:[['主持防疫',{int:1,vir:2,fame:3,gold:2},'你可以調配藥材與醫者，地方疫情很快穩定。'],['只看貴人',{gold:3,fame:-1,vir:-1},'你賺到錢，卻失去百姓信任。']]},
+ {a:[35,80],t:'太醫召入',q:()=>S.job==5&&S.jl>=5,x:'宮中召你入內診治，御藥房願意把藥材與醫案交給你。',c:[['入宮任職',{fame:4,gold:4,int:2},'你開始掌理御前醫案，醫者的權力與責任都大幅提高。'],['留守民間',{vir:2,mood:1,fame:1},'你不願涉入宮廷，選擇繼續救治百姓。']]},
+ {a:[12,70],t:'廚房掌勺',q:()=>S.job==6&&S.jl>=2,x:'你已能獨立掌勺，酒樓把一桌宴席交給你。',c:[['穩定出菜',{chr:1,gold:1,fame:1},'客人稱讚菜色，掌櫃願意給你更多工錢。'],['偷減食材',{gold:2,fame:-1,vir:-1},'你省下成本，卻被客人察覺。']]},
+ {a:[20,80],t:'大廚定席',q:()=>S.job==6&&S.jl>=3,x:'你已能帶廚房伙計，酒樓把整場宴席交由你決定菜單。',c:[['親自定席',{chr:1,gold:2,fame:2},'你可以決定菜單與人手，名聲逐漸傳開。'],['讓徒弟試手',{vir:1,chr:1,fame:1},'你把廚房當成培養後輩的地方。']]},
+ {a:[28,80],t:'貴客宴席',q:()=>S.job==6&&S.jl>=4,x:'地方豪族設宴，點名要你主持後廚。',c:[['精心設宴',{chr:2,gold:4,fame:3},'豪族記住你的手藝，往後常有貴客訂席。'],['簡辦宴席',{gold:2,mood:1},'你省下工夫，名聲只小有增加。']]},
+ {a:[35,80],t:'御膳差事',q:()=>S.job==6&&S.jl>=5,x:'宮中宴饗將開，御膳房點名請你掌一席御膳。',c:[['入宮掌膳',{fame:4,gold:5,chr:2},'你可調度御膳房人手與食材，正式接觸宮廷權力。'],['婉拒宮門差事',{mood:1,vir:1},'你保留民間自由，避免宮廷風險。']]}
+];
+E.push(...JOB_EVENTS);
+const cv=r=>()=>S.rank==r&&!S.army,mv=m=>()=>S.army&&S.mrank==m;
+E.push(
+ev([22,60],"捕盜安民",cv(1),"境內盜賊猖獗，縣令命你緝捕。",[["率差役夜捕",{},W({mar:5},"賊人落網，縣令嘉許。",{fame:2,mar:1},"賊人遁走，你還掛了彩。",{hp:-2})],["訪查賊窩再動手",{},W({int:5},"你摸清賊巢，一網打盡。",{fame:3},"消息走漏，撲了個空。",{mood:-1})],["推給縣令定奪",{vir:-1},"你落得清閒，同僚微有譏言。"]]),
+ev([28,60],"徵糧催科",cv(2),"州府催糧甚急，而境內歉收。",[["據實申報請減",{},W({vir:5},"上官體恤，准減三成。",{vir:2,fame:2},"上官斥你抗命。",{fame:-2})],["強行催逼",{gold:2,vir:-3},"糧雖收齊，百姓怨聲載道。"],["自捐俸祿補缺",{gold:-2,vir:2},"鄉民感念你的恩德。"]]),
+ev([35,65],"巡察屬縣",cv(3),"你奉命巡視各縣，暗訪民情。",[["微服私訪",{},W({int:6},"你查出一樁貪墨大案。",{fame:3,vir:2},"被胥吏識破，一無所獲。",{mood:-1})],["按例升堂聽稟",{fame:1},"所見所聞，皆是粉飾。"]]),
+ev([42,68],"廷議之爭",cv(4),"朝堂之上，為漕運改制爭論不休。",[["力主改制",{},W({int:7,fame:6},"天子准奏，你名動朝野。",{fame:3},"遭群臣圍攻，奏議被駁。",{fame:-2})],["持重旁觀",{vir:1},"你兩不相幫，保全自身。"]]),
+ev([48,75],"伏闕進諫",cv(5),"天子欲大興土木，勞民傷財。",[["伏闕直諫",{},W({vir:7},"天子動容，收回成命。",{fame:4,vir:2},"龍顏大怒，罰俸三月。",{gold:-2,fame:-1})],["委婉進言",{},W({int:6},"天子聽進了幾分。",{fame:2},"天子置若罔聞。",{})],["緘口不言",{vir:-2},"你默許其事，愧疚難安。"]]),
+ev([16,50],"夜哨驚魂",mv(1),"三更時分，你在哨位聽見林中異響。",[["鳴鑼示警",{},W(null,"果是敵探，全營有備，你記一功。",{fame:2,mar:1})],["獨自查探",{},W({mar:5},"你擒獲一名敵探。",{fame:2,mar:1},"遭敵暗算，負傷而回。",{hp:-3})]]),
+ev([18,55],"出哨探敵",mv(2),"你奉命率五人小隊出哨，刺探敵情。",[["深入敵境",{},W({mar:6,int:5},"帶回敵軍虛實，主將大喜。",{fame:3,int:1},"迷途遇敵，折了兩名弟兄。",{mood:-2,hp:-1})],["沿邊巡察",{fame:1},"你平安而回，所獲有限。"]]),
+ev([22,55],"扼守隘口",mv(3),"主將命你率千人，扼守要隘。",[["憑險固守",{},W({int:5},"敵軍攻了三日，無功而退。",{fame:3,mar:1},"糧盡援絕，苦撐待援。",{hp:-2})],["出擊襲營",{},W({mar:7},"夜襲得手，焚其糧草。",{fame:4,mar:1},"中伏而退，損兵折將。",{hp:-3,mood:-2},.6)]]),
+ev([28,60],"糧道被劫",mv(4),"後方急報，糧道為敵騎所劫。",[["親率精騎追截",{},W({mar:6},"你追上敵騎，奪回糧草。",{fame:3,mar:1},"追之不及，軍中缺糧。",{mood:-2})],["改道轉運",{},W({int:6},"另闢糧路，大軍無憂。",{fame:2,int:1},"路遠難行，延誤軍機。",{fame:-1})],["飛書請援",{},"主將另遣他人處置。"]]),
+ev([35,65],"奉詔出征",mv(5),"天子降詔，命你統兵北伐。",[["全力進剿",{},W({mar:7,int:6},"你一舉破敵，凱旋受賞。",{fame:5,gold:3},"功敗垂成，班師而還。",{fame:-2,hp:-2})],["穩紮穩打",{},W({int:6},"步步為營，終得小勝。",{fame:3},"曠日持久，朝中非議。",{fame:-1})]]),
+ev([40,70],"功高震主",mv(6),"朝中流言四起，說你擁兵自重。",[["上表交還兵符",{vir:3,fame:1},"天子嘉你忠謹，賜金帛歸第。"],["據軍自守",{vir:-4,fame:2},"你雖保住兵權，名節已虧。"],["自陳忠心",{},W({vir:7},"天子釋疑，君臣相得。",{fame:3},"疑忌難消，你寢食難安。",{mood:-2})]]),
+ev([14,70],"貨船遇風",jq(1,1,2),"運貨船行至江心，驟起風浪。",[["冒險趕路",{},W(null,"貨至價高，大獲其利。",{gold:3},"船觸暗礁，貨物盡失。",{gold:-2,mood:-2},.5)],["靠岸避風",{},"貨雖遲到，毫髮無損。"]]),
+ev([25,70],"官府攤派",jq(1,3,5),"縣衙差人上門，要你「捐輸」。",[["納銀結好官府",{gold:-3,fame:2},"此後官面上多了照應。"],["託詞推辭",{},W({fame:5},"縣令礙於你的名望，作罷。",{},"差役尋隙，罰了你一筆。",{gold:-2})]]),
+ev([14,70],"師傅挑剔",jq(2,1,2),"師傅嫌你針腳粗疏，當眾訓斥。",[["拆了重縫",{chr:1,mood:-1},"你熬夜重做，手藝見長。"],["低頭不語",{},"你把委屈嚥進肚裡。"]]),
+ev([25,70],"貴婦訂嫁衣",jq(2,3,5),"富戶人家訂製嫁衣，限期半月。",[["精工細繡",{},W({chr:7},"嫁衣豔驚四座，名聲遠播。",{gold:3,fame:2},"工期不足，被主家挑剔。",{gold:1,fame:-1})],["趕工草成",{gold:1,fame:-1},"工錢到手，口碑受損。"]]),
+ev([14,70],"爐火失控",jq(3,1,2),"夜裡爐火躥高，濺上柴垛。",[["奮力撲救",{},W({hp:5},"你撲滅火勢，保住鋪子。",{vir:1},"你被燙傷，鋪子也燒去一角。",{hp:-3,gold:-1})],["先救師傅",{vir:2,hp:-1},"人安然無恙，師傅感念於你。"]]),
+ev([25,70],"軍器監徵召",jq(3,3,5),"軍器監徵召良匠，為邊軍鑄造刀槍。",[["應召入監",{mar:1,gold:2,fame:1},"你鍛的兵刃，得軍中盛讚。"],["婉辭不去",{},"你守著自家鋪子，日子安穩。"]]),
+ev([14,70],"頑童搗蛋",jq(4,1,2),"學堂裡有頑童撕了同窗的書。",[["戒尺管教",{vir:-1},"頑童哭了，學堂靜了。"],["曉以大義",{},W({vir:5},"頑童羞愧認錯，從此向學。",{vir:2},"他當面答應，轉身又犯。",{mood:-1})]]),
+ev([25,70],"弟子赴考",jq(4,3,5),"你的得意門生即將赴京應試。",[["傾囊相授，臨行贈言",{},W({int:6},"他金榜題名，歸來拜謝師恩。",{fame:3,vir:2},"他落第而歸，你好言寬慰。",{vir:1})],["贈以盤纏",{gold:-1,vir:1},"他含淚拜別。"]]),
+ev([14,70],"村民求診",jq(5,1,2),"鄉民抱著高燒的孩子，叩門求醫。",[["望聞問切，開方施藥",{},W({int:5},"一劑見效，鄉人感激。",{vir:2,fame:1},"藥不對症，你徹夜憂心。",{mood:-2})],["先看家境再定藥",{vir:-1,gold:1},"診金收了，心裡有愧。"]]),
+ev([25,70],"貴人召診",jq(5,3,5),"高門顯宦遣車來請，說家主染了怪症。",[["悉心診治",{},W({int:7},"藥到病除，貴人厚賞。",{gold:3,fame:3},"醫不好，貴人遷怒。",{fame:-2,mood:-2})],["推薦他人",{vir:1},"你自知不能，薦了同道。"]]),
+ev([14,70],"客嫌菜鹹",jq(6,1,2),"客官拍案，說這道菜鹹得難以下嚥。",[["賠禮重做",{chr:1},"客人嚐後點頭，下回還來。"],["據理辯解",{vir:-1},"客人拂袖而去，掌櫃訓你。"]]),
+ev([25,70],"酒樓鬥廚",jq(6,3,5),"城中各酒樓相約鬥廚，賽名菜。",[["獻拿手名菜",{},W({chr:7},"滿座稱絕，奪得魁首。",{fame:3,gold:3},"火候稍差，屈居末席。",{fame:-1})],["稱病不赴",{},"你躲過一場風波，也失了良機。"]])
+);
+const PL="茶肆,酒樓,渡口,集市,城門,驛站,橋頭,廟會,書肆,藥鋪,鐵匠鋪,綢緞莊,米行,當鋪,城隍廟,山道,古道,荒村,碼頭,客棧,學堂,祠堂,河畔,竹林,田埂,村口,長街,巷口,牌坊下,茶山,漁市,馬市,戲臺邊,涼亭,石橋,山寺".split(","),TM="春雨初歇,夏夜納涼,秋風蕭瑟,冬雪封門,清明時節,端午前後,重陽佳日,除夕將近,上元燈夜,七夕之夜,梅雨連綿,霜降之後".split(",");
+const IN=`拾遺|你拾得一隻沉甸甸的錢袋，四下無人|守在原地等候失主|交給巡街差役|裝作沒看見|vir|fame|失主趕來叩謝，此事傳為美談|你枯等半日，只落得腰酸腿麻|10-80
+故人|迎面走來一位多年不見的故人，神色憔悴|請他坐下細談|塞給他幾文錢|點頭致意後走開|chr|vir|你寬慰他幾句，他眼眶泛紅，記下了你的情|話不投機，兩人都有些尷尬|18-80
+爭執|兩人為一點小事吵得面紅耳赤，眼看要動手|上前調停|在一旁勸了兩句|繞道而行|vir|fame|兩人悻悻散去，旁人都說你明理|兩邊都瞪你，你只好灰溜溜離開|14-75
+奇聞|有人繪聲繪色講起一樁離奇的傳聞|追問細節辨真偽|聽個熱鬧|當耳旁風|int|fame|你聽出破綻當場說穿，眾人側目|你信以為真，轉頭就被人笑話|10-80
+賭約|有人拍著胸脯，要與你打個賭|應下賭約|只賭小彩頭|婉言謝絕|int|gold|你算準了結果，贏得一筆彩頭|你輸了賭約，悔不當初|18-60
+求字|一位老者請你替他寫幾個字|揮毫寫下|代筆寫封信|推說不會|int|chr|字跡端秀，老者連聲稱好|你緊張走筆，墨團糊成一片|12-70
+請益|一位前輩似乎有意指點後生|誠心請教|端茶侍奉|遠遠觀望|int|int|前輩見你誠懇，講了一番道理，你茅塞頓開|前輩閉目不答，只擺了擺手|12-45
+乞兒|一個瘦小的乞兒怯怯地拽住你的衣角|分他半個饅頭|給他幾文錢|裝作沒瞧見|vir|vir|他狼吞虎嚥，多年後仍記得你|他怕生躲開，你的好意落了空|10-80
+攔路|幾個形跡可疑的漢子擋在前路|硬著頭皮闖過去|高聲呼喊求援|調頭另走他路|mar|fame|你氣勢逼人，漢子們反倒讓開了路|你被推倒在地，狼狽爬起|18-55
+急病|有人倒在路邊，臉色蒼白，氣息微弱|憑所知施救|喚人來幫忙|不敢招惹|int|vir|你施救及時，他緩過氣來連連拜謝|你手忙腳亂，幸有路人接手|12-80
+叫陣|有個年輕人當眾叫陣，要與你比試一場|應戰|改比文的|拱手認輸|mar|fame|你勝了一招，眾人喝彩|你敗下陣來，臉上火辣辣|14-45
+失火|不遠處忽然冒起濃煙，人群驚呼|衝進去救人|提水撲火|高呼示警|hp|vir|你衝入火場救出一人，自己也被燻黑|你嗆了幾口煙，只能退出|14-60
+貨郎|有個行商開價極低，說要急著脫手|砍價細驗貨|買下少許|不理會|int|gold|你驗出貨好價實，轉手得利|貨是次品，你被騙了去|16-60
+問路|一位外地商旅向你打聽去路|親自帶他一程|指點方向|說自己也不熟|chr|chr|商旅感激，臨別送你一件小物|你帶錯了路，兩人尷尬|12-75
+學藝|有位匠人正在做活，手法利落，引人駐足|請求指點|在旁靜靜看|看了一眼便走|int|int|匠人見你好學，傳了你幾句竅門|匠人嫌你礙事，把你趕開|10-40
+盤問|兩個官差攔住你，盤問你的來歷|從容作答|賠笑奉茶|低頭快步離開|chr|fame|官差見你談吐不俗，客氣放行|你言語含糊，被多盤問了一刻鐘|16-70
+宴請|有人設宴相邀，席間多是不認識的人|舉杯結交|只吃菜不多話|婉言告辭|chr|fame|席間談笑風生，你結下幾位新朋友|你酒量不濟，出了點小洋相|18-65
+急難|你聽聞鄰人家中遭了急難|慨然解囊|出力幫忙|只道一聲保重|gold|vir|你雪中送炭，鄰人記你一輩子|你手頭也緊，只幫上一點小忙|16-70
+猛獸|草叢中忽然竄出一頭毛色斑駁的野獸|持械迎擊|爬上樹避險|屏息慢慢後退|mar|fame|你擊退野獸，鄉里都說你有膽氣|你被撓了一爪，倉皇逃走|16-50
+契約|有人遞來一紙契約，請你過目畫押|逐條細讀|請人代看|推說不識字|int|gold|你讀出一條暗藏的陷阱，替自己省了一筆|你看漏一條，吃了點小虧|18-65
+孤老|一位孤寡老人獨坐門前，似有心事|陪他說話解悶|送些吃食|點頭問好|vir|mood|老人說起半生往事，你聽得心頭一暖|老人只是搖頭，什麼也不肯說|12-80
+流言|你聽說有人在背後議論你|當面澄清|一笑置之|暗中留意|vir|fame|你坦然相對，流言不攻自破|你越說越亂，反添幾分疑心|18-65`.split("\n").map(r=>r.split("|"));
+IN.push(...`賣藝|{w}在街頭賣藝，圍觀者寥寥|上前合演一段|丟幾文賞錢|駐足看完|chr|mood|你即興配合，贏得滿場喝彩|你出了醜，惹人發笑|12-60|chr2,fame1,gold1|mood-2,chr-1|gold-1,mood2|你賞了錢，藝人笑著作揖
+古井|村外有口古井，傳說夜裡能聽見人語|夜裡去探個究竟|白天去看看|不去理會|mar|mood|你壯著膽子探查，在井邊撿到一只舊銅匣|風聲嚇得你轉身就跑|12-40|gold3,int1|mood-2,hp-1|mood1,int1|你白日去看，只見青苔和蛛網
+借宿|暮色沉沉，{w}請求借宿一晚|留他住下|指他去客棧|閉門謝客|vir|mood|他臨走留下一冊舊書，說是謝禮|半夜屋裡丟了件東西，你疑神疑鬼|14-70|int2,vir1|gold-1,mood-1|mood1|你替他指了路，他道謝離去
+米價|{w}告訴你，近來米價漲得古怪|囤些米糧|只照常採買|不放在心上|int|gold|你料中行情，米價果然上漲，賺了一筆|你囤得太多，價錢又跌了回去|20-65|gold3|gold-2,mood-1|gold1|你照常過日子，米價不過是談資
+秘籍|{w}聲稱手裡有本武學秘籍，肯低價轉讓|買下細看|只問問價錢|嗤之以鼻|int|gold|你看出幾分真意，照著練習獲益匪淺|你花了冤枉錢，買來的是本廢紙|16-45|mar2,int1|gold-2,mood-1|mood1|你問了價錢，嫌貴作罷
+病牛|鄰居家的耕牛病倒了，一家人愁雲慘淡|試著配藥醫治|幫忙去請獸醫|送去一把草料|int|vir|耕牛竟緩了過來，鄰居感激涕零|藥下去沒起色，只好另想辦法|16-60|vir2,fame1|mood-1|vir1|牛吃了草料，總算有了點精神
+雷雨|山道上突降暴雨，雷聲滾滾|冒雨趕路|尋山洞避雨|在樹下躲雨|hp|mood|你一路疾行，如期趕到，反覺筋骨舒暢|你淋了個透心涼，染上風寒|14-60|hp1,mood1|hp-3|int1|你在山洞裡避雨，順手讀完了半卷書
+拜帖|一位仰慕你的後生遞來拜帖，想登門請教|熱情接待|約日後再談|婉言回絕|chr|fame|你傾囊指點，他逢人便說你的好|你講得枯燥，後生聽得昏昏欲睡|22-70|fame2,vir1|mood-1|mood1|你與他約了來日，他歡歡喜喜告辭
+河燈|河面漂著一盞盞祈願的河燈，{w}遞給你一盞|寫下心願放入水中|幫他點燈|在岸邊看著|vir|mood|你寫下心願，燈影遠去，心中一片澄明|風一吹，燈翻了，你心裡咯噔一下|12-80|mood3,vir1|mood-1|mood1|你幫他點亮河燈，兩人相視一笑
+窮親|鄉下的遠房親戚找上門來，想借住些時日|熱情留他住下|給些盤纏打發|託辭推脫|vir|vir|他勤快能幹，幫你家做了不少事|他住久了，家中雞飛狗跳|20-65|vir2,hp1|gold-1,mood-2|gold-1,vir1|你給了盤纏，他千恩萬謝
+繡帕|{w}拿出一方精緻的繡帕，請你品評|細細鑑賞|隨口誇兩句|說自己不懂|chr|chr|你點出幾處妙處，對方引為知己|你說錯了門道，對方臉色一沉|14-60|chr2,mood1|mood-1|chr1|你誇了兩句，對方笑逐顏開
+酒醉|一位同鄉醉醺醺拉著你，嘮叨生意失敗的苦|耐心勸解|陪他喝一杯|找個藉口走開|vir|mood|你勸得他醒了酒，答應重新振作|他越說越激動，竟哭了起來|20-65|vir2,mood1|mood-2|mood1,hp-1|你陪他喝到半夜，頭疼了一整天
+拆招|{w}說自己有一套獨門劍法，想找人拆招|接他兩招|在旁觀看|拱手作罷|mar|mar|你從他的招式裡悟出新路數|你被他逼得手忙腳亂|14-50|mar2,hp1|hp-2,mood-1|int1|你旁觀他演練，看出些門道
+說書|一群孩童圍著你，吵著要你講個故事|講一段英雄故事|教他們認幾個字|摸摸頭就走|chr|vir|孩子們聽得入神，把你當成了大英雄|你講得磕磕絆絆，孩子們一哄而散|16-70|chr1,vir2,mood1|mood-1|int1,vir1|孩子們跟著你念，念得搖頭晃腦
+大霧|清晨起了大霧，十步之外看不清人|摸索著前行|站在原地等霧散|折返回家|hp|int|你在霧中摸出一條近路|你一腳踩空，崴了腳|12-70|int1,mood1|hp-2|mood1|霧散後天朗氣清，你覺得神清氣爽
+家書|你收到一封遠方家人的書信|立即回信細述近況|只托人口信報平安|擱置不回|vir|mood|你一筆一畫寫了三頁，家人讀罷落淚|你寫得詞不達意，家人愈發擔憂|18-80|vir1,mood2|mood-1|mood1|你捎了口信，家人總算放下心
+古劍|{w}拿出一柄古劍，說願出讓給識貨的人|請他開價細看|只做鑑賞|說囊中羞澀|int|gold|你看出劍乃古物，轉手賣了高價|劍是仿的，你賠了定金|20-60|gold4,fame1|gold-2|fame1|你做了一番鑑賞，得了個識貨的名聲
+夜讀|夜深人靜，窗外風聲簌簌，案頭一卷書未讀完|秉燭夜讀|早些歇息|出門散步|int|int|你一夜讀完，豁然開朗|你讀到後半夜，眼睛酸澀，什麼也沒記住|12-65|int2|hp-1,mood-1|hp1|你早早歇下，一夜好眠
+風水|{w}說你家的風水有問題，要替你改運|請教道理|付些錢打發|驅他離開|int|gold|你聽出是江湖騙術，當面揭穿|你信了他的話，花錢改了半天沒用|20-65|vir1,fame1|gold-3,mood-1|gold-1|你破財打發，圖個耳根清靜
+擂臺|擂臺上，某家小姐的比武招親正熱鬧|上臺挑戰|在臺下助威|擠出人群離開|mar|chr|你連勝數場，贏得滿堂彩|你剛上臺就被掀翻，狼狽下場|16-35|chr2,fame2,mar1|hp-2,fame-1|mood1|你在臺下喊啞了嗓子，痛快極了
+夜客|夜裡有人悄悄叩門，說被仇家追殺，求你收留|收留他|報官|裝作無人|vir|vir|他日後出人頭地，記著你的救命之恩|他並非善類，鬧出一場風波|20-60|vir2,fame2|vir-1,mood-2,hp-1|fame1,vir-1|官差帶走了他，你也平安無事
+賞花|園中百花盛開，文人雅士正在聚會賞花|賦詩一首|與人品茗閒談|獨自賞花|int|chr|你的詩贏得同聲喝彩|詩句平平，被人客氣地點了點頭|16-60|chr1,fame2,int1|mood-1|chr1,mood1|你與人談得投契，換了幾位新朋友
+捉賊|你發現有人在偷鄰居家的雞|大喝一聲|悄悄告訴鄰居|假裝沒看見|mar|vir|賊被你喝退，鄰居特意送來謝禮|賊反倒瞪著你，你悻悻退開|14-60|vir1,gold1,fame1|hp-1,mood-1|vir1|鄰居抓了賊，從此跟你親近了許多
+水荒|井水乾涸，鄉鄰排著隊去遠處挑水|帶頭挖新井|幫老人挑水|各自想辦法|hp|vir|新井挖通，全村感激|累了幾天，一無所獲，白費力氣|16-60|vir3,fame2,hp-1|hp-2,mood-1|vir1,hp-1|你幫老人挑了幾趟水，腰痠背痛
+算命|街頭有個瞎眼老者，聲稱能斷人生死|請他算一卦|在一旁聽|搖頭離去|int|mood|他說了句頗有深意的話，你悟了幾分|他說了一通模稜兩可的話，你反倒心緒不寧|14-80|int1,mood2|mood-2|mood1|你在一旁聽，覺得有趣
+烈馬|有一匹烈馬，無人敢上|試著馴服|打聽價錢|在旁觀看|mar|fame|你撐住了半柱香，烈馬終於服軟|你被甩出老遠，摔得七葷八素|16-45|fame3,mar1,mood1|hp-3,fame-1|mood1|你打聽了價錢，覺得這馬不值
+誦經|僧人在殿中誦經，聲音綿長|靜心聆聽並抄經|添些香油錢|站在殿外看看|vir|mood|你心如止水，彷彿放下了些什麼|你坐不住，念頭紛亂|14-80|vir2,mood2|mood-1|vir1,gold-1|你添了香油錢，僧人合十道謝
+失眠|多日心煩意亂，總是睡不安穩|到野外練功累自己|煎一碗安神湯|硬撐著度日|hp|mood|你練到筋疲力盡，倒頭便睡，心緒開朗|你練過了頭，反倒更精神了|16-70|hp1,mood3|mood-1,hp-1|mood2|你喝了安神湯，總算睡了個安穩覺
+路遇乞兒|{w}攔住你，說已三日未進食|分他些銀錢和乾糧|教他一門謀生本事|繞道而行|vir|vir|他含淚叩謝，後來竟成了一方善人|你給的錢被旁人搶去，白費心意|12-80|vir2,mood1|mood-1|vir1,int1
+失火|附近民宅突然起火，濃煙滾滾|衝進去救人|組織鄰里提水滅火|大喊報信後退開|hp|vir|你冒死救出一家老小，傳為佳話|火勢太猛，你被灼傷退出|16-55|vir3,fame2|hp-2,mood-2|vir1,fame1
+借貸|{w}上門借錢，說家中急用|慷慨借出|問明用途再斟酌|婉言謝絕|vir|vir|對方如期奉還，還送來一份謝禮|對方一去杳無音信|16-70|gold2,vir1|gold-2,mood-1|mood1
+地界之爭|你與鄰人因地界起了爭執，鬧到公堂|據理力爭|請德高望重者調解|息事寧人|int|fame|你說得條理分明，官老爺判你勝訴|你言辭笨拙，反被對方佔了上風|18-65|fame2,gold1|fame-1,mood-2|vir1,mood1
+結義|{w}與你相談甚歡，提議結為異姓兄弟|欣然結拜|先交往一陣再說|客氣婉拒|vir|fame|你們義結金蘭，日後互相照應|對方原是騙子，騙走了你的盤纏|16-45|fame2,mood2|gold-2,mood-2|mood1
+時疫|鄉里傳出時疫，人心惶惶|設棚施藥|閉門謹慎度日|舉家避往他鄉|int|vir|你配的藥方頗有效驗，救了不少人|藥不對症，你反染了風寒|16-70|vir3,fame1|hp-2,mood-1|hp1
+舊書|你在舊書攤翻到一卷殘破古書|買下細讀|請{w}鑒定|隨手放下|int|int|原來是前朝孤本，你大有所獲|不過是尋常雜書，白費了銅錢|14-80|int3,fame1|gold-1,mood-1|int1
+資助書生|{w}盤纏用盡，在路邊發愁|資助他赴考|與他結伴同行|匆匆走過|vir|fame|數年後他高中，特意登門致謝|他名落孫山，不辭而別|16-50|vir2,fame2|gold-1,mood-1|vir1,mood1
+鬥雞|有人邀你賭鬥雞，賭注不小|下注一搏|只在旁看熱鬧|拒絕離開|fame|gold|你押中了，贏得一筆彩頭|你押的雞敗下陣來，輸得精光|16-60|gold2,mood1|gold-2,mood-2|mood1
+孤兒|你發現一個無依無靠的孤兒蜷在牆角|帶回家收留|送去善堂|不聞不問|vir|vir|孩子長大後孝順懂事，你心中甚慰|孩子偷偷跑了，你悵然若失|18-70|vir3,mood2|mood-2|vir1`.split("\n").map(r=>r.split("|")));
+const SF=["你選了穩妥的法子，事情平平淡淡地過去了。","你不爭不搶，這事便這麼了了。","你照著常理辦，無功也無過。"],SK=["你沒有多插手，事情自行了結。","你轉身離開，把這事丟在了身後。","你當作什麼也沒發生。"];
+const WH="一位白髮老者,一個挑擔的貨郎,一位遊方道士,一名落魄書生,一位年輕寡婦,一個赤腳孩童,一位路過的鏢師,一位富商,一名醉漢,一位老僧,一個說書人,一位女醫,一名退伍老兵,一位官家公子,一個走江湖的藝人,一位採藥人,一名更夫,一位私塾先生,一個異鄉旅人,一位老農".split(","),AT="日頭正毒，/人聲鼎沸，/四下安靜，/風有些涼，/天色將晚，/剛下過一場雨，/遠處傳來犬吠，/空氣中飄著炊煙，".split("/");
+const pf=t=>{const o={};String(t).replace(/([a-z]+)(-?\d+)/g,(m,k,v)=>o[k]=+v);return o};
+PL.map(p=>["你行經"+p+"時，",p]).concat(TM.map(t=>["正值"+t+"，",t])).forEach(([pre,nm],ci)=>IN.forEach((r,ri)=>{const[t,x,a,b,c,s,g,ok,no,ag,fo,fn,fs,st]=r,[lo,hi]=ag.split("-").map(Number),k=(ci+ri)%3,at=(ci+ri)%3?AT[(ci*3+ri)%AT.length]:"";
+ E.push({g:1,k:t,a:[lo,hi],t:nm+"・"+t,x:pre+at+x.replace("{w}",WH[(ci*5+ri*3)%WH.length])+"。",c:[[a,{},W({[s]:4+(ci*3+ri)%4},ok+"。",fo?pf(fo):{[g]:2,mood:1},no+"。",fn?pf(fn):{mood:-1})],[b,fs?pf(fs):{mood:1},(st||SF[k])+(st?"":"")],[c,{},SK[k]]]})}));
+const FE={a:[18,18],t:"弱冠抉擇",x:"你已年滿十八，朝廷開科取士：文有科舉，武有武舉。這一步，將決定你往後的路。",c:[["參加科舉",{},W({int:8},"放榜之日，你榜上有名，從此踏入仕途。",{rank:1,fame:3,int:1},"你在榜上遍尋不見自己的名字，只得待來年再考。",{mood:-2,int:1})],["參加武舉",{},W({mar:8},"你騎射俱佳，以武舉出身授校尉。",{enlist:1,mrank:2,fame:2},"你敗給了更強的對手，回鄉繼續磨練。",{mood:-1,mar:1})],["暫不赴考，另謀出路",{},"你決定先看看這世道，再作打算。"]]};
+const G=[["文官：考取功名",()=>S.rank>=1],["成家立業",()=>S.spouse],["子女二人以上",()=>S.kids>=2],["文官：官至知府",()=>cf()>=10],["富甲一方",()=>S.s.gold>=10],["壽過六十",()=>S.age>=60],["武官：升至校尉",()=>S.mrank>=3],["武官：出任將軍",()=>S.mrank>=5],["行業：出師為匠",()=>S.jl>=3],["行業：執一行之牛耳",()=>S.jl>=5]];
+const $=id=>document.getElementById(id),R=n=>Math.floor(Math.random()*n),P=a=>a[R(a.length)];
+let S;
+const stage=()=>S.age<3?0:S.age<12?1:S.age<18?2:S.age<35?3:S.age<55?4:5;
+const clamp=()=>K.forEach(([k])=>S.s[k]=Math.max(0,Math.min(12,S.s[k])));
+function __v5BaseApply(fx){for(const k in fx){if(k=="enlist"){S.army=1;S.job=0;S.jl=0;if(!S.mrank)S.mrank=1}else if(k=="job"){S.job=fx[k];S.jl=1;S.jx=0;S.js=0}else if(k=="quit"){S.job=0;S.jl=0}else if(k=="mrank"){if(S.army){let gain=fx[k];if(gain>0&&S.mrank<=1&&!militaryEligibility()){gain=0;S.cur.push("你雖有軍中機會，但武藝或家門軍籍尚不足，升遷未成。");}S.mrank=Math.max(0,Math.min(6,S.mrank+gain));S.ms=0}}else if(k=="discharge")S.army=0;else if(k=="rank"){let gain=fx[k];if(gain>0&&S.rank==0&&!civilEligibility()){gain=0;S.cur.push("你雖有入仕機會，但才學、名望或家門背景仍不足，未能真正授官。");}S.rank=Math.max(0,Math.min(5,S.rank+gain));S.rs=0;if(gain>0){S.job=0;S.jl=0}}else if(k=="wed"){S.spouse=P(SUR)+"氏";S.sc=genC(1);S.so=R(5)-2;S.s.chr++}else if(k=="lose"){S.spouse=0;S.sc=null}else if(k=="kid"){S.kids+=fx[k];if(fx[k]>0)for(let n=0;n<fx[k];n++)(S.kc=S.kc||[]).push({n:S.name[0]+P(GIV),b:S.age,c:null});else if(S.kc)S.kc.splice(fx[k])}else if(k=="ns"||k=="pp"||k=="fav")S[k]=Math.max(0,Math.min(12,(S[k]||0)+fx[k]));else if(k=="king")becomeKing();else if(k=="doom")S.fall="你起兵事敗，兵敗身死，家族盡誅。";else S.s[k]+=fx[k]}clamp()}
+const fxT=fx=>Object.entries(fx).map(([k,v])=>NM[k]+(v>0?"↑":"↓")).join(" ");
+function sheet(t,b,x=1){$("sh").innerHTML=`<div class="cd"><h2>${t}</h2>${b}${x?'<button class="opt" onclick="cls()">關閉</button>':''}</div>`;$("sh").classList.add("on")}
+const cls=()=>$("sh").classList.remove("on");
+const rows=a=>a.map(([x,y])=>`<div class="row"><span>${x}</span><span>${y}</span></div>`).join("");
+const tt=()=>{if(S.king)return"皇帝";const a=[];if(S.rank)a.push(cn());if(S.mrank)a.push(mn()+(S.army?"":"(退)"));if(S.job)a.push(jn());return a.join("・")||(S.royal==2?"皇嗣":S.royal==1?"宗室":"白身")};
+function render(){
+  const st=stage();
+  $("nm").textContent=S.name;
+  $("sb").textContent=DY[S.dyn].n+"朝"+S.emp.nh+"・"+tt()+"・"+S.age+"歲";
+  $("av").textContent=AV[st];$("coin").textContent=S.s.gold*100;
+  $("prov").textContent=S.prov.slice(0,2);
+  $("stg").innerHTML="<b>"+SI[st]+"</b>"+SN[st];
+  $("txt").innerHTML=S.cur.map(l=>`<p>${l}</p>`).join("");
+  $("txt").scrollTop=0;
+  const goalDone=G.filter(x=>x[1]()).length,score=lifeScore();
+  $("lpAge").textContent=S.age+" / 80";
+  $("lpBar").style.width=Math.min(100,S.age/80*100)+"%";
+  $("lpAct").textContent=(S.acted||0)+" / 2";
+  $("lpScore").textContent=score;
+  $("lpGoal").textContent=goalDone+" / "+G.length;
+  $("nx").textContent=S.age>=80?"走完一生":"下一年";
+  $("lpTitle").textContent=S.king?"👑 帝王之路":(S.royal==2?"🏯 皇嗣之路":(S.fam?.n||"人生旅途"));
+  $("bars").innerHTML=(S.king?[BARS[0],BARS[1],["ns","國力","#e05c5c","🏯"],["pp","民心","#5ccfe0","👥"],BARS[3],BARS[4]]:BARS).map(([k,n,c,e])=>`<div class="b"><div class="ic">${e}</div><span>${n}</span><div class="tr"><i style="width:${(S[k]??S.s[k])/12*100}%;background:${c}">${Math.round((S[k]??S.s[k])/12*100)}</i></div></div>`).join("");
+}
+function __v5BaseStart(){
+  cls();const dyn=R(4),fi=pickFam(),fam=FAM[fi],sur=P(SUR),gv=P(GIV),g=()=>P(GIV)+P(GIV);
+  S={dyn,fam,rank:0,mrank:0,army:0,job:0,jl:0,jx:0,spouse:0,kids:0,age:0,name:sur+gv,prov:P(PV),s:{...fam.s,mood:3+R(5),chr:2+R(7)},done:new Set(),ik:{},last:{},deeds:[],hist:[],quiet:0,acted:0,eventHistory:[],causal:{仁:0,權:0,財:0,武:0},worldFlags:{},pending:[],eventCount:0,v6Done:{},v6EventHistory:[],v6Last:{},famOfficeAid:0,famMilitaryAid:0,famTradeAid:0,familyCareer:{civil:0,military:0,trade:0,craft:0},
+   kin:[{r:"父親",n:sur+g(),a:20+R(10),c:{...FJC[fi]}},{r:"母親",n:P(SUR)+"氏",a:19+R(9),c:{...FMC[fi]}}]};
+  for(let i=R(4);i>0;i--)S.kin.push({r:Math.random()<.5?"兄長":"姐姐",n:sur+P(GIV),a:1+R(8)});
+  apply(DY[dyn].s);S.emp=newEmp(1);S.ns=6;S.pp=6;S.fav=4+R(4);S.fi=fi;S.royal=fi>=5?fi-4:0;
+  // 皇室身分同步：若玩家生於皇室，父親「天子」就是當朝皇帝，避免父親與皇帝資料分離。
+  if(S.royal==2){ const father=S.kin.find(k=>k.r==="父親"); if(father){ S.emp.n=father.n; father.c=father.c||{}; father.c.l=father.c.l||6; } }
+  S.cur=["<b>年齡 零歲</b>",`${DY[dyn].n}朝${P(NH)}年，我生於${S.prov}，隨父姓${sur}，名${gv}。${DY[dyn].d}${fam.d}當今天子為${S.emp.n}，${S.emp.tr[0]}之相。`,...S.kin.map(k=>`${k.r}${k.n}，${k.a}歲${k.c?"，職業："+cj(k.c):""}。`)];
+  render();
+}
+function __v5BaseNextYear(){
+  S.age++;S.acted=0;S.cur=[`<b>年齡 ${S.age}歲</b>`];processPending();
+  if(S.age>45&&Math.random()<.12)S.s.hp--;
+  S.s.mood+=R(3)-1;if(S.army){if(Math.random()<.15)S.s.hp--;if(Math.random()<.4)S.s.gold++}
+  if(S.job){const J=JB[S.job-1];S.jx++;if(Math.random()<.15+.1*S.jl)S.s.gold++;if((S.jl<5||(S.js||0)<2)&&S.jx>=2+S.jl&&S.s[J.m]>=2+S.jl*1.5+(S.js||0)){if((S.js||0)<2)S.js=(S.js||0)+1;else{S.jl++;S.js=0}S.jx=0;S.cur.push(`你在${J.n}一行勤勉有成，晉為「${jn()}」。`)}}
+  offYear();famYear();familyCareerYear();famDeath();empYear();clamp();
+  if(S.fall||S.s.hp<=0||(S.age>60&&Math.random()<(S.age-58)/70)||S.age>=95)return end();
+  let pool=E.filter(e=>(e.rep?S.age-(S.last[e.t]??-99)>=(e.cd||8):!S.done.has(e.t))&&S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.d||e.d.includes(S.dyn))&&(!e.q||e.q())&&!(e.k&&S.ik[e.k])&&(!S.king||e.kg||e.fam||e.a[0]>=18));
+  // 年齡分層：12歲以前只允許兒童／成長事件；12–15歲不抽婚姻、仕途與成人社會事件。
+  if(S.age<12){pool=pool.filter(e=>e.a[1]<=15||e.t==='災荒');}
+  else if(S.age<16){pool=pool.filter(e=>e.a[1]<=20&&e.t!=='提親'&&e.t!=='科舉'&&e.t!=='察舉孝廉'&&e.t!=='長安詩會'&&e.t!=='商機'&&e.t!=='朝堂風波'&&e.t!=='縣衙事務'&&e.t!=='考績'&&e.t!=='黨爭'&&e.t!=='入閣之議');}
+  // 皇帝不再只抽皇帝事件：一般事件與帝王事件混合，並避開最近幾次出現過的標題。
+  if(S.ev){const recent=(S.eventHistory||[]).slice(-8);const fresh=pool.filter(e=>!recent.includes(e.t));if(fresh.length>=3)pool=fresh;}
+  render();
+  const fe=S.age==18&&!S.army&&S.royal!=2&&!S.king&&!S.done.has("弱冠抉擇")?FE:null;
+  if(fe||pool.length&&(Math.random()<.62||S.quiet>=2)){S.quiet=0;const gp=pool.filter(x=>x.g),core=pool.filter(x=>!x.g),one=core.filter(x=>!x.rep);
+    let e=fe;
+    if(!e){
+      // 約 25% 偏向特殊／帝王事件，其餘優先一般事件，避免登基後畫面只剩宮廷事件。
+      const special=S.king?pool.filter(x=>x.kg):[];
+      const general=S.king?pool.filter(x=>!x.kg):pool;
+      e=(S.king&&special.length&&Math.random()<.25)?P(special):P(general.length?general:(gp.length?gp:pool));
+    }
+    S.eventHistory=S.eventHistory||[];S.eventHistory.push(e.t);if(S.eventHistory.length>12)S.eventHistory.shift();
+    S.done.add(e.t);S.last[e.t]=S.age;if(e.k)S.ik[e.k]=1;S.ev=e;
+    sheet(e.t,`<p>${S.age}歲。${typeof e.x=="function"?e.x():e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="pick(${i})">${c[0]}</button>`).join(""),0)}
+  else{S.quiet++;S.cur.push((S.army&&Math.random()<.7?P(FA):P(FL[stage()])));render()}
+}
+function applyChoiceConsequence(e,lab,fx){
+  S.choiceCount=(S.choiceCount||0)+1;
+  const c=S.causal||{仁:0,權:0,財:0,武:0};
+  if((fx.vir||0)>0){c.仁+=fx.vir;S.worldFlags.goodDeeds=(S.worldFlags.goodDeeds||0)+1;if(S.family?.rep!=null)S.family.rep=Math.min(20,S.family.rep+1);}
+  if((fx.fame||0)>0){c.權+=fx.fame;S.worldFlags.reputation=(S.worldFlags.reputation||0)+1;if(S.family?.rep!=null)S.family.rep=Math.min(20,S.family.rep+1);}
+  if((fx.gold||0)>0){c.財+=fx.gold;S.worldFlags.wealth=(S.worldFlags.wealth||0)+1;}
+  if((fx.mar||0)>0){c.武+=fx.mar;S.worldFlags.martial=(S.worldFlags.martial||0)+1;}
+  if(S.king){
+    if((fx.vir||0)>0)S.pp=Math.min(12,(S.pp||0)+1);
+    if((fx.fame||0)>0)S.ns=Math.min(12,(S.ns||0)+1);
+    if((fx.gold||0)<0)S.pp=Math.max(0,(S.pp||0)-1);
+    if((fx.mar||0)>0)S.ns=Math.min(12,(S.ns||0)+1);
+  }
+  // 重大選擇留下「因果」，數年後可能轉化為人物、家族或朝廷事件。
+  if(Math.max(Math.abs(fx.vir||0),Math.abs(fx.fame||0),Math.abs(fx.gold||0),Math.abs(fx.mar||0),Math.abs(fx.int||0))>=2){
+    S.pending=S.pending||[];S.pending.push({age:S.age+2+R(5),type:(fx.vir||0)>0?"仁":(fx.gold||0)>0?"財":(fx.mar||0)>0?"武":"權",title:e.t,choice:lab});
+    if(S.pending.length>8)S.pending.shift();
+  }
+  S.causal=c;
+}
+function processPending(){
+  if(!S.pending?.length)return;
+  const hit=S.pending.filter(x=>x.age<=S.age);S.pending=S.pending.filter(x=>x.age>S.age);
+  hit.forEach(x=>{
+    if(x.type==="仁"){S.s.fame++;S.s.mood++;S.cur.push(`因你當年在「${x.title}」中的選擇，舊日受助者的後人登門致謝。（名望↑ 心情↑）`)}
+    else if(x.type==="財"){S.s.gold++;S.cur.push(`當年在「${x.title}」留下的商業選擇如今開花結果，有人送來分紅。（家財↑）`)}
+    else if(x.type==="武"){S.s.mar++;S.s.fame++;S.cur.push(`當年在「${x.title}」中的膽識傳開，地方武人邀你主持比武。（武勇↑ 名望↑）`)}
+    else {S.s.int++;S.s.fame++;S.cur.push(`當年在「${x.title}」中的決定被人傳頌，朝中有人因此記住你的名字。（才學↑ 名望↑）`)}
+  });
+}
+function pick(i){
+  const e=S.ev,[lab,fx,r]=e.c[i];let txt;apply(fx);let resultFx={...fx};
+  const d0=S.s.hp+S.s.int+S.s.vir+S.s.fame+S.s.mar;
+  if(typeof r==="string")txt=r;
+  else{let ok=r.p!=null?Math.random()<r.p:true;if(r.need)for(const k in r.need)if(S.s[k]<r.need[k])ok=false;
+    if(ok){txt=r.ok;Object.assign(resultFx,r.okfx||{});apply(r.okfx||{})}else{txt=r.no;Object.assign(resultFx,r.nofx||{});apply(r.nofx||{})}}
+  applyChoiceConsequence(e,lab,resultFx);
+  S.s.mood+=Math.sign(S.s.hp+S.s.int+S.s.vir+S.s.fame+S.s.mar-d0);clamp();
+  S.cur.push(`【${e.t}】你選擇了「${lab}」。${txt}`);S.hist.push(`${S.age}歲 ${e.t}：${lab}。${txt}`);S.deeds.push(e.t+"・"+lab);
+  cls();render();if(S.s.hp<=0||S.fall)end();
+}
+function acts(src){
+  const L=AL(src);
+  const h=L.map((it,j)=>[it,j]).filter(([it])=>(!it[2]||it[2]())&&S.age>=(it[3]||0)).map(([it,j])=>`<button class="opt" ${S.acted>=2||(it[1].gold<0&&S.s.gold<1)?"disabled":""} onclick="act(${j},'${src}')">${it[0]}<small>${fxT(it[1])}</small></button>`).join("");
+  sheet(src=="s"?SN[stage()]:"活動",`<p>${S.acted>=2?"今年行動已用盡，請進入下一年。":"每年有 2 點行動力，已使用 "+(S.acted||0)+" / 2。"}</p>`+h);
+}
+function act(j,src){
+  const it=AL(src)[j];if(S.acted>=2)return;S.acted=(S.acted||0)+1;
+  const fx={};for(const k in it[1]){const v=it[1][k];if(v>0&&K.some(x=>x[0]==k)&&((k!="gold"&&S.s[k]>=7&&Math.random()<.5)||Math.random()<.2))continue;fx[k]=v}
+  apply(fx);const n=Object.keys(fx).length;
+  S.cur.push(`你${it[0]}，${n?"頗有所得。（"+fxT(fx)+"）":"這一年收穫不大。"}`);S.hist.push(`${S.age}歲 ${it[0]}`);cls();render();
+}
+function visit(){if(S.acted>=2)return;S.acted=(S.acted||0)+1;apply({mood:2});S.cur.push("你探望了親友，彼此問暖。（心情↑）");cls();render()}
+function kin(){
+  const l=S.kin.map(k=>{const a=k.a+S.age;return [k.r+" "+k.n,a>75||k.x?"已故":a+"歲"+(k.c?"・"+cj(k.c)+(a>62&&k.c.t?"（已退）":""):"")]});
+  if(S.spouse)l.push(["配偶 "+S.spouse,S.sc?(S.age+S.so)+"歲・"+cj(S.sc):"在世"]);
+  const kc=S.kc||[];kc.forEach(d=>l.push(["子女 "+d.n,(S.age-d.b)+"歲"+(d.c?"・"+cj(d.c):"")]));if(S.kids>kc.length)l.push(["其餘子女",(S.kids-kc.length)+"人"]);
+  sheet("親友",rows(l)+`<button class="opt" ${S.acted>=2?"disabled":""} onclick="visit()">探望親友<small>心情↑</small></button>`);
+}
+function estate(){const g=S.s.gold;sheet("家產",rows([["銅錢",g*100+" 文"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["居所",g<3?"茅屋":g<6?"瓦房":g<10?"大宅":"府邸"],["文職",S.rank?cnp()+(S.army?"・休職":""):"無"],["武職",S.mrank?mnp()+(S.army?"・現役":"・退役"):"無"],["文俸",S.rank&&!S.army?Math.round((cf()+1)*3.4)+" 石/年":"無"],["軍餉",S.army?Math.round((mf()+1)*3.6)+" 石/年":"無"]]))}
+function personMenu(){sheet("人物",rows([["姓名",S.name],["年齡",S.age+"歲"],["身分",tt()],["家族",S.family?.name||S.fam?.n||"—"],["家門背景",familyCareerLabel()],["家人職業影響",(()=>{const f=familyCareerInfo();return `文官${f.civil||0}級・武職${f.military||0}級・商業${f.trade||0}級`})()],["職業",S.job?`${jobInfo().name}・${jobInfo().title}`:"未入行"],["配偶",S.spouse||"未婚"],["子女",(S.kids||0)+"人"],["名望",S.s.fame],["心情",S.s.mood],["體魄",S.s.hp],["才學",S.s.int],["武勇",S.s.mar],["仁德",S.s.vir],["家財",S.s.gold+" 貫"]])+`<button class="opt" onclick="jobMenu()">查看職業權力</button><button class="opt" onclick="book()">查看生平紀錄</button>`)}
+function v5AchSheet(){sheet('成就',V5ACH.map(a=>`<p>${S.v5ach[a[0]]?'🏆':'⬜'} ${a[0]} <small>${a[2]}</small></p>`).join(''))}
+function v5Book(){sheet('生平紀錄',(S.hist||[]).slice().reverse().map(x=>`<p>${x}</p>`).join('')||'<p>尚無紀錄。</p>')}
+function openEstate(){try{if(!S.estate)S.estate={lv:0,xp:0};if(!S.family)S.family={name:S.fam?.n||'—',rep:0};v5Estate()}catch(err){console.error('openEstate failed',err);sheet('家產',rows([["家財",S?.s?.gold??0],["家宅",['茅舍','瓦房','深宅','府邸','豪門','世家祖宅'][S?.estate?.lv||0]],["提示","家產資料已重新整理。"]]))}}
+function v5Estate(){let e=V5EST[S.estate.lv],nx=V5EST[Math.min(5,S.estate.lv+1)];sheet('家產',rows([['家宅',e[0]],['家宅介紹',e[1]],['家族聲望',S.family.rep+'/12'],['家財',S.s.gold],['下一級',S.estate.lv<5?nx[0]:'最高級'],['升級需求',S.estate.lv<5?nx[2]+' 家財':'已達最高']])+`<button class="opt" onclick="upgradeEstate()" ${S.estate.lv>=5?'disabled':''}>升級房產<small>打造家族基業</small></button>`)}
+function menu(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)}
+function v5Save(){let x={...S,done:[...S.done],ik:{...S.ik}};localStorage.setItem('fusheng_save_v5',JSON.stringify(x));S.cur.push('💾 此生已儲存。');render();cls()}
+function v5Load(){let x=localStorage.getItem('fusheng_save_v5');if(!x){S.cur.push('目前沒有 v5 存檔。');render();cls();return}S=JSON.parse(x);S.done=new Set(S.done||[]);render();cls()}
+/* 擴充主介面 */
+const v5Style=document.createElement('style');v5Style.textContent=`
+.v5tag{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(180,140,60,.14);margin:3px;font-size:11px}
+.quest{padding:12px;border:1px solid rgba(80,100,80,.18);border-radius:14px;background:rgba(255,255,255,.3)}
+.cd h3{margin:12px 0 5px}.profile{padding:12px;border-radius:14px;background:rgba(47,125,109,.07);margin-bottom:10px}
+`;
+document.head.appendChild(v5Style);
+/* 替換部分舊入口 */
+window.v5Profile=v5Profile;window.v5Family=v5Family;window.v5Marriage=v5Marriage;window.v5Children=v5Children;window.v5Quest=v5Quest;window.v5AchSheet=v5AchSheet;window.v5Book=v5Book;window.upgradeEstate=upgradeEstate;window.v5Marry=v5Marry;window.v5HaveChild=v5HaveChild;window.v5ChildTrain=v5ChildTrain;window.v5QuestDo=v5QuestDo;window.v5ContinueAfterDeath=v5ContinueAfterDeath;window.startHeir=startHeir;window.v5Save=v5Save;window.v5Load=v5Load;
+window.v5Rel=v5Rel;
+/* v5 核心入口必須暴露給 HTML onclick，否則手機 Safari/GitHub Pages 會無法啟動 */
+window.apply=apply;window.start=start;window.nextYear=nextYear;window.end=end;
+/* footer / menu 快速入口改為新版 */
+try{$('dm')?.insertAdjacentHTML('beforeend','');}catch(e){}
+/* v5 global entry overrides */
+window.menu=function(){
+  sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻選擇</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)
+};
+window.estate=function(){v5Estate()};
+window.kin=function(){v5Family()};
+/* ===== v6 國家・領土・家族身分・歷史貨幣系統 ===== */
+(function(){
+const V6_COUNTRIES=[
+ {n:'大梁',d:'重文治、設科舉，士大夫地位較高。',bonus:'文'},
+ {n:'大周',d:'尚武重軍，邊防與軍功尤其重要。',bonus:'武'},
+ {n:'南楚',d:'水網與商路發達，商貿繁盛。',bonus:'商'},
+ {n:'北燕',d:'北境多戰事，軍戶與屯田制度發達。',bonus:'軍'}
+];
+const V6_TERR=[
+ ['無領地','尚未取得正式領地',0],['村里','一座村落與周邊田地',1],['鄉里','數村組成的鄉里',2],['縣域','一縣之地，可設縣署',3],['州府','掌一州府之政，家族影響力大增',4],['封疆','一方重鎮，需同時處理軍政民政',5]
+];
+const V6_FAM_STATUS=[
+ ['平民','無官爵、無顯赫功名',0],['富戶','有產業與田宅，在地方有些聲望',1],['士紳','有功名、學業或地方公益聲望',2],['官宦','家中有人入仕，能影響地方政務',3],['將門','家中有人有軍功或掌兵',3],['名門','數代有功名、官爵或重大功勳',4],['宗室','與皇室有血親或宗族關係',5]
+];
+const V6_EVENTS=[
+ {a:[3,18],t:'家中分田',x:'祖父病後準備分配家中田產，族人各有盤算。',c:[['主張均分',{v:1,f:1,m:1},'你主張按人口與功勞分配，家人多半接受。'],['替父母留足養老田',{v:2,g:-1},'父母安心，族中也稱你有孝心。'],['暗中多留一份',{g:2,v:-2},'你得了些好處，卻讓兄弟間埋下嫌隙。']]},
+ {a:[8,25],t:'私塾延聘',x:'地方士紳願意出錢延聘先生，邀你家子弟入學。',c:[['送子入學',{money:-80,int:1,fame:1},'孩子得以受教，家族開始有了讀書人的名聲。'],['親自教導',{int:2,v:1},'你用自己的方式教孩子，家風漸成。'],['暫不讀書',{money:30},'你省下開支，把錢留作家用。']]},
+ {a:[12,40],t:'田契糾紛',x:'鄰族拿出一紙舊契，聲稱你家的田地原本屬於他們。',c:[['查驗契約',{int:1,f:1},'你找出契約漏洞，保住了祖田。'],['請族老調解',{v:2},'族老出面，兩家各退一步。'],['花錢息事',{money:-150,m:1},'你買來清靜，但族人覺得你太軟弱。']]},
+ {a:[16,35],t:'縣中徵役',x:'縣衙徵調壯丁修城，里正來你家登門。',c:[['親自出役',{m:1,v:1},'你與鄉人一同出力，里正對你另眼相看。'],['出錢代役',{money:-120,g:1},'你以錢糧代役，保留了經營時間。'],['設法免役',{f:-1,v:-1},'你保住清閒，卻留下了不好的名聲。']]},
+ {a:[18,45],t:'縣令召見',q:()=>S.rank>=1||S.family?.ext?.status==='士紳',x:'縣令聽聞你家在地方頗有聲望，召你入衙商議民情。',c:[['據實直言',{f:2,v:1},'你說出民間疾苦，縣令記住了你的名字。'],['只談家鄉好話',{f:1,m:1},'你說得圓滑，雙方都留了體面。'],['請託家事',{f:-1,money:-50},'你把公事變成私情，聲望略受損。']]},
+ {a:[20,50],t:'商路開通',q:()=>S.family?.ext?.status==='富戶'||S.s.gold>=5,x:'一條新商路通往鄰州，族中有人勸你投入本錢。',c:[['投資商隊',{money:-300,g:3,f:1},'商隊順利往返，家族財力明顯增加。'],['只投小股',{money:-100,g:1,m:1},'你分散風險，收益雖小卻穩。'],['不參與',{m:1},'你守住本業，沒有承擔風險。']]},
+ {a:[20,55],t:'族譜重修',x:'族老提議重修族譜，要求各房提供姓名、婚姻與功名。',c:[['出錢重修',{money:-120,f:2,v:1},'新族譜記下你的功名與家業，家族聲望提升。'],['親自整理',{int:2,f:1},'你查閱舊卷，補上失傳的支系。'],['不願出錢',{v:-1},'族老對你頗有微詞。']]},
+ {a:[22,60],t:'地方賑濟',x:'連月歉收，縣城糧價上漲，地方士紳號召開倉賑濟。',c:[['捐糧賑濟',{money:-250,v:3,f:2},'百姓度過饑荒，家族名望大增。'],['捐少量糧食',{money:-80,v:1,f:1},'你盡了一份力。'],['閉門自守',{g:1,v:-2},'家中糧食無缺，但鄉里對你議論紛紛。']]},
+ {a:[25,55],t:'軍情告急',q:()=>S.mrank>=1||S.army,x:'邊境軍報傳來，朝廷徵調糧秣與兵員。',c:[['親自領兵',{m:2,f:2},'你在軍中立下戰功，家族也被視為將門。'],['捐糧助軍',{money:-220,f:2,v:1},'軍需得到補充，朝廷記下你的名字。'],['請辭避戰',{v:-1,f:-1},'你保住性命，但軍中名聲受損。']]},
+ {a:[28,65],t:'婚盟聯族',q:()=>S.spouse,x:'一個地方望族提出婚姻聯盟，希望兩家結為姻親。',c:[['答應聯姻',{f:2,v:1,money:-100},'兩族結盟，往來與生意都更加便利。'],['先查對方家世',{int:1,f:1},'你沒有急著答應，避免了一場麻煩。'],['婉拒',{m:1},'你守住自主，不願讓婚姻變成交易。']]},
+ {a:[30,70],t:'族產分房',x:'家族日益壯大，族人要求重新分配祖產與店鋪。',c:[['按長幼分配',{v:1,f:1},'族人接受安排，家族秩序穩定。'],['按功勞分配',{f:2,m:1},'能者得到更多資源，但部分族人不滿。'],['保留族產共同經營',{g:2,v:1},'家族資產集中，長遠收益較高。']]},
+ {a:[35,70],t:'地方水利',x:'河道年久失修，春汛將至，縣里急需有人帶頭修堤。',c:[['出資修堤',{money:-300,v:3,f:2},'堤壩修成，百姓稱頌你的家族。'],['組織族人出力',{m:1,v:2,f:1},'你以人力代替大量花費，工程順利完成。'],['袖手旁觀',{m:-1,v:-1},'洪水之後，鄉人對你家頗有怨言。']]},
+ {a:[40,75],t:'家族封賞',q:()=>S.rank>=3||S.mrank>=3||S.family?.ext?.status==='名門',x:'朝廷因你的功勞或祖上功勳，準許家族登記功名與榮典。',c:[['接受封賞',{f:3,g:2},'家族正式進入地方名門之列。'],['請減免虛名',{v:1,m:1},'你不願過度張揚，反而得到清譽。'],['用封賞換資源',{money:250,f:1},'你將名望轉化為實際家產。']]},
+ {a:[45,80],t:'祖宅修繕',x:'祖宅年久失修，族老希望你主持大修。',c:[['重修祖堂',{money:-350,f:3,v:1},'祖堂煥然一新，後代都有了祭祀之所。'],['簡單修補',{money:-120,m:1},'你量力而為，祖宅仍可居住。'],['不再修繕',{f:-1},'老宅逐漸破敗，族人開始各奔東西。']]},
+ {a:[50,80],t:'家族後繼',q:()=>S.kids>=1,x:'你開始思考，誰最適合承擔家族未來。',c:[['重視長子嫡系',{f:1,v:1},'家族繼承順序明確，族人少了爭端。'],['以才能選繼承人',{int:1,f:2},'你不拘嫡庶，讓有能力的人承擔家業。'],['分散家產給子女',{g:-1,v:1},'各房都有根基，但家族資產較為分散。']]},
+ {a:[55,80],t:'地方祭祀',x:'鄉里準備重修地方祠廟，族老希望你主持祭典。',c:[['出資主持',{money:-100,v:2,f:2},'祭典順利，家族在鄉里的地位更穩。'],['親自主持',{v:1,m:1},'你親力親為，族人更加信服。'],['婉拒',{m:1},'你把資源留給家中晚輩。']]},
+ {a:[18,80],t:'國策變動',x:'朝廷宣布調整田賦與商稅，各地官府開始重新丈量田地。',c:[['如實申報',{v:1,f:1,money:-30},'你家帳目清楚，反而免去後患。'],['尋人疏通',{money:-100,f:-1,g:1},'眼前省了一點稅，卻留下把柄。'],['趁機擴田',{money:-200,g:2},'你買入幾畝好田，家產增加。']]},
+ {a:[18,80],t:'糧價波動',x:'今年雨水失常，米價忽高忽低，市井議論紛紛。',c:[['提前囤糧',{money:-120,g:2},'後來米價上漲，你的糧倉成了保障。'],['按需購買',{m:1},'你不冒險，平穩度過。'],['趁高價賣糧',{money:80,g:1,f:-1},'賺了差價，卻被人說趁災牟利。']]},
+ {a:[18,80],t:'驛路徵發',x:'官府修整驛路，沿途人家需提供車馬或人力。',c:[['提供車馬',{money:-60,f:1},'驛使記住了你家的名號。'],['出人出力',{m:1,v:1},'工程很快完成。'],['設法推辭',{f:-1},'你少了麻煩，卻少了官府的人情。']]},
+ {a:[18,80],t:'鹽商往來',x:'外地商人想借你家名義做鹽貨買賣，利潤可觀。',c:[['查清來源再做',{int:1,g:1},'你避開了來路不明的貨物。'],['小額合作',{money:-80,g:2},'商路順利，得到不錯回報。'],['拒絕合作',{v:1},'你不願涉入灰色生意。']]},
+ {a:[18,80],t:'旱災借糧',x:'鄰村前來借糧，說明年收成後必定歸還。',c:[['借出糧食',{money:-100,v:3,f:1},'來年對方如約還糧，兩村結下善緣。'],['只借一半',{money:-50,v:1},'你量力相助。'],['拒絕借糧',{g:1,v:-2},'你守住自家糧倉，鄉里卻記在心裡。']]},
+ {a:[18,80],t:'流民入境',x:'戰亂使流民湧入附近城鎮，官府人手不足。',c:[['開粥棚',{money:-180,v:3,f:2},'你家善名遠播。'],['招募做工',{money:-80,g:2,v:1},'你提供生計，也補足家中人手。'],['閉門不納',{f:-1,v:-1},'你守住家門，但名聲下降。']]},
+ {a:[18,80],t:'盜匪出沒',x:'山道盜匪猖獗，商旅不敢通行。',c:[['組織鄉勇',{m:2,f:1},'你帶人護路，商路逐漸恢復。'],['花錢請鏢局',{money:-150,g:1},'你用錢解決問題，商隊平安。'],['暫停外運',{m:1},'你減少損失，等待風聲過去。']]},
+ {a:[18,80],t:'官印失竊',q:()=>S.rank>=1,x:'縣衙官印失竊，縣令命你協助追查。',c:[['徹查線索',{int:2,f:2},'你找出線索，官印失而復得。'],['先護住文書',{m:1,v:1},'你先保全卷宗，避免事態擴大。'],['置身事外',{f:-1},'你不願惹麻煩，官府對你印象轉淡。']]},
+ {a:[18,80],t:'學官薦才',q:()=>S.s.int>=6,x:'地方學官看中你的才學，願意替你引薦上級。',c:[['接受薦舉',{f:3,int:1},'你的名聲傳到上級，仕途更順。'],['請薦族中子弟',{f:2,v:1},'你把機會讓給後輩，家族受益。'],['婉拒入仕',{v:1,m:1},'你更看重清閒與家業。']]},
+ {a:[18,80],t:'軍戶徵丁',q:()=>S.mrank>=1||S.army,x:'軍籍文書送到家門，族中男丁可能被徵調。',c:[['按令從軍',{m:2,f:1},'族中有人立下軍功，家族成為將門。'],['出錢代役',{money:-180,g:-1},'你保住家中人手，但花費不小。'],['逃避徵調',{v:-2,f:-2},'一旦查出，家族名聲受損。']]},
+ {a:[18,80],t:'鄉約成立',x:'地方士紳想訂立鄉約，約束盜竊、賭博與械鬥。',c:[['加入鄉約',{v:2,f:2},'你成為地方公議的一員。'],['只捐資助辦',{money:-80,f:1},'你不直接參與，但提供實際支持。'],['拒絕參與',{m:1},'你少了束縛，也少了些地方影響力。']]},
+ {a:[18,80],t:'河運漕糧',x:'官府徵集船戶運糧，沿河商路因此繁忙。',c:[['投資船運',{money:-250,g:4,f:1},'船隊往返順利，家財快速增長。'],['與船戶合作',{money:-100,g:2},'你分散風險，穩定獲利。'],['不涉水運',{m:1},'你守住熟悉的產業。']]},
+ {a:[18,80],t:'城牆修築',x:'邊城增築城牆，朝廷允許地方商戶捐資換取名望。',c:[['捐資修城',{money:-220,f:3,v:1},'城牆完工，你家被刻入功德名冊。'],['出人出力',{m:1,f:1},'你用人力換取名望。'],['不參與',{m:1},'你不願將家財投入公共工程。']]},
+ {a:[18,80],t:'國境互市',q:()=>S.nation&&S.nation.stability>=5,x:'邊境互市重新開放，商旅帶回北方馬匹與皮貨。',c:[['投入貿易',{money:-180,g:4},'貨物售出，家族財力增加。'],['買馬改善家業',{money:-120,m:2},'良馬提高了家族出行與運輸效率。'],['觀望行情',{m:1},'你沒有急著下注。']]},
+ {a:[18,80],t:'鄰國使者',x:'鄰國使團途經此地，地方官需要熟悉禮制的人接待。',c:[['出面接待',{chr:2,f:2},'你應對得體，名聲傳入上層。'],['請官府主辦',{f:1,v:1},'你提供協助，不搶功勞。'],['避而不見',{m:1},'你少惹事，但錯過了一次結識權貴的機會。']]},
+ {a:[18,80],t:'兵變傳聞',x:'城中流傳軍隊不滿糧餉的傳聞，街坊人心惶惶。',c:[['安撫鄉里',{v:2,f:1},'你穩住人心，地方秩序沒有失控。'],['囤糧避亂',{money:-100,g:1},'你先保住家中糧食。'],['散播消息',{f:-2,m:1},'你得到短暫好處，卻破壞了自己的名聲。']]},
+ {a:[18,80],t:'皇恩大赦',x:'朝廷頒布大赦，許多舊案重新審理，地方氣氛為之一變。',c:[['替人申冤',{v:2,f:2},'你替無辜者奔走，獲得清譽。'],['保守觀望',{m:1},'你不涉其中。'],['趁機追討舊債',{g:2,v:-1},'你收回了一些舊帳，但人情淡了。']]}
+];
+function v6MoneyFmt(n){n=Math.max(0,Math.round(n||0));let l=Math.floor(n/1000),w=n%1000;return l?`${l}兩${w?` ${w}文`:''}`:`${w}文`}
+function v6Init(){
+ if(!S.family)S.family={name:(S.name||'李氏').slice(0,1)+'氏',rep:3,members:[],heir:null};
+ if(!S.v6)S.v6={};
+ if(!S.v6.moneyReady){S.v6.money=Math.max(50,(S.s.gold||0)*100);S.v6.moneyReady=1}
+ if(!S.nation)S.nation={name:P(V6_COUNTRIES).n,stability:6,treasury:5000,pop:18000,power:6,diplomacy:5,year:1};
+ if(!S.territory)S.territory={name:S.prov||'本鄉',level:Math.max(0,(S.rank||0)>=1?1:0),land:Math.max(10,(S.s.gold||1)*2),people:180,fields:Math.max(8,(S.s.gold||1)*2),tax:70,loyalty:6,renovation:0};
+ if(!S.family.ext)S.family.ext={status:'平民',influence:3,land:Math.max(1,S.territory.land),treasury:Math.max(100,S.v6.money),honor:0,branches:1,memberStatus:{}};
+ v6FamilyRecalc();
+}
+function v6SyncFromGold(oldGold){
+ if(!S.v6)return;let d=(S.s.gold||0)-(oldGold||0);if(d)S.v6.money=Math.max(0,(S.v6.money||0)+d*100);
+}
+function v6FamilyRecalc(){
+ if(!S.family?.ext)return;let score=0;
+ if(S.rank>=4)score+=3;else if(S.rank>=1)score+=2;
+ if(S.mrank>=4)score+=3;else if(S.mrank>=1)score+=2;
+ if(S.job)score+=1;if(S.s.fame>=8)score+=2;if(S.estate?.lv>=3)score+=1;if(S.kids>=2)score+=1;if(S.legacy?.gens>=2)score+=2;
+ let st=score>=10?'名門':score>=7?(S.mrank>=2?'將門':'官宦'):score>=5?'士紳':(S.s.gold>=7?'富戶':'平民');
+ if(S.royal)st='宗室';S.family.ext.status=st;S.family.ext.influence=Math.max(1,Math.min(20,3+score+Math.floor((S.family.rep||0)/2)));S.family.ext.land=Math.max(S.family.ext.land||0,S.territory?.land||0);S.family.ext.treasury=Math.max(0,Math.round((S.v6?.money||0)+(S.estate?.lv||0)*180));S.family.ext.honor=Math.max(0,(S.legacy?.renown||0)+(S.s.fame||0));
+ if(S.kin)S.kin.forEach(k=>{let ks=st;if(k.c){let vals=Object.values(k.c);if((k.c.int||0)>=6)ks='讀書人';else if((k.c.mar||0)>=6)ks='武人';else if((k.c.vir||0)>=6)ks='善士';else if((k.c.gold||0)>=6)ks='商人'}k.familyStatus=ks});if(S.kc)S.kc.forEach(k=>{let c=k.c||{};k.status=(c.int||0)>=6?'才子':(c.mar||0)>=6?'武生':(c.vir||0)>=6?'善士':(c.chr||0)>=6?'藝人':'家中後輩'});
+}
+function v6Year(){
+ v6Init();
+ // 年度貨幣與家族經濟：把原本 gold 變動以 1 點 = 100 文同步到真實貨幣帳
+ S.v6.money=Math.max(0,S.v6.money||0);
+ const wage=S.rank&&!S.army?Math.max(20,Math.round((S.rank+1)*35)):S.army?Math.max(25,Math.round((S.mrank+1)*45)):0;
+ if(wage){S.v6.money+=wage;S.cur.push(`💰 本年俸祿入帳：${v6MoneyFmt(wage)}。`)}
+ // 生活支出與家庭人口
+ const familyCost=Math.max(10,Math.round(((S.kids||0)+1)*12+(S.estate?.lv||0)*8));S.v6.money=Math.max(0,S.v6.money-familyCost);
+ if(S.territory.level>0){let tax=Math.max(0,Math.round(S.territory.people*S.territory.tax/1000));S.nation.treasury+=tax;S.v6.money+=Math.round(tax*.08);S.territory.loyalty=Math.max(0,Math.min(10,S.territory.loyalty+(S.territory.loyalty>=5?0:-1)));}
+ S.nation.year++;
+ if(Math.random()<.12)S.nation.stability=Math.max(1,Math.min(10,S.nation.stability+(Math.random()<.5?-1:1)));
+ if(S.territory.level>0&&Math.random()<.18)S.territory.people+=R(20)-5;
+ v6FamilyRecalc();
+ const modal=$('sh')?.classList.contains('on');
+ // 第二層事件只從成年開始，避免兒童／少年突然遇到成年人的官場、商業與戰事事件。
+ if(!modal&&S.age>=18&&Math.random()<.55){
+   S.v6Done=S.v6Done||{};S.v6EventHistory=S.v6EventHistory||[];S.v6Last=S.v6Last||{};
+   let pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q())&&!S.v6Done[e.t]&&S.age-(S.v6Last[e.t]??-99)>=8);
+   if(!pool.length){
+     const recent=S.v6EventHistory.slice(-8);
+     pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q())&&!recent.includes(e.t)&&S.age-(S.v6Last[e.t]??-99)>=8);
+   }
+   if(pool.length){
+     const e=P(pool);
+     S.v6Event=e;S.v6Done[e.t]=1;S.v6Last[e.t]=S.age;S.v6EventHistory.push(e.t);
+     if(S.v6EventHistory.length>20)S.v6EventHistory.shift();
+     sheet(e.t,`<p>${S.age}歲。${e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="v6Pick(${i})">${c[0]}</button>`).join(''),0);
+   }
+ }
+}
+function v6Pick(i){let e=S.v6Event,c=e.c[i],old=S.s.gold||0;let fx={};for(const k in c[1]){let v=c[1][k];if(k==='money'){S.v6.money=Math.max(0,(S.v6.money||0)+v);continue}if(k==='f')fx.fame=v;else if(k==='v')fx.vir=v;else if(k==='m')fx.mood=v;else fx[k]=v}apply(fx);v6FamilyRecalc();S.cur.push(`【${e.t}】你選擇「${c[0]}」。${c[2]}`);S.hist.push(`${S.age}歲 ${e.t}：${c[0]}。${c[2]}`);cls();render()}
+function v6Nation(){v6Init();let n=S.nation,t=S.territory;sheet('國家與領土',rows([['國家',n.name],['國家穩定',n.stability+'/10'],['國庫',v6MoneyFmt(n.treasury)],['國力',n.power+'/10'],['外交',n.diplomacy+'/10'],['領地',V6_TERR[t.level][0]],['領地名稱',t.name],['人口',t.people.toLocaleString()+' 人'],['耕地',t.fields+' 畝'],['田賦估值',t.tax+' 文/千人'],['民心',t.loyalty+'/10']])+`<button class="opt" onclick="v6CollectTax()" ${t.level<1?'disabled':''}>徵收田賦<small>增加家族收入，但民心可能下降</small></button><button class="opt" onclick="v6Develop()" ${t.level<1?'disabled':''}>修水利與墾田<small>約 300 文</small></button><button class="opt" onclick="v6Appoint()">爭取升任領地官<small>功名／家族聲望越高越容易</small></button>`+`<p style="margin-top:12px">國制基準：${n.name}採古代郡縣制架空設定；貨幣以文、貫、兩計價，數值依歷史貨幣結構設計，實際物價仍會隨地區與時代波動。</p>`)}
+function v6CollectTax(){v6Init();let t=S.territory;if(t.level<1)return;let amount=Math.max(10,Math.round(t.people*t.tax/1000));let share=Math.round(amount*.12);S.v6.money+=share;S.nation.treasury+=amount-share;t.loyalty=Math.max(0,t.loyalty-(amount>120?1:0));S.cur.push(`🏛️ 你完成年度徵收，領地共收 ${v6MoneyFmt(amount)}，家族可支配 ${v6MoneyFmt(share)}。`);render();cls()}
+function v6Develop(){v6Init();if(S.v6.money<300){sheet('資金不足',`<p>修水利與墾田至少需要 300 文，目前只有 ${v6MoneyFmt(S.v6.money)}。</p>`);return}S.v6.money-=300;S.territory.fields+=Math.max(2,Math.round(S.territory.people/80));S.territory.people+=R(30)+10;S.territory.loyalty=Math.min(10,S.territory.loyalty+1);S.family.ext.land=S.territory.land+Math.round(S.territory.fields*.2);S.cur.push('🌾 你投入資金修水利、墾荒，領地產出與民心提升。');render();cls()}
+function v6Appoint(){v6Init();let need=S.territory.level+1,score=(S.rank||0)+(S.mrank||0)+(S.family.ext.influence||0)/4+(S.s.fame||0)/4;if(score<need*2){sheet('尚未具備資格',`<p>你的功名、軍功或地方聲望還不足。</p><p>目前評分 ${score.toFixed(1)}，本級約需 ${need*2}。</p>`);return}if(S.territory.level>=5){sheet('已到封疆','<p>你已掌一方重鎮，暫無更高領地。</p>');return}S.territory.level++;S.territory.name=['本鄉','新授村','安民鄉','本縣','本州','鎮守一方'][S.territory.level];S.territory.people+=120;S.territory.fields+=20;S.territory.loyalty=7;S.nation.power=Math.min(10,S.nation.power+1);S.family.rep=Math.min(12,S.family.rep+1);S.cur.push(`🏯 你獲授「${V6_TERR[S.territory.level][0]}」管理權，家族身分提升為 ${S.family.ext.status}。`);v6FamilyRecalc();render();cls()}
+function v6Family(){v6Init();let ex=S.family.ext,estateName=['茅舍','瓦房','深宅','府邸','豪門','世家祖宅'][S.estate?.lv||0],member=(S.kin||[]).map(k=>[k.r+' '+k.n,k.familyStatus||ex.status]).concat((S.kc||[]).map(k=>['子女 '+k.n,k.status||'家中後輩']));sheet('家族制度',rows([['家族',S.family.name],['家族身分',ex.status],['家族影響力',ex.influence+'/20'],['家族田產',ex.land+' 畝'],['家族可動用資產',v6MoneyFmt(ex.treasury)],['家族榮譽',ex.honor],['家族分房',ex.branches+' 房'],['家族聲望',S.family.rep+'/12'],['家宅',estateName],['領地',S.territory.name+'・'+V6_TERR[S.territory.level][0]]])+`<h3>家人身分</h3>`+rows(member)+`<p style="margin-top:10px">家族身分會隨家主功名、軍功、財產、家宅、子女成就與歷代傳承改變；家中有人入仕、立軍功或成為名士，會提高整個家族的地方影響力。</p><button class="opt" onclick="v6Nation()">查看國家與領土</button>`)}
+function v6Economy(){v6Init();sheet('古代帳房',rows([['現銀／現錢',v6MoneyFmt(S.v6.money)],['換算',`1 貫 = 1000 文；1 兩約按 1000 文計帳`],['家族資產估值',v6MoneyFmt(S.family.ext.treasury)],['本年基本家用',v6MoneyFmt(Math.max(10,((S.kids||0)+1)*12+(S.estate?.lv||0)*8))],['田產',S.territory.fields+' 畝'],['稅制',S.territory.level?'按領地人口與田賦估值計算':'尚未有正式領地']])+`<p style="margin-top:10px">本作採「明代中後期白銀化」作為貨幣結構參考：小額交易以文、較大交易以兩計價。明代中後期白銀逐漸成為重要的市場與財政結算媒介；但不同時期、地區與物價差異很大，因此遊戲採近似模型而非宣稱每筆價格都是史實。</p>`)}
+
+/* ===== v9.1：大幅擴充通用事件／皇帝可觸發一般人生事件 ===== */
+/* 皇帝不再被限制只能看到 kg/fam 事件；18歲以上的一般事件也可發生。 */
+E.push(
+ {a:[18,80],t:'鄉里修橋',rep:1,x:'暴雨沖毀村口石橋，行人往來受阻，里正前來募資。',c:[['出資修橋',{gold:-2,vir:2,fame:1},'橋成之日，鄉民紛紛道謝。'],['號召鄉民出力',{vir:1,fame:1},'眾人合力修橋，省下不少錢。'],['置之不理',{vir:-1},'商旅繞道而行，鄉里對你頗有微詞。']]},
+ {a:[18,85],t:'糧價暴漲',rep:1,x:'今年糧價突然上漲，市井間人人談論米價。',c:[['趁高價售糧',{gold:3,vir:-2},'你賺了一筆，但鄰里對你頗有怨言。'],['平價出糧',{gold:-1,vir:3,fame:1},'百姓稱你有仁心。'],['囤糧觀望',{gold:1},'你暫時沒有損失，靜待市況。']]},
+ {a:[18,85],t:'名醫過境',rep:1,x:'一位名醫路過此地，願以一帖良方換取一點報酬。',c:[['請他診治',{gold:-1,hp:2},'你的身體好了許多。'],['請教醫理',{int:1,vir:1},'你學到不少養生之道。'],['不予理會',{mood:1},'你覺得自己一向身強體健。']]},
+ {a:[18,85],t:'古書流落民間',rep:1,x:'市集出現一本殘缺古籍，攤主不知其價值。',c:[['買下研讀',{gold:-1,int:2},'你從殘卷中悟得不少道理。'],['轉手賣出',{gold:2},'有人高價買走，你小賺一筆。'],['送給學堂',{vir:2,fame:1},'先生感激你的慷慨。']]},
+ {a:[18,80],t:'舊友來訪',rep:1,x:'多年未見的故友突然登門，帶著年少時的往事。',c:[['設宴款待',{gold:-1,mood:2,vir:1},'舊日情誼重新升溫。'],['促膝長談',{mood:2,fame:1},'你們談到深夜，心境開闊不少。'],['婉拒相見',{mood:-1},'故友失望離去，你心中略有遺憾。']]},
+ {a:[20,85],t:'門客求助',rep:1,x:'曾受你照顧的一名門客如今落難，請求你伸手相助。',c:[['慷慨相助',{gold:-2,vir:2},'他感激涕零，日後成了你的得力助手。'],['只給盤纏',{gold:-1,vir:1},'你盡了本分。'],['拒絕往來',{vir:-1},'你不願讓舊人情拖累自己。']]},
+ {a:[18,85],t:'商隊遇險',rep:1,x:'一支商隊在途中遇到盜匪，正尋求熟悉道路的人帶路。',c:[['出面護送',{mar:1,hp:-1,fame:2},'商隊平安抵達，眾人對你感激不已。'],['提供消息',{int:1,gold:1},'你提供的路線讓商隊避開了危險。'],['袖手旁觀',{mood:1},'你不想惹上麻煩。']]},
+ {a:[18,85],t:'寺觀募修',rep:1,x:'附近寺觀年久失修，主持向地方士紳募資。',c:[['捐資修繕',{gold:-2,vir:2,fame:1},'香火重新興盛，鄉人稱頌你的善舉。'],['捐些香火錢',{gold:-1,vir:1},'你略盡心意。'],['婉言謝絕',{mood:1},'你認為錢財應留作家用。']]},
+ {a:[18,85],t:'河道淤塞',rep:1,x:'河道泥沙堆積，商船難以通行，地方百姓盼望有人主持疏浚。',c:[['帶頭疏浚',{gold:-2,vir:2,fame:2},'河道暢通後，商旅重新聚集。'],['召集民夫',{int:1,vir:1},'你組織人手完成了工程。'],['不願插手',{vir:-1},'河道問題繼續困擾地方。']]},
+ {a:[18,85],t:'豪門宴請',rep:1,x:'地方豪族設宴邀請你赴席，席間賓客皆有來頭。',c:[['赴宴結交',{fame:2,chr:1,gold:-1},'你結識不少權貴與名士。'],['只談正事',{int:1,vir:1},'你沒有失禮，也沒有捲入私交。'],['推辭不去',{vir:1,mood:1},'你避開了複雜的人情往來。']]},
+ {a:[20,85],t:'賑濟流民',rep:1,x:'城外聚集流民，地方官府暫時無法安置。',c:[['開倉施粥',{gold:-2,vir:3,fame:2},'流民得到安置，城中秩序逐漸恢復。'],['召集鄉紳募糧',{vir:2,fame:1},'眾人共同出力，救濟了不少人。'],['閉門自守',{gold:1,vir:-2},'你保住家產，卻留下了冷酷的名聲。']]},
+ {a:[20,85],t:'盜匪求饒',rep:1,x:'一夥盜匪被官軍擊潰，其中一人跪地求饒，稱自己是被逼上山的。',c:[['查明實情',{int:2,vir:1},'你發現其中確有被逼無奈者。'],['嚴懲到底',{mar:1,vir:-1,fame:1},'你展現了強硬的一面。'],['暗中放走',{vir:1,fame:-1},'他向你叩首後消失在人群中。']]},
+ {a:[18,80],t:'鄉試名額',rep:1,x:'地方學子爭奪有限的科舉名額，請你出面主持公議。',c:[['秉公評定',{int:2,vir:2,fame:2},'眾人服氣，沒有人能指責你的決定。'],['照顧熟人',{gold:1,vir:-3},'你得到一點回報，清名卻受損。'],['交給地方官',{vir:1},'你避免了直接捲入爭端。']]},
+ {a:[18,85],t:'秋收豐年',rep:1,x:'今年風調雨順，田野一片金黃，百姓笑逐顏開。',c:[['減少租息',{gold:-1,vir:2,fame:1},'百姓過了個寬裕的冬天。'],['正常收取',{gold:2},'家中收入增加，日子更安穩。'],['多收一些',{gold:4,vir:-3},'你賺得更多，卻讓佃戶心生不滿。']]},
+ {a:[18,85],t:'雪災',rep:1,x:'大雪封路，幾戶人家缺少柴米，求助聲不絕於耳。',c:[['開門施粥',{gold:-1,vir:2,mood:1},'寒冬裡的人們記住了你的善意。'],['捐柴取暖',{gold:-1,vir:2},'幾戶老人因此熬過寒冬。'],['關門避災',{hp:1,vir:-1},'你保住自家安穩。']]},
+ {a:[18,85],t:'春祭祖先',rep:1,x:'春日祭祖，族中長輩希望你主持祭禮。',c:[['親自主持',{vir:2,fame:1},'族人對你的敬重增加。'],['請長輩主持',{vir:1,mood:1},'你尊重家中長幼秩序。'],['不參與祭禮',{mood:1,vir:-1},'你錯過了與族人團聚的機會。']]},
+ {a:[18,85],t:'族譜修訂',rep:1,x:'族中準備重修族譜，請你補錄近年的家族事蹟。',c:[['據實記錄',{int:1,vir:1,fame:1},'族譜留下了完整的一筆。'],['誇大功績',{fame:2,vir:-2},'後人或許會記得你的名字，卻未必相信。'],['婉拒參與',{mood:1},'你不願為名聲費心。']]},
+ {a:[18,85],t:'遠親投奔',rep:1,x:'多年未見的遠親因家鄉災亂，帶著一家老小來投奔。',c:[['收留安置',{gold:-2,vir:3,fame:1},'家宅雖擁擠，親族卻重新團聚。'],['提供盤纏',{gold:-1,vir:1},'你幫他們另尋安身之處。'],['婉拒收留',{vir:-2,gold:1},'你保住了家中資源，親族卻失望離去。']]},
+ {a:[18,85],t:'子弟爭執',rep:1,x:'族中兩名年輕子弟為田產爭執，雙方都請你評理。',c:[['公平裁決',{int:2,vir:2,fame:1},'兩邊雖不完全滿意，終究接受了裁決。'],['各打五十大板',{vir:1},'爭端暫時平息。'],['偏袒一方',{gold:1,vir:-3},'你得到一點好處，族中卻埋下怨氣。']]},
+ {a:[20,85],t:'船運遇風',rep:1,x:'你投資的貨物正在水路運輸，途中突然遇上暴風。',c:[['祈求平安',{mood:1},'船隊有驚無險地靠岸。'],['派人接應',{gold:-1,int:1},'你提前安排，減少了損失。'],['聽天由命',{gold:-2},'貨物受損，所幸沒有全軍覆沒。']]},
+ {a:[18,85],t:'市集失火',rep:1,x:'夜半市集突然起火，火勢沿著木造店鋪迅速蔓延。',c:[['帶人救火',{mar:1,hp:-1,fame:2,vir:1},'火勢被控制，許多商戶因此保住生計。'],['組織撤離',{int:1,vir:2},'你先疏散百姓，避免更多傷亡。'],['關門避火',{hp:1,vir:-1},'你自家沒有受損。']]},
+ {a:[18,85],t:'官道修整',rep:1,x:'官道年久失修，往來車馬顛簸不堪。',c:[['捐資修路',{gold:-2,vir:2,fame:1},'商旅稱便，地方往來更加興盛。'],['號召商旅分攤',{int:1,fame:1},'眾人共同出資，工程順利完成。'],['不願出錢',{gold:1,vir:-1},'道路仍舊破敗。']]},
+ {a:[18,85],t:'鄰縣械鬥',rep:1,x:'鄰縣兩村因水源問題爆發衝突，幾乎釀成大禍。',c:[['出面調停',{int:2,vir:2,fame:2},'雙方終於坐下談判。'],['協助守衛',{mar:1,fame:1},'你幫忙穩住局勢。'],['趁機牟利',{gold:3,vir:-3},'你賺到錢，卻留下惡名。']]},
+ {a:[18,85],t:'名士評點',rep:1,x:'一位名士路過，公開評點地方人物，眾人都想知道他如何看你。',c:[['坦然請教',{int:1,fame:2},'他的幾句話讓你受益匪淺。'],['與他辯論',{int:2,fame:1},'你們辯得面紅耳赤，旁觀者卻聽得津津有味。'],['不屑一顧',{mood:1,fame:-1},'你不願受他人評價左右。']]},
+ {a:[20,85],t:'書院邀請',rep:1,x:'地方書院邀你講述人生經驗，學子們早已坐滿講堂。',c:[['親自授課',{int:2,fame:2,vir:1},'學子們記下你的言談，視你為師。'],['談治家之道',{vir:2,fame:1},'許多家長也來旁聽。'],['婉拒邀請',{mood:1},'你認為自己還有許多事情要做。']]},
+ {a:[20,85],t:'武館求援',rep:1,x:'地方武館缺少兵器與糧食，希望你相助。',c:[['捐助武館',{gold:-2,mar:1,fame:1},'武館弟子日後常替地方維持治安。'],['贈送舊兵器',{mar:1,vir:1},'你把閒置兵器交給他們。'],['拒絕資助',{gold:1},'你不想再增加開支。']]},
+ {a:[18,85],t:'夜雨訪客',rep:1,x:'深夜大雨，一名陌生人敲門求宿，自稱只是過路讀書人。',c:[['留宿一晚',{vir:2,mood:1},'翌日他留下幾句感謝便離去。'],['給他乾糧',{gold:-1,vir:1},'你沒有讓陌生人進門。'],['拒絕開門',{vir:-1,hp:1},'你保住家宅安全。']]},
+ {a:[18,85],t:'古玩贗品',rep:1,x:'有人拿著一件古玉來找你，聲稱價值連城。',c:[['請人鑑定',{gold:-1,int:1},'鑑定後發現竟是贗品，你躲過一劫。'],['直接買下',{gold:-3},{ok:'後來證明是真品，你大喜過望。',okfx:{gold:5},no:'原來是贗品，你吃了大虧。',nofx:{gold:-2}}],['轉身離去',{mood:1},'你沒有被一時的誘惑打動。']]},
+ {a:[18,85],t:'田界糾紛',rep:1,x:'鄰家說你家的田界多占了他一小塊土地，雙方各執一詞。',c:[['查閱田契',{int:2,vir:1},'契約清楚，雙方終於釐清界線。'],['各退一步',{vir:2,gold:-1},'你以小利換長久和氣。'],['強硬爭到底',{gold:1,vir:-2},'官司雖贏，人情卻失了。']]},
+ {a:[18,85],t:'老僕請辭',rep:1,x:'服侍家中多年的老僕年事已高，想回鄉養老。',c:[['厚贈盤纏',{gold:-1,vir:2,mood:1},'他含淚告別，家中人都很感動。'],['安排退休',{vir:1},'你讓他安心回鄉。'],['要求繼續做事',{gold:1,vir:-2},'他雖留下，心中卻有了芥蒂。']]},
+ {a:[20,85],t:'門生報喜',rep:1,x:'你曾指點過的年輕人如今有所成就，特意登門報喜。',c:[['設宴祝賀',{gold:-1,mood:2,fame:1},'師徒之情更加深厚。'],['勉勵他繼續努力',{int:1,vir:1},'他將你的話牢牢記在心中。'],['收下賀禮',{gold:2,vir:-1},'你接受了他的心意。']]},
+ {a:[20,85],t:'地方募兵',rep:1,x:'邊患加劇，地方開始募兵，鄉勇希望你帶頭響應。',c:[['出資募兵',{gold:-2,fame:2,mar:1},'地方防務得到加強。'],['親自訓練',{mar:2,hp:-1},'你花了一段時間訓練鄉勇。'],['拒絕參與',{mood:1},'你不願涉入軍務。']]},
+ {a:[18,85],t:'春日踏青',rep:1,x:'春光正好，親友邀你到郊外踏青。',c:[['欣然前往',{mood:2,hp:1},'你難得放下公務，心情舒暢。'],['與友談學',{int:1,mood:1},'一路談古論今，頗有收穫。'],['留在家中',{mood:1},'你選擇安靜度日。']]},
+ {a:[18,85],t:'秋夜賞月',rep:1,x:'中秋夜月色清明，家人與鄰里邀你共聚。',c:[['與家人團聚',{mood:2,vir:1},'一家人難得其樂融融。'],['宴請鄰里',{gold:-1,fame:1,vir:1},'鄰里關係更加融洽。'],['獨自賞月',{int:1,mood:1},'你在月下想起許多往事。']]},
+ {a:[18,85],t:'冬日圍爐',rep:1,x:'寒冬夜裡，家人圍坐爐旁，談起這一年的是非得失。',c:[['聽家人訴說',{mood:2,vir:1},'你更了解家人的心思。'],['教導晚輩',{int:1,vir:1},'晚輩記住了你的教誨。'],['獨自處理公務',{int:1,hp:-1},'你又忙了一夜。']]},
+ {a:[25,85],t:'地方選舉',rep:1,x:'鄉里推舉新的里正，眾人請你評議候選人。',c:[['推薦賢者',{vir:2,fame:1},'新的里正果然辦事公允。'],['推薦能吏',{int:2,fame:1},'地方事務效率大增。'],['不涉其中',{mood:1},'你避免了人情糾葛。']]},
+ {a:[25,85],t:'家產分房',rep:1,x:'家中房產與田地增多，族人開始討論如何分配。',c:[['公平分配',{vir:2,fame:1,gold:-1},'族人雖各有得失，卻都服氣。'],['集中家產',{gold:2,vir:-2},'家產更集中，族中卻有人不滿。'],['交長輩裁決',{vir:1,mood:1},'你把難題交給最有威望的人。']]},
+ {a:[25,85],t:'家中藏金',rep:1,x:'老宅修繕時，工匠在牆中發現前人留下的一小匣財物。',c:[['如實上報',{vir:2,fame:1,gold:1},'你查清來源後妥善處理。'],['留作家用',{gold:4,vir:-1},'這筆意外之財讓家中寬裕不少。'],['分給工匠',{gold:2,vir:2},'工匠感念你的厚道。']]},
+ {a:[30,85],t:'地方水患',rep:1,x:'暴雨連日，河水暴漲，低窪村落開始進水。',c:[['組織撤離',{int:1,vir:2,fame:2,hp:-1},'百姓及時撤出，傷亡大減。'],['出資築堤',{gold:-3,vir:2,fame:2},'堤防勉強擋住洪水。'],['守住自家',{gold:1,vir:-2},'你保住了自家田產。']]},
+ {a:[30,85],t:'山林大火',rep:1,x:'山火沿著乾燥林地蔓延，附近村莊開始冒險救火。',c:[['帶人救火',{mar:2,hp:-2,fame:2,vir:1},'大火終於被撲滅。'],['供應糧水',{gold:-1,vir:2},'救火的人們得到補給。'],['遠離火場',{hp:1},'你避免了危險。']]},
+ {a:[30,85],t:'外鄉商人求見',rep:1,x:'外地商人帶著稀罕貨物，希望得到你的引薦。',c:[['替他引薦',{chr:1,fame:1,gold:1},'商路因此更加順暢。'],['先查貨物',{int:2},'你發現其中有幾件來路不明的貨物。'],['拒絕引薦',{vir:1},'你不想承擔未知風險。']]},
+ {a:[30,85],t:'地方學子請益',rep:1,x:'幾名年輕學子專程來向你請教人生與仕途。',c:[['耐心指點',{int:1,vir:2,fame:1},'他們把你的話當作人生準則。'],['勸他們腳踏實地',{vir:2},'學子們連連點頭。'],['簡短應付',{mood:1},'你沒有太多時間。']]},
+ {a:[30,85],t:'舊案重提',rep:1,x:'多年前的一樁舊案突然被人翻出，牽涉到你的故交。',c:[['重新查證',{int:2,vir:1,fame:1},'你找到了當年忽略的線索。'],['相信故交',{vir:1,fame:-1},'你選擇站在朋友這邊。'],['不再過問',{mood:1},'你不願再捲入往事。']]},
+ {a:[30,85],t:'恩人求助',rep:1,x:'當年曾幫過你的恩人如今家道中落，派人送信求助。',c:[['全力相助',{gold:-3,vir:3,fame:2},'你終於報答了多年前的恩情。'],['資助一些',{gold:-1,vir:1},'你盡力而為。'],['婉拒請求',{gold:1,vir:-2},'你選擇顧好自己的家業。']]},
+ {a:[35,85],t:'家族名士',rep:1,x:'家族中有一名晚輩文章出眾，逐漸在地方嶄露頭角。',c:[['全力栽培',{gold:-2,fame:2,int:1},'家族聲望因此更上一層。'],['讓他自行闖蕩',{vir:1,fame:1},'你相信真正的人才不需過度扶持。'],['壓下鋒芒',{fame:-1,mood:1},'你擔心太早成名反而招禍。']]},
+ {a:[35,85],t:'族中武人',rep:1,x:'族中一名年輕人投身軍伍，立下戰功後回鄉省親。',c:[['設宴迎接',{gold:-1,fame:1,mood:1},'族人以他為榮。'],['勉勵報國',{vir:1,fame:1},'他決心再赴邊關。'],['勸其歸田',{mood:1},'你希望他平安度日。']]},
+ {a:[35,85],t:'鄰國商路',rep:1,x:'新的商路開通，外地商人開始大量進入本地。',c:[['投資商路',{gold:-2,int:1},'商路繁榮，你獲得穩定收益。'],['維持觀望',{gold:1},'你沒有冒險投入。'],['協助維持秩序',{vir:1,fame:2},'商旅對地方治安信心大增。']]},
+ {a:[35,85],t:'寺院藏經',rep:1,x:'寺院整理藏經時發現失傳的古籍，主持邀你一同研讀。',c:[['閉門研讀',{int:2,mood:1},'你對古代思想有了新的理解。'],['請人抄錄',{gold:-1,int:1},'家中留下了一套珍貴抄本。'],['捐給書院',{vir:2,fame:2},'更多人因此受益。']]},
+ {a:[40,85],t:'老臣請教',rep:1,x:'一位德高望重的老臣退休後來到你府上，與你談論天下大勢。',c:[['虛心請益',{int:2,fame:1},'你從他的經驗中學到許多。'],['與他論道',{int:1,vir:1,fame:1},'你們相談甚歡。'],['只談家常',{mood:1},'你讓這次會面變得輕鬆許多。']]},
+ {a:[40,85],t:'故鄉召集',rep:1,x:'故鄉族老希望你出面主持一次大規模祭祖與族會。',c:[['親自回鄉',{gold:-2,mood:2,vir:2,fame:1},'族人對你的重視遠勝往年。'],['派人代辦',{gold:-1,vir:1},'你雖未親自前往，禮數仍周全。'],['不予理會',{mood:-1,fame:-1},'族人對你頗感失望。']]},
+ {a:[40,85],t:'晚輩求官',rep:1,x:'家族晚輩希望你出面替他求一個官職，引起你的兩難。',c:[['讓他憑本事',{vir:2,int:1},'你告訴他真正的功名只能靠自己。'],['替他引薦',{fame:1,gold:-1,vir:-1},'他得到機會，但也欠下你一份人情。'],['直接拒絕',{vir:1,mood:-1},'他雖失望，卻明白你的原則。']]},
+ {a:[40,85],t:'地方名產',rep:1,x:'地方商戶送來名產，希望與你建立長久往來。',c:[['照價購買',{gold:-1,vir:1},'你不願平白受人好處。'],['婉拒厚禮',{vir:2,fame:1},'你的清廉讓人敬佩。'],['欣然收下',{gold:2,vir:-2},'家中多了些稀罕物件。']]},
+ {a:[45,90],t:'回望故居',rep:1,x:'多年奔波後，你再次站在年少時住過的老宅前。',c:[['修繕祖屋',{gold:-2,mood:2,fame:1},'老宅重新有了昔日的模樣。'],['追憶往事',{int:1,mood:2},'你想起許多已故親人。'],['轉身離去',{mood:1},'你決定把目光放向未來。']]},
+ {a:[45,90],t:'舊臣遺孤',rep:1,x:'故去舊臣留下的孩子生活困頓，族人希望你收留照料。',c:[['收為門下',{gold:-2,vir:3,fame:2},'你替他重新安排了人生。'],['提供學費',{gold:-1,vir:2},'孩子得以繼續讀書。'],['交給親族',{vir:1},'你請他的親族負起責任。']]},
+ {a:[50,90],t:'退隱邀請',rep:1,x:'一群故交邀你遠離塵囂，到山林間過幾年清靜日子。',c:[['欣然赴約',{mood:3,hp:1,fame:-1},'你暫別俗務，身心得到休養。'],['偶爾往來',{mood:1,vir:1},'你仍保留自己的生活節奏。'],['婉拒邀請',{int:1},'你還有放不下的責任。']]},
+ {a:[50,90],t:'後輩成婚',rep:1,x:'家族中最受期待的晚輩今日成婚，族人請你主持婚禮。',c:[['親自主持',{gold:-1,mood:2,vir:1,fame:1},'婚禮圓滿，家族氣氛喜氣洋洋。'],['送上賀禮',{gold:-2,vir:1},'你把祝福化作實際的支持。'],['只送一句祝福',{mood:1},'你沒有鋪張。']]},
+ /* 皇帝也能遇到的非專屬天下事件 */
+ {a:[25,90],t:'民間讖語',rep:1,x:'民間流傳一則讖語，說天下將有大變，京城人心浮動。',c:[['公開安撫',{pp:1,fame:1,vir:1},'百姓漸漸恢復信心。'],['查明來源',{int:2,ns:1},'你發現只是有人故意散播謠言。'],['置之不理',{pp:-1,mood:1},'謠言一度愈演愈烈。']]},
+ {a:[25,90],t:'商路斷絕',rep:1,x:'連日暴雨導致主要商路中斷，城中物價開始上漲。',c:[['開放官道',{gold:-1,ns:1,pp:1},'商旅恢復通行，物價逐漸穩定。'],['暫緩徵稅',{pp:2,ns:-1},'百姓鬆了一口氣。'],['任其自理',{pp:-1},'市場短期內陷入混亂。']]},
+ {a:[25,90],t:'地方士紳請命',rep:1,x:'地方士紳聯名請求朝廷調整一項不合時宜的舊規。',c:[['允其改革',{ns:1,pp:1,fame:2},'新規施行後，地方運作更有效率。'],['派員查訪',{int:1,fame:1},'你決定先掌握實情。'],['維持舊制',{ns:1,pp:-1},'你選擇穩妥，不願輕易改制。']]},
+ {a:[25,90],t:'邊民互市',rep:1,x:'邊境百姓希望恢復有限互市，以交換糧食與生活用品。',c:[['開放互市',{pp:1,ns:1,gold:1},'邊境商貿活絡，百姓收入增加。'],['嚴格限制',{ns:1,pp:-1},'安全性提高，但邊民略有不滿。'],['暫緩決定',{int:1},'你要求官員繼續調查。']]},
+ {a:[30,90],t:'官員告老',rep:1,x:'一名勤勉多年的老臣請求告老還鄉，朝廷一時找不到合適接替者。',c:[['准其致仕',{vir:1,pp:1,fame:1},'老臣感激你的體恤。'],['再留三年',{ns:1,hp:-1},'朝廷暫時維持穩定。'],['安排接班人',{int:2,ns:1},'新舊交接順利完成。']]},
+ {a:[30,90],t:'糧倉盤點',rep:1,x:'地方糧倉帳目出現差異，官員互相推諉。',c:[['派員徹查',{int:2,ns:1,fame:1},'查出數筆虧空，責任終於明確。'],['限期補足',{ns:1,pp:1},'地方官員連夜補齊缺額。'],['暫不追究',{ns:-1,pp:-1},'問題暫時被壓下。']]},
+ {a:[30,90],t:'民間冤案',rep:1,x:'一樁多年未決的冤案再次被百姓敲鼓申訴，群情激動。',c:[['重審案件',{vir:2,fame:2,pp:1},'真相終於水落石出。'],['命三司會審',{int:1,ns:1,fame:1},'案件交由多方共同查辦。'],['維持原判',{pp:-2,vir:-1},'民間對朝廷的信任下降。']]},
+ {a:[35,90],t:'將領請功',rep:1,x:'邊將送來捷報，請求為麾下將士加功封賞。',c:[['厚賞將士',{gold:-2,mar:1,ns:1,fame:2},'軍心大振。'],['按功行賞',{mar:1,ns:1,vir:1},'賞罰分明，將士信服。'],['暫緩封賞',{ns:-1,pp:-1},'軍中開始出現怨言。']]},
+ {a:[35,90],t:'京師米價',rep:1,x:'京師米價連月上漲，百姓開始減少口糧。',c:[['調糧入京',{gold:-2,pp:2,ns:-1},'糧價很快回落。'],['平抑米價',{pp:1,gold:-1},'百姓暫時鬆了一口氣。'],['放任市場',{pp:-2,ns:1},'國庫沒有負擔，但民怨升高。']]},
+ {a:[35,90],t:'宮外失竊案',rep:1,x:'京城接連發生盜竊案，百姓懷疑地方治安失控。',c:[['整頓治安',{ns:1,pp:1,mar:1},'盜賊很快收斂。'],['暗中查訪',{int:2,fame:1},'你抓到幕後主使。'],['增加刑罰',{pp:-1,ns:1},'盜賊減少了，但百姓也開始害怕。']]},
+ {a:[40,90],t:'學官請建學',rep:1,x:'各地學官上奏，希望增建官學以培養更多人才。',c:[['撥款興學',{gold:-2,ns:1,fame:2},'讀書風氣大盛。'],['地方自籌',{int:1,pp:1},'士紳共同出資建學。'],['暫緩興建',{gold:1,ns:-1},'國庫暫時省下一筆。']]},
+ {a:[40,90],t:'宗室求封',rep:1,x:'宗室子弟請求增加封賞與歲祿，朝臣對此意見不一。',c:[['適度封賞',{gold:-2,pp:1,fame:1},'宗室滿意，朝廷也沒有太大負擔。'],['削減歲祿',{ns:1,gold:2,pp:-1},'國庫寬裕了，宗室卻頗有怨言。'],['召集議政',{int:1,ns:1},'你讓朝臣共同提出方案。']]},
+ {a:[40,90],t:'外使贈禮',rep:1,x:'外國使節入京，帶來珍奇異寶，希望改善兩國關係。',c:[['厚待使節',{gold:-1,fame:2,pp:1},'兩國關係更加融洽。'],['按禮接待',{vir:1,ns:1},'外交保持穩定。'],['拒收厚禮',{vir:2,fame:1},'你避免了被人指責貪圖外物。']]},
+ {a:[40,90],t:'地方疫病',rep:1,x:'一州出現疫病，官府請求朝廷支援藥材與醫者。',c:[['調撥藥材',{gold:-2,pp:2,vir:2},'疫病逐漸受到控制。'],['派醫官前往',{gold:-1,int:1,pp:1},'醫官找到有效的防治方法。'],['命地方自救',{pp:-2,ns:-1},'地方百姓對朝廷失望。']]},
+ {a:[45,90],t:'邊軍缺餉',rep:1,x:'邊軍上報糧餉不足，將士情緒開始不穩。',c:[['立即補餉',{gold:-2,ns:2,mar:1},'軍心穩定，邊防無虞。'],['查清虧空',{int:2,ns:1},'你發現問題出在地方糧官。'],['暫緩撥款',{ns:-2,pp:-1},'軍中開始出現怨言。']]},
+ {a:[45,90],t:'權貴求情',rep:1,x:'一名權貴為犯事親族求情，希望你網開一面。',c:[['依法處置',{vir:2,fame:2,ns:1},'朝野稱讚你賞罰分明。'],['從輕發落',{fame:1,vir:-1},'事情暫時平息。'],['完全赦免',{fame:-1,pp:-1,vir:-2},'百姓開始質疑你的公正。']]},
+ {a:[45,90],t:'朝野求賢',rep:1,x:'天下名士紛紛上書自薦，朝廷需要挑選真正有用的人才。',c:[['廣開言路',{int:2,fame:1,pp:1},'各地人才開始進入朝廷視野。'],['重點考察',{int:1,ns:1,fame:1},'你讓官員逐一查核履歷。'],['只用舊臣',{ns:-1,fame:-1},'朝廷缺乏新鮮血液。']]}
+);
+// 給所有新增事件更長冷卻；近期出現過的事件不再立即抽中。
+for(const e of E){if(e.rep)e.cd=e.cd||8;}
+
+const __v6Apply=apply,__v6Start=start,__v6Next=nextYear,__v6Render=render,__v6Menu=menu;
+apply=function(fx){let old=S?.s?.gold||0;if(S&&!S.v5act)S.v5act={study:0,kin:0,gold:0,work:0};__v6Apply(fx);if(S?.s){v6Init();v6SyncFromGold(old);v6FamilyRecalc()}};
+start=function(){__v6Start();v6Init();render()};
+nextYear=function(){v6Init();let old=S?.s?.gold||0;__v6Next();v6SyncFromGold(old);v6Year();render()};
+render=function(){__v6Render();if(!S)return;v6Init();$('coin').textContent=v6MoneyFmt(S.v6.money);$('prov').textContent=(S.territory?.name||S.prov||'本鄉').slice(0,5);};
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`) }
+window.jobMenu=jobMenu;window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;window.v5Children=v5Children;window.v5ChildTrain=v5ChildTrain;window.v5HaveChild=v5HaveChild;window.v5Marriage=v5Marriage;window.v5Marry=v5Marry;window.v5Family=v5Family;window.v5Quest=v5Quest;window.v5QuestDo=v5QuestDo;window.v5AchSheet=v5AchSheet;window.v5Book=v5Book;window.v5Estate=v5Estate;window.upgradeEstate=upgradeEstate;window.v5Profile=v5Profile;window.v5Save=v5Save;window.v5Load=v5Load;window.v5ContinueAfterDeath=v5ContinueAfterDeath;window.v5Inheritance=v5Inheritance;window.estate=estate;window.kin=kin;window.acts=acts;window.menu=menu;window.openEstate=openEstate;
+})();
+
+
+/* ===== v7 朝廷・官職・皇帝・戰爭・國家存亡・領土爭奪 ===== */
+(function(){
+const OFFICES=['平民','縣丞','縣令／知縣','知府／刺史','六部尚書','宰相'];
+const MILOFF=['無','什長','校尉','將軍','大將軍','統帥'];
+const WAR_TYPES=['邊境衝突','爭奪關隘','攻城戰','大規模國戰'];
+function v7Init(){
+ if(!S.v7)S.v7={office:0,officeYears:0,war:null,enemy:null,conquests:0,rebellion:0,royalBlood:!!S.royal};
+ if(!S.nation){S.nation={name:'大梁',stability:6,treasury:5000,pop:18000,power:6,diplomacy:5,year:1}}
+ if(!S.territory){S.territory={name:'本鄉',level:0,land:20,people:180,fields:8,tax:70,loyalty:6,renovation:0}}
+ if(!S.nation.neighbors)S.nation.neighbors=[{name:'北燕',power:5,stability:6,land:3},{name:'南楚',power:5,stability:7,land:3},{name:'西涼',power:4,stability:5,land:2}];
+ if(S.king&&!S.v7.office)S.v7.office=5;
+}
+function v7OfficeName(){v7Init();return S.king?'皇帝':(OFFICES[Math.max(0,Math.min(5,S.rank||S.v7.office||0))]||'平民')}
+function v7MilitaryName(){return MILOFF[Math.max(0,Math.min(5,S.mrank||0))]}
+function v7Power(){v7Init();return Math.max(1,(S.nation.power||0)+(S.rank||0)+(S.mrank||0)+Math.floor((S.family?.ext?.influence||0)/5))}
+function v7Court(){v7Init();let n=S.nation,e=S.emp||{};
+ const office=v7OfficeName(), mil=v7MilitaryName();
+ let b='';
+ if(!S.king){
+  b+=`<button class="opt" onclick="v7SeekOffice()">📜 謀求官職<small>依功名、名望與家族影響力晉升</small></button>`;
+  if((S.rank||0)>=1)b+=`<button class="opt" onclick="v7Serve()">🏛️ 處理政務<small>增加政績，也可能消耗體力與家財</small></button>`;
+  if((S.mrank||0)>=1)b+=`<button class="opt" onclick="v7Mobilize()">⚔️ 調兵備戰<small>軍功越高，戰爭越有利</small></button>`;
+ }
+ if(S.king){
+  b+=`<button class="opt" onclick="v7ImperialDecree()">👑 頒布國策<small>治理國家、調整國力與民心</small></button>`;
+  b+=`<button class="opt" onclick="v7AppointMinister()">🏯 任用大臣<small>提升朝廷效率</small></button>`;
+ }
+ sheet('朝廷與官職',rows([['國家',n.name],['身分',S.king?'皇帝':(S.royal?'宗室／皇族':office)],['文官職',office],['武官職',mil],['官職年資',(S.v7.officeYears||0)+' 年'],['國家穩定',(n.stability||0)+'/10'],['國力',(n.power||0)+'/10'],['國庫',v6MoneyFmt(n.treasury||0)],['民心',(S.pp??S.territory.loyalty??0)+'/12'],['在位／帝年',S.king?((S.emp?.t||0)+' 年'):'非皇帝']])+b+`<p>官職會影響俸祿、事件與家族身分；文官以功名、德行、名望為主，武官以軍功與武力為主。</p>`)
+}
+function v7SeekOffice(){v7Init();if(S.king)return;let r=S.rank||0,score=r*3+(S.s.fame||0)/2+(S.s.vir||0)/3+(S.family?.ext?.influence||0)/4;
+ if(r>=5){sheet('官至極品','<p>你已位極人臣，若再進一步便可能觸及帝位與攝政之爭。</p>');return}
+ let need=(r+1)*4;if(score<need){sheet('暫未授官',`<p>目前仕途評分 ${score.toFixed(1)}，約需 ${need}。</p><p>提升功名、名望、德行或家族影響力後再來。</p>`);return}
+ S.rank=Math.min(5,r+1);S.v7.office=S.rank;S.v7.officeYears=0;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);v6FamilyRecalc();S.cur.push(`🏛️ 朝廷授你「${OFFICES[S.rank]}」，家族身分提升。`);S.hist.push(`${S.age}歲 授官：${OFFICES[S.rank]}`);render();cls();}
+function v7Serve(){v7Init();if(!S.rank||S.acted>=2)return;S.acted++;let roll=(S.s.int||0)+(S.s.vir||0)+R(5),need=8+S.rank*2;if(roll>=need){S.nation.stability=Math.min(10,S.nation.stability+1);S.s.fame=Math.min(12,S.s.fame+1);S.v7.officeYears++;S.cur.push(`📜 你處理政務有功，${OFFICES[S.rank]}聲望上升。`)}else{S.s.hp=Math.max(0,S.s.hp-1);S.nation.stability=Math.max(0,S.nation.stability-1);S.cur.push('📜 政務繁重，你一時失誤，地方百姓頗有怨言。')}v6FamilyRecalc();render();cls();}
+function v7Mobilize(){v7Init();if(S.mrank<1){sheet('尚未掌兵','<p>先取得武職或從軍，才能調兵備戰。</p>');return}S.nation.power=Math.min(10,S.nation.power+1);S.nation.treasury=Math.max(0,S.nation.treasury-150);S.cur.push('⚔️ 你整軍備戰，國庫支出 150 文記帳單位，軍備提升。');render();cls();}
+function v7ImperialDecree(){v7Init();if(!S.king)return;let opts=[['輕徭薄賦',()=>{S.pp=Math.min(12,(S.pp||0)+2);S.nation.treasury=Math.max(0,S.nation.treasury-400);S.nation.stability=Math.min(10,S.nation.stability+1)}],['整頓吏治',()=>{S.nation.stability=Math.min(10,S.nation.stability+2);S.nation.power=Math.max(1,S.nation.power-1)}],['擴軍備戰',()=>{S.nation.power=Math.min(10,S.nation.power+2);S.nation.treasury=Math.max(0,S.nation.treasury-500);S.pp=Math.max(0,(S.pp||0)-1)}],['開倉賑濟',()=>{S.pp=Math.min(12,(S.pp||0)+3);S.nation.treasury=Math.max(0,S.nation.treasury-600)}]];sheet('皇帝國策',opts.map((o,i)=>`<button class="opt" onclick="v7Decree(${i})">${o[0]}</button>`).join(''))}
+function v7Decree(i){let a=[['輕徭薄賦',()=>{S.pp=Math.min(12,(S.pp||0)+2);S.nation.treasury=Math.max(0,S.nation.treasury-400);S.nation.stability=Math.min(10,S.nation.stability+1)}],['整頓吏治',()=>{S.nation.stability=Math.min(10,S.nation.stability+2);S.nation.power=Math.max(1,S.nation.power-1)}],['擴軍備戰',()=>{S.nation.power=Math.min(10,S.nation.power+2);S.nation.treasury=Math.max(0,S.nation.treasury-500);S.pp=Math.max(0,(S.pp||0)-1)}],['開倉賑濟',()=>{S.pp=Math.min(12,(S.pp||0)+3);S.nation.treasury=Math.max(0,S.nation.treasury-600)}]][i];if(!a)return;a[1]();S.cur.push(`👑 皇帝頒布「${a[0]}」國策。`);S.hist.push(`${S.age}歲 國策：${a[0]}`);render();cls();}
+function v7AppointMinister(){if(!S.king)return;S.nation.stability=Math.min(10,S.nation.stability+1);S.nation.power=Math.min(10,S.nation.power+1);S.nation.treasury=Math.max(0,S.nation.treasury-200);S.cur.push('🏯 你任用賢能大臣，朝廷運作更加穩定。');render();cls();}
+function v7War(){v7Init();let w=S.v7.war;
+ if(!w){let en=P(S.nation.neighbors);w={enemy:en.name,progress:0,enemyPower:en.power,year:0,type:P(WAR_TYPES),won:false};S.v7.war=w;sheet('⚔️ 戰爭爆發',`<p>「${en.name}」與${S.nation.name}邊境衝突升級。</p><p>戰事：${w.type}</p><p>我方戰力：${v7Power()}　敵方：${en.power}</p><button class="opt" onclick="v7Battle(1)">出兵決戰</button><button class="opt" onclick="v7Battle(0)">守城固守</button><button class="opt" onclick="v7Retreat()">暫避鋒芒</button>`,0);return}
+ sheet('⚔️ 戰爭狀態',rows([['敵國',w.enemy],['戰事',w.type],['戰爭年數',w.year],['我方戰果',w.progress+'/3'],['我方戰力',v7Power()],['敵方戰力',w.enemyPower]])+`<button class="opt" onclick="v7Battle(1)">再次出兵</button><button class="opt" onclick="v7Battle(0)">守城</button><button class="opt" onclick="v7Retreat()">議和／撤軍</button>`)}
+function v7Battle(attack){v7Init();let w=S.v7.war;if(!w)return;w.year++;let own=v7Power()+(attack?R(4):1),enemy=w.enemyPower+R(4);if(own>=enemy){w.progress++;S.nation.power=Math.min(10,S.nation.power+(attack?1:0));S.nation.stability=Math.min(10,S.nation.stability+1);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.s.hp=Math.max(0,S.s.hp-(attack?1:0));S.cur.push(`⚔️ ${attack?'主動出擊':'固守城池'}成功，${w.enemy}軍退卻。`)}else{w.progress=Math.max(0,w.progress-1);S.nation.power=Math.max(0,S.nation.power-1);S.nation.stability=Math.max(0,S.nation.stability-1);S.s.hp=Math.max(0,S.s.hp-1);S.cur.push(`⚔️ ${w.enemy}軍突破防線，戰局不利。`)}if(w.progress>=3){v7WinWar();return}if(S.nation.power<=0||S.nation.stability<=0){v7CountryCollapse(w.enemy);return}render();cls();}
+function v7Retreat(){v7Init();if(!S.v7.war)return;S.nation.stability=Math.max(0,S.nation.stability-1);S.nation.power=Math.max(1,S.nation.power);S.cur.push(`🕊️ 你與${S.v7.war.enemy}暫時議和，邊境留下戰後裂痕。`);S.v7.war=null;render();cls();}
+function v7WinWar(){let w=S.v7.war;S.cur.push(`🏆 ${S.nation.name}在與${w.enemy}的戰爭中獲勝！`);S.s.fame=Math.min(12,(S.s.fame||0)+2);S.nation.power=Math.min(10,S.nation.power+2);S.nation.stability=Math.min(10,S.nation.stability+1);S.v7.war=null;render();cls();}
+function v7Territory(){v7Init();let t=S.territory;sheet('🗺️ 領土爭奪',rows([['目前領地',V6_TERR[t.level]?.[0]||'無'],['領地名稱',t.name],['領地等級',t.level+'/5'],['田產',t.land+' 畝'],['人口',t.people+' 人'],['民心',t.loyalty+'/10'],['已奪取領地',S.v7.conquests||0]])+`<button class="opt" onclick="v7Contest()" ${t.level>=5?'disabled':''}>⚔️ 爭奪鄰境</button><button class="opt" onclick="v7DevelopBorder()">🌾 經營新領土</button><p>領土爭奪會受到軍功、官職、家族影響力與國力影響；失敗可能降低民心與國力。</p>`)}
+function v7Contest(){v7Init();let t=S.territory;if(t.level>=5){sheet('疆域已達上限','<p>你已經掌握一方重鎮。</p>');return}let target=P(S.nation.neighbors),score=v7Power()+t.loyalty/2+R(6),need=8+t.level*2+target.power;if(score>=need){t.level++;t.name=['本鄉','新授村','安民鄉','本縣','本州','鎮守一方'][t.level];t.land+=40+t.level*10;t.people+=180;t.fields+=30;t.loyalty=Math.min(10,t.loyalty+1);S.v7.conquests++;S.nation.power=Math.min(10,S.nation.power+1);S.family.rep=Math.min(12,S.family.rep+1);S.s.fame=Math.min(12,(S.s.fame||0)+2);S.cur.push(`🗺️ 你擊退${target.name}勢力，取得新的領地，晉升為「${V6_TERR[t.level][0]}」。`);S.hist.push(`${S.age}歲 領土擴張：取得${V6_TERR[t.level][0]}`)}else{S.nation.power=Math.max(0,S.nation.power-1);t.loyalty=Math.max(0,t.loyalty-2);S.s.hp=Math.max(0,S.s.hp-1);S.cur.push(`🗺️ 爭奪${target.name}失敗，邊境軍民受損。`)}v6FamilyRecalc();render();cls();}
+function v7DevelopBorder(){v7Init();let t=S.territory;if(S.v6.money<200){sheet('資金不足','<p>至少需要 200 文投入邊境。</p>');return}S.v6.money-=200;t.fields+=20;t.people+=80;t.loyalty=Math.min(10,t.loyalty+1);S.family.ext.land=Math.max(S.family.ext.land,t.land+Math.round(t.fields*.15));S.cur.push('🌾 你投入資金經營新領土，耕地與人口增加。');render();cls();}
+function v7CountryStatus(){v7Init();let n=S.nation;let collapse=(n.stability<=0||n.power<=0||(S.pp!==undefined&&S.pp<=0));if(collapse){v7CountryCollapse('內亂／外敵');return}sheet('👑 國家存亡',rows([['國家',n.name],['穩定',n.stability+'/10'],['國力',n.power+'/10'],['國庫',v6MoneyFmt(n.treasury)],['外交',n.diplomacy+'/10'],['民心',((S.pp!==undefined?S.pp:S.territory.loyalty)||0)+'/12'],['疆域',V6_TERR[S.territory.level][0]],['戰爭',S.v7.war?`與 ${S.v7.war.enemy} 交戰`:'目前無大戰']])+`<button class="opt" onclick="v7War()">⚔️ 戰爭／軍情</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button>`)}
+function v7CountryCollapse(reason){v7Init();let old=S.nation.name;S.nation.stability=0;S.nation.power=0;S.v7.war=null;S.cur.push(`💀 ${old}國祚終結：${reason}。`);S.hist.push(`${S.age}歲 ${old}滅亡`);if(S.king){S.fall=`${old}國破山河，${S.name}成為亡國之君。`}else{S.s.fame=Math.max(0,(S.s.fame||0)-2);S.family.rep=Math.max(0,(S.family.rep||0)-2)}sheet('國家滅亡',`<div class="seal">國祚終結</div><p>${old}因${reason}而滅亡。</p><p>你的家族將面臨流亡、改朝換代與重新立足的選擇。</p><button class="opt" onclick="v7AfterCollapse()">面對亂世</button>`,0)}
+function v7AfterCollapse(){S.nation={name:P(['新梁','新周','南朝','北朝']),stability:5,treasury:2500,pop:12000,power:4,diplomacy:4,year:1,neighbors:[{name:'舊敵',power:4,stability:5,land:2}]};S.v7.rebellion=0;S.cur.push('🕊️ 新朝建立，你的家族在亂世中重新尋找立足之地。');render();cls();}
+function v7Year(){v7Init();S.v7.officeYears=(S.v7.officeYears||0)+((S.rank||0)>0?1:0);if(S.king){S.emp=S.emp||{t:0};S.emp.t=(S.emp.t||0)+1;let drift=R(4)-1;S.nation.stability=Math.max(0,Math.min(10,S.nation.stability+drift));S.nation.power=Math.max(0,Math.min(10,S.nation.power+(Math.random()<.45?1:-1)));if(Math.random()<.18)v7War();}else if(Math.random()<.08&&S.rank>=2){S.nation.stability=Math.max(0,S.nation.stability-1);S.cur.push('🏛️ 朝中黨爭加劇，你的仕途受到波及。')}if(Math.random()<.07&&S.territory.level>=2){S.territory.loyalty=Math.max(0,S.territory.loyalty-1);S.cur.push('🗺️ 邊地民情不穩，地方官府需要加強治理。')}if(S.nation.stability<=0||S.nation.power<=0||((S.pp||99)<=0&&S.king))v7CountryCollapse('國力或民心崩潰');v6FamilyRecalc();}
+const oldNext=nextYear;
+nextYear=function(){oldNext();v7Year();render();};
+const oldMenu=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v7Court=v7Court;window.v7SeekOffice=v7SeekOffice;window.v7Serve=v7Serve;window.v7Mobilize=v7Mobilize;window.v7ImperialDecree=v7ImperialDecree;window.v7Decree=v7Decree;window.v7AppointMinister=v7AppointMinister;window.v7War=v7War;window.v7Battle=v7Battle;window.v7Retreat=v7Retreat;window.v7Territory=v7Territory;window.v7Contest=v7Contest;window.v7DevelopBorder=v7DevelopBorder;window.v7CountryStatus=v7CountryStatus;window.v7CountryCollapse=v7CountryCollapse;window.v7AfterCollapse=v7AfterCollapse;window.v7Year=v7Year;
+})();
+
+
+/* ===== v8 特殊勢力／錦衣衛類勢力 ===== */
+(function(){
+const FACTIONS={
+  jinwei:{name:'錦衣衛',icon:'🛡️',desc:'皇帝親軍與密探勢力，負責巡查、護駕、緝捕與秘密差事。',need:1,power:5},
+  dongchang:{name:'東廠',icon:'🕯️',desc:'宮廷情報與監察勢力，擅長偵查、監視與查辦官員。',need:2,power:6},
+  jinyi:{name:'羽林衛',icon:'⚔️',desc:'宮禁宿衛與精銳軍府，重視武勇、軍功與護衛。',need:1,power:5},
+  anbu:{name:'玄衣司',icon:'🌑',desc:'架空王朝的秘密情報機構，專辦暗查、反間與邊境密使。',need:2,power:7}
+};
+function v8Init(){
+ if(!S.v8)S.v8={faction:null,rep:0,rank:0,missions:0,heat:0};
+}
+function v8Faction(){v8Init();let f=S.v8.faction?FACTIONS[S.v8.faction]:null;
+ let list=Object.entries(FACTIONS).map(([id,x])=>{
+   const joined=S.v8.faction===id;
+   const can=(S.king||((S.rank||0)>=x.need)||((S.mrank||0)>=x.need));
+   return `<button class="opt" ${joined?'disabled':''} ${(!can&&!joined)?'disabled':''} onclick="v8Join('${id}')">${x.icon} ${x.name}<small>${x.desc}${can?'':'（需要一定官職／軍職）'}</small></button>`;
+ }).join('');
+ let status=f?rows([['所屬勢力',f.icon+' '+f.name],['勢力聲望',S.v8.rep+'/20'],['勢力階級',S.v8.rank+'/5'],['完成密令',S.v8.missions+' 次'],['皇權警戒',S.v8.heat+'/10']])+`<p>${f.desc}</p><button class="opt" onclick="v8Mission()">📜 接受秘密任務<small>成功可提升勢力聲望與個人名望，失敗可能增加警戒</small></button><button class="opt" onclick="v8Promotion()">🎖️ 申請晉升<small>勢力聲望達標後提升階級</small></button><button class="opt" onclick="v8Leave()">🚪 脫離勢力</button>`:'';
+ sheet('特殊勢力',status+`<h3>可加入勢力</h3>${list}<p style="margin-top:10px">勢力會影響官場、人脈、家族聲望與部分事件；皇帝與高階官員可接觸更多勢力。</p>`);
+}
+function v8Join(id){v8Init();let f=FACTIONS[id];if(!f)return;if(S.v8.faction)return;if(!(S.king||((S.rank||0)>=f.need)||((S.mrank||0)>=f.need))){sheet('資格不足',`<p>加入「${f.name}」需要至少 ${f.need} 級文官或武官身分。</p>`);return}S.v8.faction=id;S.v8.rep=2;S.v8.rank=1;S.v8.heat=0;S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`${f.icon} 你正式加入「${f.name}」，開始接觸朝廷機密與特殊任務。`);S.hist.push(`${S.age}歲 加入特殊勢力：${f.name}`);render();cls();}
+function v8Mission(){v8Init();if(!S.v8.faction){v8Faction();return}let f=FACTIONS[S.v8.faction],kind=P(['暗查官員','護送密詔','緝拿要犯','護駕巡查','邊境密使','查抄貪墨','查探敵情','保護朝臣']);let stat=(S.v8.faction==='jinyi'||S.v8.faction==='anbu')?(S.s.int||0)+(S.s.fame||0)+(S.mrank||0):((S.s.int||0)+(S.s.vir||0)+(S.rank||0));let need=7+S.v8.rank*2+R(5);let success=stat>=need;if(success){S.v8.rep=Math.min(20,S.v8.rep+2);S.v8.missions++;S.v8.heat=Math.max(0,S.v8.heat-1);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.v6.money=(S.v6?.money||0)+30+S.v8.rank*15;S.cur.push(`${f.icon} 密令完成：「${kind}」。你在「${f.name}」中的聲望提升。`);S.hist.push(`${S.age}歲 完成${f.name}密令：${kind}`)}else{S.v8.heat=Math.min(10,S.v8.heat+1);S.s.hp=Math.max(0,S.s.hp-1);S.v8.rep=Math.max(0,S.v8.rep-1);S.cur.push(`⚠️ 密令「${kind}」失敗，你的行蹤引起${f.name}注意。`);if(S.v8.heat>=8){S.family.rep=Math.max(0,(S.family.rep||0)-1);S.nation.stability=Math.max(0,(S.nation.stability||0)-1)}}render();cls();}
+function v8Promotion(){v8Init();if(!S.v8.faction){v8Faction();return}let req=S.v8.rank*3+2;if(S.v8.rep<req){sheet('尚未符合晉升條件',`<p>目前勢力聲望 ${S.v8.rep}，晉升至少需要 ${req}。</p>`);return}if(S.v8.rank>=5){sheet('已達最高階','<p>你已成為此勢力的核心人物。</p>');return}S.v8.rank++;S.v8.rep-=req;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`🎖️ 你在「${FACTIONS[S.v8.faction].name}」晉升為第 ${S.v8.rank} 階。`);render();cls();}
+function v8Leave(){v8Init();if(!S.v8.faction)return;let n=FACTIONS[S.v8.faction].name;S.v8.faction=null;S.v8.rank=0;S.v8.rep=0;S.v8.heat=0;S.cur.push(`🚪 你離開了「${n}」，從此不再受其差遣。`);render();cls();}
+const oldMenu8=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v8Faction=v8Faction;window.v8Join=v8Join;window.v8Mission=v8Mission;window.v8Promotion=v8Promotion;window.v8Leave=v8Leave;
+})();
+
+
+/* ===== v9 特殊勢力權力鬥爭擴充 ===== */
+(function(){
+const REL={
+ jinwei:{dongchang:-2,anbu:1,jinyi:2},
+ dongchang:{jinwei:-2,anbu:2,jinyi:-1},
+ jinyi:{jinwei:2,dongchang:-1,anbu:0},
+ anbu:{jinwei:1,dongchang:2,jinyi:0}
+};
+const TITLES={jinwei:['校尉','千戶','副指揮使','指揮使','都督'],dongchang:['檔頭','掌班','掌刑千戶','提督太監','東廠提督'],jinyi:['校尉','百戶','千戶','鎮撫使','指揮使'],anbu:['密探','司使','副司正','司正','玄衣令']};
+function v9Init(){
+ v8Init();
+ if(!S.v9)S.v9={relations:{jinwei:0,dongchang:0,jinyi:0,anbu:0},appointed:false,appointedTitle:'',investigations:0,power:0,scandals:0};
+ if(!S.v9.relations)S.v9.relations={jinwei:0,dongchang:0,jinyi:0,anbu:0};
+}
+function v9FactionPower(id){v9Init();return (S.v9.relations[id]||0)+(S.v8.faction===id?S.v8.rep:0)+(S.v8.faction===id?S.v8.rank*2:0);}
+function v9Rivalry(){
+ v9Init();
+ if(!S.v8.faction)return;
+ const id=S.v8.faction, rival=Object.keys(FACTIONS).filter(x=>x!==id).sort((a,b)=>v9FactionPower(b)-v9FactionPower(a))[0];
+ if(!rival)return;
+ const rel=REL[id]?.[rival]||0;
+ if(rel<0 && Math.random()<.28){
+   S.v9.relations[rival]=Math.max(-10,(S.v9.relations[rival]||0)-1);
+   S.v8.heat=Math.min(10,S.v8.heat+1);
+   S.cur.push(`⚔️ ${FACTIONS[id].name}與${FACTIONS[rival].name}暗中爭權，你被捲入派系角力。`);
+ }
+ if(Math.random()<.10 && (S.rank||0)>=3){S.v9.power++;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.cur.push('🏛️ 朝中派系對你示好，你在權力核心的影響力上升。');}
+}
+function v9Investigation(){
+ v9Init();
+ if(!(S.v8.faction||S.king||(S.rank||0)>=3)){sheet('資格不足','<p>需要加入特殊勢力，或至少達到較高官職。</p>');return;}
+ const targets=['貪墨縣令','私通外敵的武官','侵吞軍餉的糧官','結黨營私的權臣','勾結豪強的地方官','疑似通敵的使者'];
+ const target=P(targets);
+ let score=(S.s.int||0)+(S.s.fame||0)+(S.rank||0)+(S.v8?.rank||0)*2+R(6);
+ let need=9+R(6);
+ if(score>=need){S.v9.investigations++;S.v9.power++;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.nation.stability=Math.min(10,(S.nation.stability||0)+1);S.cur.push(`🔎 密查成功：你查明「${target}」的罪證，案件震動朝廷。`);S.hist.push(`${S.age}歲 查辦：${target}`);}
+ else{S.v9.scandals++;S.v8.heat=Math.min(10,(S.v8.heat||0)+2);S.cur.push(`⚠️ 查辦「${target}」未能取得完整證據，反而得罪了權貴。`);if(S.v8.heat>=8)S.family.rep=Math.max(0,(S.family.rep||0)-1);}
+ render();cls();
+}
+function v9Appoint(){
+ v9Init();
+ if(!S.king){sheet('尚無任命權','<p>只有皇帝或最高統治者能正式任命特殊勢力首長。</p>');return;}
+ if((S.v8.rank||0)<4){sheet('資歷不足','<p>需要在所屬特殊勢力達到第 4 階以上。</p>');return;}
+ const id=S.v8.faction;
+ if(!id){sheet('尚未加入勢力','<p>先加入一個特殊勢力。</p>');return;}
+ S.v9.appointed=true;S.v9.appointedTitle=TITLES[id][Math.min(4,(S.v8.rank||1)-1)];S.v9.power+=3;S.s.fame=Math.min(12,(S.s.fame||0)+2);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`👑 皇帝任命你為${FACTIONS[id].name}「${S.v9.appointedTitle}」，正式掌握實權。`);S.hist.push(`${S.age}歲 奉詔出任${FACTIONS[id].name}${S.v9.appointedTitle}`);render();cls();
+}
+function v9PowerStruggle(){
+ v9Init();
+ if(!S.v8.faction){sheet('尚未加入勢力','<p>先加入特殊勢力才能參與派系鬥爭。</p>');return;}
+ const id=S.v8.faction;
+ const rivals=Object.keys(FACTIONS).filter(x=>x!==id);
+ const rival=P(rivals);
+ const my=v9FactionPower(id)+(S.v9.appointed?4:0)+R(8), enemy=v9FactionPower(rival)+R(8);
+ if(my>=enemy){S.v9.relations[rival]=Math.min(10,(S.v9.relations[rival]||0)+1);S.v9.power+=2;S.v8.rep=Math.min(20,S.v8.rep+2);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.cur.push(`⚔️ 派系鬥爭中，你代表${FACTIONS[id].name}壓制了${FACTIONS[rival].name}，勢力地位上升。`);}
+ else{S.v8.heat=Math.min(10,S.v8.heat+2);S.v9.power=Math.max(0,S.v9.power-1);S.family.rep=Math.max(0,(S.family.rep||0)-1);S.cur.push(`⚠️ 派系鬥爭失利，${FACTIONS[rival].name}在朝中的話語權增加。`);}
+ render();cls();
+}
+function v9FactionPolitics(){
+ v9Init();let id=S.v8.faction;
+ const rels=Object.keys(FACTIONS).map(k=>[FACTIONS[k].name,(S.v9.relations[k]||0)>0?'友好':(S.v9.relations[k]||0)<0?'敵對':'中立']);
+ const title=S.v9.appointed?(S.v9.appointedTitle+'（奉詔）'):'尚未奉詔掌權';
+ sheet('⚔️ 特殊勢力權力鬥爭',rows([['本派',FACTIONS[id]?.name||'無'],['勢力職位',TITLES[id]?.[Math.max(0,(S.v8.rank||1)-1)]||'—'],['朝廷職權',title],['權力影響',S.v9.power],['查案次數',S.v9.investigations],['政治風險',S.v9.scandals]])+`<h3>四方關係</h3>`+rows(rels)+`<button class="opt" onclick="v9Investigation()">🔎 密查官員<small>調查貪腐、通敵與黨爭案件</small></button><button class="opt" onclick="v9PowerStruggle()">⚔️ 派系鬥爭<small>與其他特殊勢力爭奪朝廷影響力</small></button><button class="opt" onclick="v9Appoint()">👑 皇帝任命<small>皇帝可任命你掌握更高權力</small></button>`);
+}
+const oldV8Mission=v8Mission;
+v8Mission=function(){oldV8Mission();v9Init();if(S.v8.faction&&Math.random()<.35){S.v9.relations[S.v8.faction]=Math.min(10,(S.v9.relations[S.v8.faction]||0)+1);}};
+const oldNext9=nextYear;
+nextYear=function(){oldNext9();v9Rivalry();};
+const oldMenu9=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v9FactionPolitics()">⚔️ 特殊勢力權力鬥爭</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v9FactionPolitics=v9FactionPolitics;window.v9Investigation=v9Investigation;window.v9PowerStruggle=v9PowerStruggle;window.v9Appoint=v9Appoint;
+})();
+
+// v10.4 啟動修正：頁面載入後若尚未建立人生狀態，直接啟動新人生。
+try {
+  if (!S) start();
+  else render();
+} catch (err) {
+  console.error('浮生一夢啟動失敗', err);
+  try { document.getElementById('txt').innerHTML = '<p>遊戲初始化失敗，請重新整理頁面。</p>'; } catch(e) {}
+}
+</script><noscript><div style="max-width:720px;margin:24px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.8"><h1>浮生一夢・古代人生模擬器</h1><p>這是一款免費的古代人生與家族世代養成網頁遊戲。請啟用 JavaScript 後重新整理，即可開始遊玩。</p></div></noscript></body></html>
+<style>
+/* v9.5 — 明亮精品 RPG UI */
+:root{
+ --ui-bg:#e9e5dc;--ui-paper:#fbfaf6;--ui-paper2:#f2efe7;--ui-text:#2f3935;--ui-muted:#78817b;
+ --ui-sage:#667d72;--ui-sage2:#52695f;--ui-gold:#b79a62;--ui-gold2:#d5c59d;
+ --ui-line:#ddd8cc;--ui-shadow:0 14px 40px rgba(58,58,48,.12)
+}
+html,body{background:var(--ui-bg)!important}
+body{font-family:Inter,"Noto Sans TC","Noto Serif TC",sans-serif!important;color:var(--ui-text)!important;background:
+ radial-gradient(circle at 15% 8%,rgba(255,255,255,.82),transparent 30%),
+ radial-gradient(circle at 90% 85%,rgba(204,199,183,.35),transparent 32%),var(--ui-bg)!important}
+#app{background:linear-gradient(180deg,#f8f7f2 0%,#efede6 100%)!important;box-shadow:0 18px 55px rgba(54,54,46,.15)!important}
+#app:before{inset:0!important;border:0!important}
+header{background:linear-gradient(180deg,#71877d 0%,#647a70 100%)!important;padding:18px 28px 15px!important;border-bottom:0!important}
+header:after{left:28px;right:28px;bottom:7px;height:1px;background:linear-gradient(90deg,transparent,rgba(230,218,185,.7),transparent)!important}
+.av{width:68px;height:68px!important;background:linear-gradient(145deg,#a8b7ae,#60756b)!important;box-shadow:0 0 0 3px rgba(255,255,255,.8),0 8px 18px rgba(37,55,48,.18)!important;font-size:32px!important}
+.nm{font-family:"Noto Serif TC",serif!important;font-size:28px!important;letter-spacing:.12em!important;color:#fff!important;text-shadow:none!important}
+.sbt{color:#edf0eb!important;opacity:.9;letter-spacing:.04em}
+.pills{gap:6px}.pills span{background:rgba(255,255,255,.11)!important;border:1px solid rgba(235,225,198,.55)!important;border-radius:999px!important;min-width:88px!important;color:#fff!important;box-shadow:none!important}
+.goal{color:#f1f2ee!important}
+.dm{gap:7px}.dm button{width:58px!important;height:58px!important;border-radius:14px!important;clip-path:none!important;background:rgba(255,255,255,.10)!important;border:1px solid rgba(240,233,215,.45)!important;color:#fff!important;box-shadow:none!important}
+.dm button:hover{background:rgba(255,255,255,.18)!important;transform:translateY(-2px)}
+.txt{background:rgba(255,255,255,.88)!important;border:1px solid var(--ui-line)!important;border-left:4px solid var(--ui-sage)!important;border-radius:18px!important;box-shadow:var(--ui-shadow)!important;color:var(--ui-text)!important;padding:17px 19px!important}
+.txt b{font-family:"Noto Serif TC",serif!important;color:#40564d!important;border-bottom:1px solid var(--ui-line)!important;font-size:20px!important}
+.txt p{color:#5f6863!important}
+#lifePanel{background:rgba(255,255,255,.72)!important;border:1px solid var(--ui-line)!important;border-radius:14px!important;box-shadow:0 7px 20px rgba(58,58,48,.07)!important}
+.lpTop{color:#68726d}.lpTrack{background:#deddd6!important}.lpTrack i{background:linear-gradient(90deg,#9d8860,#cdbb90)!important}
+#nx{width:94px!important;height:94px!important;background:linear-gradient(145deg,#748d80,#5b7268)!important;border:0!important;box-shadow:0 0 0 5px #f7f5ef,0 0 0 6px rgba(183,154,98,.75),0 12px 26px rgba(51,69,61,.22)!important;color:#fff!important;font-size:21px!important}
+#nx:hover{transform:translateY(-3px) scale(1.025)}
+footer{background:#647970!important;border-top:1px solid rgba(214,199,164,.7)!important;border-radius:0!important;box-shadow:none!important;padding:38px 26px 16px!important}
+.b{color:#f2f3ef!important}.ic{background:rgba(255,255,255,.11)!important;border:1px solid rgba(255,255,255,.12)!important}.tr{background:rgba(37,54,47,.22)!important;box-shadow:none!important}.tr i{background:linear-gradient(90deg,#c0a773,#dfcfaa)!important;box-shadow:none!important;color:#394038!important}
+.dmb{width:76px!important;height:76px!important;clip-path:none!important;border-radius:18px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(224,209,175,.58)!important;color:#fff!important;box-shadow:none!important}
+.dmb:hover{background:rgba(255,255,255,.15)!important;transform:translateY(-2px)}
+#sh{background:rgba(61,65,58,.30)!important;backdrop-filter:blur(10px)!important}
+.cd{background:rgba(253,252,248,.97)!important;border:1px solid #ddd7ca!important;border-radius:22px!important;box-shadow:0 24px 70px rgba(40,44,40,.20)!important;padding:24px 22px!important}
+.cd h2{font-family:"Noto Serif TC",serif!important;color:#40564d!important;letter-spacing:.14em!important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,#c5b58e)!important}
+.opt{background:#f6f5f0!important;border:1px solid #dfddd5!important;border-radius:12px!important;color:#3b4540!important;padding:12px 14px!important;transition:.18s ease!important}.opt:hover:not(:disabled){background:#647970!important;color:#fff!important;box-shadow:0 8px 20px rgba(73,91,82,.15)!important;transform:translateY(-1px)}.opt small{color:#8a908a!important}.opt:hover small{color:#e6ebe7!important}
+.row{border-bottom:1px solid #e4e0d7!important;padding:8px 2px!important}.seal{border:2px solid #a25b53!important;color:#a25b53!important}
+@media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(900px,calc(100% - 150px))!important}.txt{margin-top:18px!important}.cd{max-width:740px!important}}
+@media(max-width:699px){header{padding:16px 16px 12px!important}.txt{margin-left:14px!important;margin-right:14px!important}.lifePanel{margin-left:14px!important;margin-right:14px!important}footer{padding-left:14px!important;padding-right:14px!important}}
+</style>
+<style id="v97-palette">
+/* v9.7 全新配色：霧米白 × 石板藍 × 陶土紅 × 古銅金 */
+:root{
+ --s1:#e9e3d8 !important; --s2:#f7f2e9 !important;
+ --ink:#2f3440 !important; --ink2:#667080 !important;
+ --pn:#596a82 !important; --pn2:#3f4e65 !important;
+ --cd:#fbf7ef !important; --gd:#b88a4d !important; --mute:#7c8490 !important;
+ --m1:#dce2ea !important; --m2:#c9d2df !important; --m3:#b6c2d2 !important; --sun:#ead8b3 !important;
+ --paper:#fbf7ef !important; --paper2:#eee5d7 !important;
+ --deep:#3f4e65 !important; --accent:#b88a4d !important; --red:#a65b50 !important;
+ --line:rgba(72,80,94,.18) !important; --shadow:0 18px 45px rgba(57,61,70,.14) !important;
+}
+html,body{background:#e4ddd1 !important;color:#2f3440 !important}
+body{font-family:"Noto Serif TC","Songti TC",serif !important;background:
+ radial-gradient(circle at 12% 8%,rgba(255,255,255,.85),transparent 25%),
+ radial-gradient(circle at 90% 85%,rgba(184,138,77,.10),transparent 28%),
+ linear-gradient(135deg,#e4ddd1,#f7f2e9) !important;}
+#app{background:#f8f3e9 !important;box-shadow:0 24px 70px rgba(55,59,67,.20) !important}
+#app:before{border:1px solid rgba(184,138,77,.22) !important}
+header{background:linear-gradient(135deg,#697a92 0%,#4b5b73 100%) !important;border-bottom:1px solid rgba(255,255,255,.28) !important;padding:20px 26px 14px !important}
+header:after{background:linear-gradient(90deg,transparent,#e2c38e,transparent) !important;opacity:.8 !important}
+.av{background:linear-gradient(145deg,#d9e0e8,#8493a8) !important;box-shadow:0 0 0 2px #fff,0 0 0 5px #b88a4d,0 10px 24px rgba(34,43,57,.24) !important;color:#fff !important}
+.nm{color:#fff !important;text-shadow:0 2px 8px rgba(35,42,54,.28) !important}
+.sbt{color:#e9edf2 !important}
+.pills span{background:rgba(255,255,255,.12) !important;color:#fff !important;border:1px solid rgba(231,207,161,.8) !important;border-radius:14px !important;box-shadow:none !important}
+.goal{color:#f2eee6 !important;text-shadow:none !important}
+.dm button{border:1px solid rgba(255,255,255,.55) !important;background:#68798f !important;color:#fff !important;clip-path:none !important;border-radius:12px !important;box-shadow:0 5px 12px rgba(40,48,62,.16) !important}
+.dm button:hover{background:#a65b50 !important;transform:translateY(-2px)}
+.txt{background:rgba(255,252,246,.96) !important;border:1px solid rgba(93,106,130,.20) !important;border-left:5px solid #a65b50 !important;border-radius:16px !important;box-shadow:0 10px 30px rgba(67,71,80,.11) !important;color:#2f3440 !important}
+.txt b{color:#4b5b73 !important;border-bottom:1px solid rgba(184,138,77,.35) !important}
+.txt p{color:#626b78 !important}
+#lifePanel{background:rgba(255,251,244,.92) !important;border:1px solid rgba(93,106,130,.18) !important;border-radius:14px !important;box-shadow:0 7px 20px rgba(67,71,80,.08) !important}
+.lpTop{color:#687080 !important}
+.lpTrack{background:#dfe3e8 !important}.lpTrack i{background:linear-gradient(90deg,#a65b50,#c88c69) !important}
+.lpAct{background:rgba(89,106,130,.08) !important;color:#566274 !important}
+#nx{background:linear-gradient(145deg,#a65b50,#87463e) !important;border:2px solid #e4c78f !important;box-shadow:0 0 0 5px #f8f3e9,0 0 0 7px #b88a4d,0 12px 26px rgba(88,54,49,.25) !important;color:#fff !important}
+#nx:hover{background:#b96858 !important;transform:translateY(-3px) scale(1.02)}
+footer{background:linear-gradient(180deg,#596a82,#3f4e65) !important;border-top:2px solid #b88a4d !important;border-radius:0 !important;box-shadow:0 -10px 28px rgba(48,56,70,.18) !important;padding:42px 26px 16px !important}
+.b{color:#f8f5ef !important}.ic{background:rgba(255,255,255,.10) !important;border:1px solid rgba(255,255,255,.22) !important}
+.tr{background:rgba(25,34,47,.38) !important;box-shadow:none !important}.tr i{background:linear-gradient(90deg,#c48a57,#e0bb7d) !important;box-shadow:none !important;color:#2f3440 !important}
+.dmb{border:1px solid rgba(226,195,142,.85) !important;background:rgba(255,255,255,.06) !important;color:#fff !important;border-radius:50% !important;box-shadow:none !important}
+.dmb:hover{background:rgba(166,91,80,.35) !important}
+#sh{background:rgba(40,45,54,.55) !important;backdrop-filter:blur(9px) !important}
+.cd{background:linear-gradient(160deg,#fffaf2,#eee5d7) !important;border:1px solid rgba(184,138,77,.62) !important;border-radius:18px !important;box-shadow:0 25px 70px rgba(35,39,46,.28) !important}
+.cd h2{color:#4b5b73 !important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,#b88a4d) !important}
+.opt{background:rgba(89,106,130,.055) !important;border:1px solid rgba(89,106,130,.20) !important;border-radius:11px !important;color:#353b47 !important}
+.opt:hover:not(:disabled){background:#596a82 !important;color:#fff !important;box-shadow:0 7px 18px rgba(63,78,101,.18) !important;transform:translateX(2px)}
+.opt small{color:#8a8d91 !important}.opt:hover small{color:#eee8dc !important}
+.seal{border-color:#a65b50 !important;color:#a65b50 !important}
+</style>
