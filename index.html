@@ -21,10 +21,10 @@ button,input,select{font:inherit}button{cursor:pointer}
 .timeline{display:grid;gap:8px;max-height:380px;overflow:auto}.log{padding:10px 12px;border-left:3px solid #cdbb91;background:#f7f3e9;border-radius:0 10px 10px 0;font-size:13px;line-height:1.6}.tag{display:inline-block;padding:2px 7px;border-radius:99px;background:#e5eee7;color:#4e695d;font-size:11px;margin-right:5px}
 .start{min-height:100vh;display:grid;place-items:center;padding:28px}.startbox{max-width:760px;text-align:center;background:rgba(255,253,247,.92);border:1px solid var(--line);border-radius:28px;padding:45px;box-shadow:var(--shadow)}.startbox h1{font-family:serif;font-size:46px;letter-spacing:9px;margin:0;color:#42544d}.startbox .quote{font-family:serif;font-size:18px;color:#6d776f;line-height:2;margin:18px 0 30px}.startbox button{padding:15px 42px;border:0;border-radius:999px;background:var(--green);color:#fff;font-size:18px;box-shadow:0 10px 25px rgba(73,100,88,.2)}
 .modal{position:fixed;inset:0;background:rgba(38,45,42,.35);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}.modal.on{display:flex}.sheet{max-width:760px;width:100%;max-height:88vh;overflow:auto;background:var(--paper);border:1px solid #d4c8ad;border-radius:22px;padding:22px;box-shadow:0 30px 80px rgba(20,25,22,.25)}.sheet h2{font-family:serif;margin-top:0}.row{display:flex;justify-content:space-between;gap:20px;padding:10px 0;border-bottom:1px dashed #d4d1c7}.close{float:right;border:0;background:#e9e5dc;border-radius:50%;width:34px;height:34px}.list{display:grid;gap:9px}.list .item{padding:12px;border:1px solid #d8d1c3;border-radius:12px;background:#faf8f1}
-.birth{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.birth button{padding:13px;border:1px solid #d3cabb;border-radius:12px;background:#fff}.birth button.sel{border-color:var(--gold);background:#f4ead7}
+.birth{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}.birth button{padding:13px;border:1px solid #d3cabb;border-radius:12px;background:#fff}.birth button.sel{border-color:var(--gold);background:#f4ead7}.rollcard{margin:22px 0;padding:24px;border:1px solid #d8c7a5;border-radius:20px;background:linear-gradient(135deg,#fffdf7,#f3eee2);box-shadow:0 10px 28px rgba(70,65,50,.08)}.rolltitle{font-family:serif;font-size:28px;color:#43564e;margin-bottom:18px}.rollgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;text-align:left}.rollgrid>div{padding:14px;border:1px solid #ded5c6;border-radius:14px;background:rgba(255,255,255,.65)}.rollgrid b,.rollgrid span,.rollgrid small{display:block}.rollgrid span{font-size:18px;margin:5px 0;color:#354842}.rollgrid small{color:var(--muted);line-height:1.5}.rollactions{display:flex;justify-content:center;gap:12px}.rollactions button{padding:13px 26px;border:1px solid #cfc4b1;border-radius:999px;background:#fff;color:var(--ink)}.rollactions .primary{background:var(--green);color:#fff;border-color:var(--green)}
 .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#34453f;color:#fff;padding:10px 16px;border-radius:999px;display:none;z-index:30}.toast.on{display:block}
 @media(max-width:820px){.grid{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.top{position:static}.topstats{margin-left:0}.main{padding:14px}.startbox{padding:30px 20px}.startbox h1{font-size:35px}}
-@media(max-width:480px){.actions{grid-template-columns:1fr}.birth{grid-template-columns:1fr}.brand h1{font-size:19px}.top{padding:16px}.main{padding:10px}}
+@media(max-width:480px){.actions{grid-template-columns:1fr}.birth{grid-template-columns:1fr}.rollgrid{grid-template-columns:1fr}.rollactions{flex-direction:column}.brand h1{font-size:19px}.top{padding:16px}.main{padding:10px}}
 </style>
 </head>
 <body>
@@ -99,10 +99,28 @@ function save(){if(!S)return;localStorage.setItem('fusheng_v11',JSON.stringify({
 function load(){const x=localStorage.getItem('fusheng_v11');if(!x)return false;S=JSON.parse(x);S.done=new Set(S.done||[]);return true}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('on');setTimeout(()=>$('toast').classList.remove('on'),1600)}
 function start(){S=fresh();renderStartChoice()}
-function begin(){S.started=true;S.name=$('birthName').value.trim()||['趙安','沈清','周景','王謙','林遠'][R(0,4)];S.sex=$('sex').value;S.familyType=$('family').value;S.region=$('region').value;S.familyName=FAMILIES.find(f=>f.id===S.familyType)?.n||'寒門';S.personality=PERSONAL[R(0,PERSONAL.length-1)];S.talents=[TALENTS[R(0,TALENTS.length-1)][0],TALENTS[R(0,TALENTS.length-1)][0]];S.gold=FAMILIES.find(f=>f.id===S.familyType).wealth+R(-2,2);S.health=10+R(0,3);S.parents.father=S.familyType==='royal'?'當朝天子':S.familyName+'長';S.parents.mother='王氏';S.logs.push(`你投胎於${S.region}的${S.familyName}。這一世從零歲開始。`);S.history.push('投胎');render();eventForAge(true);}
+function rollIdentity(){
+ const f=FAMILIES[R(0,FAMILIES.length-1)], r=REGIONS[R(0,REGIONS.length-1)];
+ const sex=Math.random()<.5?'男':'女';
+ const surnames=['趙','李','王','張','陳','沈','周','林','蘇','顧','宋','陸'];
+ const male=['安','景','遠','謙','明','修','衡','川','昀','昭','辰','澤'], female=['寧','瑤','清','蘭','婉','月','棠','柔','雲','玉','蘅','妍'];
+ const given=(sex==='男'?male:female)[R(0,(sex==='男'?male:female).length-1)];
+ S.birthRoll={name:given,sex,familyType:f.id,region:r[0],familyName:surnames[R(0,surnames.length-1)],personality:PERSONAL[R(0,PERSONAL.length-1)],talents:[TALENTS[R(0,TALENTS.length-1)][0],TALENTS[R(0,TALENTS.length-1)][0]]};
+ return S.birthRoll;
+}
+function begin(){
+ const b=S.birthRoll||rollIdentity(), f=FAMILIES.find(x=>x.id===b.familyType)||FAMILIES[0];
+ S.started=true;S.name=b.name;S.sex=b.sex;S.familyType=b.familyType;S.region=b.region;S.familyName=b.familyName;S.personality=b.personality;S.talents=[...new Set(b.talents)];
+ while(S.talents.length<2)S.talents.push(TALENTS[R(0,TALENTS.length-1)][0]);
+ S.gold=f.wealth+R(-2,2);S.health=10+R(0,3);S.parents.father=S.familyType==='royal'?'當朝天子':f.n+'家主';S.parents.mother=['王氏','李氏','沈氏','周氏'][R(0,3)];
+ S.logs.push(`你投胎於${S.region}的${f.n}。這一世從零歲開始。`);S.history.push('投胎');delete S.birthRoll;render();eventForAge(true);
+}
 function renderStartChoice(){
 $('app').innerHTML=`<div class="start"><div class="startbox"><div class="seal">🪷</div><h1>浮生一夢</h1><div class="quote">人生如夢，從一聲啼哭開始。<br>你不是旁觀者，你要在古代真正過完這一生。</div><button onclick="showBirth()">投胎</button></div></div>`}
-function showBirth(){$('app').innerHTML=`<div class="start"><div class="startbox" style="max-width:820px"><h1 style="font-size:34px">選擇你的出身</h1><p class="sub">出生地、家門與父母職業會影響你之後能接觸的人與事。</p><div class="birth"><label>名字<input id="birthName" value="" placeholder="留空則隨機" style="width:100%;padding:12px;border:1px solid #d5cdbc;border-radius:10px;margin-top:6px"></label><label>性別<select id="sex" style="width:100%;padding:12px;border:1px solid #d5cdbc;border-radius:10px;margin-top:6px"><option>男</option><option>女</option></select></label><label>出生地<select id="region" style="width:100%;padding:12px;border:1px solid #d5cdbc;border-radius:10px;margin-top:6px">${REGIONS.map(r=>`<option value="${r[0]}">${r[0]}・${r[1]}</option>`).join('')}</select></label></div><div class="birth">${FAMILIES.map(f=>`<button type="button" onclick="chooseFamily('${f.id}')" id="fam-${f.id}"><b>${f.n}</b><br><small>${f.desc}</small></button>`).join('')}</div><input type="hidden" id="family" value="farmer"><button class="primary" onclick="begin()">開始這一生</button></div></div>`}
+function showBirth(){
+ const b=rollIdentity(), f=FAMILIES.find(x=>x.id===b.familyType), r=REGIONS.find(x=>x[0]===b.region);
+ $('app').innerHTML=`<div class="start"><div class="startbox" style="max-width:820px"><div class="seal">🎴</div><h1 style="font-size:34px">命運已抽定</h1><p class="sub">這一世的身分由命運決定。每次投胎，都可能走上完全不同的人生。</p><div class="rollcard"><div class="rolltitle">${b.familyName}${b.name}・${b.sex}</div><div class="rollgrid"><div><b>出生地</b><span>${b.region}</span><small>${r?.[1]||''}</small></div><div><b>家門</b><span>${f.n}</span><small>${f.desc}</small></div><div><b>性格</b><span>${b.personality}</span><small>影響你面對人生的方式</small></div><div><b>天賦</b><span>${b.talents.join('、')}</span><small>${b.talents.map(x=>TALENTS.find(t=>t[0]===x)?.[1]||'').join('；')}</small></div></div></div><div class="rollactions"><button onclick="showBirth()">🔄 再投一胎</button><button class="primary" onclick="begin()">落地此世</button></div></div></div>`
+}
 function chooseFamily(id){$('family').value=id;FAMILIES.forEach(f=>$('fam-'+f.id)?.classList.toggle('sel',f.id===id))}
 function season(){return SEASONS[S.season%4]}
 function yearText(){return `${S.year}年・${season()}・${S.region}`}
