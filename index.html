@@ -454,6 +454,13 @@ const E=[
 {a:[35,70],t:"重病",x:"一場大病，讓你在床上躺了數月。",c:[
  ["遍求良醫",{gold:-2},{ok:"你慢慢康復了。",okfx:{hp:3}}],
  ["靜養調息",{},{need:{hp:6},ok:"你靠底子挺過來了。",okfx:{hp:1},no:"病勢拖延，身體大不如前。",nofx:{hp:-4}}]]}
+,
+{a:[3,5],t:"牙牙學語",x:"你開始學著說話，家中長輩每天都逗你開口。",c:[["學著叫人",{vir:1,chr:1},"你很快學會稱呼長輩，家中笑聲不斷。"],["只愛玩耍",{mood:1,hp:1},"你滿院子跑，大家都說你活潑。"],["盯著書頁",{int:1},"你對桌上的書頁格外好奇。"]]},
+{a:[6,9],t:"私塾初學",x:"你正式進入私塾，先生教你認字、習禮，也教你如何與同窗相處。",c:[["認真識字",{int:2},"你一天比一天認得更多字。"],["與同窗遊戲",{chr:1,mood:1},"你結交了幾個玩伴，學堂也不再陌生。"],["偷懶挨罰",{int:-1,vir:1},"先生敲了敲你的書桌，你只好收起玩心。"]]},
+{a:[8,12],t:"鄉野玩伴",x:"放學後，你和鄰里孩子在田埂、河邊玩耍，開始懂得什麼叫朋友。",c:[["一起幫忙",{vir:1,hp:1},"你們互相照應，感情越來越好。"],["比試跑跳",{mar:1,hp:1},"你跑得飛快，身子也越來越結實。"],["坐在樹下讀書",{int:1,mood:1},"你少了些玩樂，卻多懂了幾分道理。"]]},
+{a:[10,14],t:"第一次幫家裡做事",x:"你年紀漸長，家人開始讓你做一些力所能及的家務。",c:[["下田幫忙",{hp:1,vir:1},"你第一次真正體會到一家人的辛苦。"],["幫忙算帳",{int:1,gold:1},"你撥著算盤，漸漸學會家中收支。"],["照顧弟妹",{vir:2,chr:1},"長輩對你的懂事很是欣慰。"]]},
+{a:[12,15],t:"少年試膽",x:"幾名同窗約你到城外探險，第一次真正離開熟悉的街坊。",c:[["結伴前往",{mar:1,chr:1},"你學會了判斷路況，也更加獨立。"],["留在家中讀書",{int:2},"你沒有冒險，反而把心思放在學業上。"],["勸大家不要胡來",{vir:2,fame:1},"大家雖然失望，卻開始佩服你的穩重。"]]}
+
 ];
 
 K.push(["mood","心情"],["chr","魅力"]);
@@ -717,10 +724,12 @@ function render(){
 }
 function __v5BaseStart(){
   cls();const dyn=R(4),fi=pickFam(),fam=FAM[fi],sur=P(SUR),gv=P(GIV),g=()=>P(GIV)+P(GIV);
-  S={dyn,fam,rank:0,mrank:0,army:0,job:0,jl:0,jx:0,spouse:0,kids:0,age:0,name:sur+gv,prov:P(PV),s:{...fam.s,mood:3+R(5),chr:2+R(7)},done:new Set(),ik:{},last:{},deeds:[],hist:[],quiet:0,acted:0,eventHistory:[],causal:{仁:0,權:0,財:0,武:0},worldFlags:{},pending:[],eventCount:0,famOfficeAid:0,famMilitaryAid:0,famTradeAid:0,familyCareer:{civil:0,military:0,trade:0,craft:0},
+  S={dyn,fam,rank:0,mrank:0,army:0,job:0,jl:0,jx:0,spouse:0,kids:0,age:0,name:sur+gv,prov:P(PV),s:{...fam.s,mood:3+R(5),chr:2+R(7)},done:new Set(),ik:{},last:{},deeds:[],hist:[],quiet:0,acted:0,eventHistory:[],causal:{仁:0,權:0,財:0,武:0},worldFlags:{},pending:[],eventCount:0,v6Done:{},v6EventHistory:[],v6Last:{},famOfficeAid:0,famMilitaryAid:0,famTradeAid:0,familyCareer:{civil:0,military:0,trade:0,craft:0},
    kin:[{r:"父親",n:sur+g(),a:20+R(10),c:{...FJC[fi]}},{r:"母親",n:P(SUR)+"氏",a:19+R(9),c:{...FMC[fi]}}]};
   for(let i=R(4);i>0;i--)S.kin.push({r:Math.random()<.5?"兄長":"姐姐",n:sur+P(GIV),a:1+R(8)});
   apply(DY[dyn].s);S.emp=newEmp(1);S.ns=6;S.pp=6;S.fav=4+R(4);S.fi=fi;S.royal=fi>=5?fi-4:0;
+  // 皇室身分同步：若玩家生於皇室，父親「天子」就是當朝皇帝，避免父親與皇帝資料分離。
+  if(S.royal==2){ const father=S.kin.find(k=>k.r==="父親"); if(father){ S.emp.n=father.n; father.c=father.c||{}; father.c.l=father.c.l||6; } }
   S.cur=["<b>年齡 零歲</b>",`${DY[dyn].n}朝${P(NH)}年，我生於${S.prov}，隨父姓${sur}，名${gv}。${DY[dyn].d}${fam.d}當今天子為${S.emp.n}，${S.emp.tr[0]}之相。`,...S.kin.map(k=>`${k.r}${k.n}，${k.a}歲${k.c?"，職業："+cj(k.c):""}。`)];
   render();
 }
@@ -732,6 +741,9 @@ function __v5BaseNextYear(){
   offYear();famYear();familyCareerYear();famDeath();empYear();clamp();
   if(S.fall||S.s.hp<=0||(S.age>60&&Math.random()<(S.age-58)/70)||S.age>=95)return end();
   let pool=E.filter(e=>(e.rep?S.age-(S.last[e.t]??-99)>=(e.cd||8):!S.done.has(e.t))&&S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.d||e.d.includes(S.dyn))&&(!e.q||e.q())&&!(e.k&&S.ik[e.k])&&(!S.king||e.kg||e.fam||e.a[0]>=18));
+  // 年齡分層：12歲以前只允許兒童／成長事件；12–15歲不抽婚姻、仕途與成人社會事件。
+  if(S.age<12){pool=pool.filter(e=>e.a[1]<=15||e.t==='災荒');}
+  else if(S.age<16){pool=pool.filter(e=>e.a[1]<=20&&e.t!=='提親'&&e.t!=='科舉'&&e.t!=='察舉孝廉'&&e.t!=='長安詩會'&&e.t!=='商機'&&e.t!=='朝堂風波'&&e.t!=='縣衙事務'&&e.t!=='考績'&&e.t!=='黨爭'&&e.t!=='入閣之議');}
   // 皇帝不再只抽皇帝事件：一般事件與帝王事件混合，並避開最近幾次出現過的標題。
   if(S.ev){const recent=(S.eventHistory||[]).slice(-8);const fresh=pool.filter(e=>!recent.includes(e.t));if(fresh.length>=3)pool=fresh;}
   render();
@@ -883,7 +895,12 @@ const TR=[["明君","勵精圖治，朝野清明。"],["昏君","沉迷享樂，
 function newEmp(f){const len=8+R(22),tr=P(TR);return{n:P(["昭","章","德","明","靖","景","惠","武","宣","哀"])+P(["宗","帝"]),nh:P(NH),tr,len,t:f?R(len>>1):0}}
 const empB=m=>{const k=S.emp.tr[0];return(m?{好戰:1,崇文:-1,昏君:-1,明君:1}:{崇文:1,好戰:-1,昏君:-1,明君:1})[k]||0};
 function empYear(){const e=S.emp,k=e.tr[0],r=Math.random(),m=t=>S.cur.push(t);if(S.king){e.t++;return kingYear()}if(S.royal&&Math.random()<.25){S.s.gold++;m("宗室歲祿發下，家財添了一筆。（家財↑）")}e.t++;
- if(e.t>=e.len){m(`${e.nh}年間，${e.n}駕崩，舉國縞素。`);apply({mood:-1});if(S.royal==2&&S.age>=10){const sc=S.fav+(S.s.fame+S.s.int+S.s.mar)/3+R(5);S.royal=1;if(sc>=18){m("先帝遺詔傳位於你！");becomeKing();return}else if(sc<13){apply({fame:-2,mood:-3});m("新君即位，你因奪嫡失利被圈禁高牆。（處世↓ 心情↓）")}else m("新君即位，你被封為郡王，遠離了權力中心。")}S.emp=newEmp();const n=S.emp;m(`新帝${n.n}登基，改元${n.nh}。（${n.tr[0]}：${n.tr[1]}）`);if(Math.random()<.5&&S.rank>=2){apply({fame:1});m("新君廣施恩澤，你受了加封。（處世↑）")}return}
+ if(e.t>=e.len){
+   const wasCrownPrince=S.royal==2;
+   const father=wasCrownPrince?S.kin.find(k=>k.r==="父親"&&!k.x):null;
+   if(wasCrownPrince&&father){father.x=1; m(`${father.n}駕崩，舉國縞素。你失去父皇，宮中鐘聲徹夜不絕。`);}else{m(`${e.nh}年間，${e.n}駕崩，舉國縞素。`);}
+   apply({mood:-1});
+   if(wasCrownPrince&&S.age>=10){const sc=S.fav+(S.s.fame+S.s.int+S.s.mar)/3+R(5);S.royal=1;if(sc>=18){m("先帝遺詔傳位於你！");becomeKing();return}else if(sc<13){apply({fame:-2,mood:-3});m("新君即位，你因奪嫡失利被圈禁高牆。（處世↓ 心情↓）")}else m("新君即位，你被封為郡王，遠離了權力中心。")}S.emp=newEmp();const n=S.emp;m(`新帝${n.n}登基，改元${n.nh}。（${n.tr[0]}：${n.tr[1]}）`);if(Math.random()<.5&&S.rank>=2){apply({fame:1});m("新君廣施恩澤，你受了加封。（處世↑）")}return}
  if(r<.2){const o={仁君:["朝廷減免賦稅，百姓得以喘息。",{gold:1,mood:1}],昏君:["權臣橫徵暴斂，家家叫苦。",{gold:-1,mood:-1}],暴君:["朝中興起大獄，人心惶惶。",{mood:-1,fame:-1}],好戰:["邊關烽火再起，各地徵發糧草。",S.army?{mar:1,fame:1}:{gold:-1}],崇文:["天子廣設學館，文風大盛。",{int:1}],明君:["天下升平，市井繁榮。",{mood:1,gold:1}]}[k];m(o[0]+"（"+fxT(o[1])+"）");apply(o[1])}
  else if(r>.93){m("天子下詔大赦天下，四海同慶。（心情↑）");apply({mood:1})}}
 const fv=(t,a,q,x,c)=>({g:1,rep:1,a,t,q,x,c}),nm=(l,d)=>l[0]?l[0].r?l[0].r+l[0].n:"孩子"+l[0].n:d;
@@ -1192,7 +1209,21 @@ function v6Year(){
  if(S.territory.level>0&&Math.random()<.18)S.territory.people+=R(20)-5;
  v6FamilyRecalc();
  const modal=$('sh')?.classList.contains('on');
- if(!modal&&Math.random()<.82){let pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q()));if(pool.length){let e=P(pool);S.v6Event=e;sheet(e.t,`<p>${S.age}歲。${e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="v6Pick(${i})">${c[0]}</button>`).join(''),0);}}
+ // 第二層事件只從成年開始，避免兒童／少年突然遇到成年人的官場、商業與戰事事件。
+ if(!modal&&S.age>=18&&Math.random()<.55){
+   S.v6Done=S.v6Done||{};S.v6EventHistory=S.v6EventHistory||[];S.v6Last=S.v6Last||{};
+   let pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q())&&!S.v6Done[e.t]&&S.age-(S.v6Last[e.t]??-99)>=8);
+   if(!pool.length){
+     const recent=S.v6EventHistory.slice(-8);
+     pool=V6_EVENTS.filter(e=>S.age>=e.a[0]&&S.age<=e.a[1]&&(!e.q||e.q())&&!recent.includes(e.t)&&S.age-(S.v6Last[e.t]??-99)>=8);
+   }
+   if(pool.length){
+     const e=P(pool);
+     S.v6Event=e;S.v6Done[e.t]=1;S.v6Last[e.t]=S.age;S.v6EventHistory.push(e.t);
+     if(S.v6EventHistory.length>20)S.v6EventHistory.shift();
+     sheet(e.t,`<p>${S.age}歲。${e.x}</p>`+e.c.map((c,i)=>`<button class="opt" onclick="v6Pick(${i})">${c[0]}</button>`).join(''),0);
+   }
+ }
 }
 function v6Pick(i){let e=S.v6Event,c=e.c[i],old=S.s.gold||0;let fx={};for(const k in c[1]){let v=c[1][k];if(k==='money'){S.v6.money=Math.max(0,(S.v6.money||0)+v);continue}if(k==='f')fx.fame=v;else if(k==='v')fx.vir=v;else if(k==='m')fx.mood=v;else fx[k]=v}apply(fx);v6FamilyRecalc();S.cur.push(`【${e.t}】你選擇「${c[0]}」。${c[2]}`);S.hist.push(`${S.age}歲 ${e.t}：${c[0]}。${c[2]}`);cls();render()}
 function v6Nation(){v6Init();let n=S.nation,t=S.territory;sheet('國家與領土',rows([['國家',n.name],['國家穩定',n.stability+'/10'],['國庫',v6MoneyFmt(n.treasury)],['國力',n.power+'/10'],['外交',n.diplomacy+'/10'],['領地',V6_TERR[t.level][0]],['領地名稱',t.name],['人口',t.people.toLocaleString()+' 人'],['耕地',t.fields+' 畝'],['田賦估值',t.tax+' 文/千人'],['民心',t.loyalty+'/10']])+`<button class="opt" onclick="v6CollectTax()" ${t.level<1?'disabled':''}>徵收田賦<small>增加家族收入，但民心可能下降</small></button><button class="opt" onclick="v6Develop()" ${t.level<1?'disabled':''}>修水利與墾田<small>約 300 文</small></button><button class="opt" onclick="v6Appoint()">爭取升任領地官<small>功名／家族聲望越高越容易</small></button>`+`<p style="margin-top:12px">國制基準：${n.name}採古代郡縣制架空設定；貨幣以文、貫、兩計價，數值依歷史貨幣結構設計，實際物價仍會隨地區與時代波動。</p>`)}
