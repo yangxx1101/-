@@ -246,6 +246,75 @@ footer{background:var(--jade)!important;border-top:1px solid var(--gold)!importa
 .seal{border:2px solid var(--red)!important;color:var(--red)!important;border-radius:1px!important}
 @media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(880px,calc(100% - 150px))!important}.txt{margin-top:18px!important}.cd{max-width:720px!important}}
 @media(max-width:699px){header{padding:18px 18px 12px!important}.txt{margin-left:16px!important;margin-right:16px!important}.lifePanel{margin-left:16px!important;margin-right:16px!important}footer{padding-left:16px!important;padding-right:16px!important}}
+
+/* ===== v9.6 全面重新配色：霧米白 × 鼠尾草 × 淡藍灰 × 古金 ===== */
+:root{
+  --s1:#eef2ed !important; --s2:#f8f4ea !important;
+  --ink:#3d4944 !important; --ink2:#69736d !important;
+  --pn:#728d82 !important; --pn2:#5d766d !important;
+  --cd:#fbfaf5 !important; --gd:#b99a62 !important; --mute:#7b8781 !important;
+  --m1:#dce7df !important; --m2:#c9d9d1 !important; --m3:#b4c9bf !important;
+  --sun:#f4dfad !important;
+  --paper:#fbfaf5 !important; --paper2:#f0eadc !important;
+  --deep:#61796f !important; --accent:#b99a62 !important;
+  --red:#a96d63 !important; --line:rgba(94,111,102,.18) !important;
+  --shadow:0 14px 38px rgba(74,88,81,.12) !important;
+}
+html,body,body{background:#e9eee9 !important;color:#3d4944 !important}
+body{background:
+  radial-gradient(circle at 12% 6%,rgba(255,255,255,.9),transparent 30%),
+  radial-gradient(circle at 88% 88%,rgba(205,219,210,.55),transparent 34%),
+  linear-gradient(135deg,#e9eee9,#f7f3e9) !important;
+}
+#app{background:rgba(250,249,244,.96) !important;box-shadow:0 22px 65px rgba(76,88,82,.16) !important}
+#app:before{border:1px solid rgba(185,154,98,.18) !important}
+header{background:linear-gradient(135deg,#e7eee9 0%,#f7f2e7 100%) !important;border-bottom:1px solid rgba(120,139,129,.25) !important;padding:20px 26px 14px !important}
+header:after{background:linear-gradient(90deg,transparent,#b99a62,transparent) !important;opacity:.45 !important}
+.av{background:linear-gradient(145deg,#b6c8bf,#789187) !important;box-shadow:0 0 0 1px rgba(255,255,255,.9),0 0 0 4px rgba(185,154,98,.55),0 9px 22px rgba(80,98,90,.18) !important;color:#fff !important}
+.nm{color:#43544d !important;text-shadow:none !important}
+.sbt{color:#718078 !important}
+.pills span{background:#f9f7ef !important;color:#5e6d65 !important;border:1px solid rgba(185,154,98,.55) !important;border-radius:12px !important;box-shadow:0 3px 10px rgba(80,95,88,.06) !important}
+.goal{color:#6e7b74 !important;text-shadow:none !important}
+.dm button{background:#f8f6ef !important;color:#64736b !important;border:1px solid rgba(112,136,124,.3) !important;border-radius:14px !important;box-shadow:0 5px 14px rgba(70,88,80,.07) !important}
+.dm button:hover{background:#e7eee9 !important;color:#526960 !important}
+.dmb,.dm button{clip-path:none !important}
+.dmb:before,.dm button:before{display:none !important}
+.txt{background:rgba(255,254,249,.95) !important;color:#46534d !important;border:1px solid rgba(120,139,129,.2) !important;border-left:4px solid #b99a62 !important;border-radius:14px !important;box-shadow:0 9px 28px rgba(74,89,82,.08) !important}
+.txt b{color:#617a70 !important;border-bottom:1px solid rgba(185,154,98,.3) !important}
+.txt p{color:#69756f !important}
+#lifePanel{background:rgba(248,247,241,.92) !important;border:1px solid rgba(120,139,129,.18) !important;border-radius:14px !important;box-shadow:0 5px 18px rgba(74,89,82,.06) !important}
+.lpTop{color:#6b7771 !important}
+.lpTrack{background:#dfe5e0 !important}
+.lpTrack i{background:linear-gradient(90deg,#829b90,#c1a36c) !important}
+.lpAct{background:#edf1ed !important;color:#738078 !important;border:1px solid rgba(120,139,129,.12) !important}
+.lpAct strong{color:#53675e !important}
+#nx{background:linear-gradient(145deg,#829b90,#627d71) !important;color:#fff !important;border:2px solid #d2b77d !important;box-shadow:0 0 0 5px #fbfaf5,0 0 0 6px rgba(185,154,98,.6),0 12px 24px rgba(72,91,82,.18) !important;text-shadow:none !important}
+#nx:hover{filter:brightness(1.04) !important}
+footer{background:linear-gradient(135deg,#dfe9e3,#e9eee9) !important;border-top:1px solid rgba(120,139,129,.25) !important;border-radius:24px 24px 0 0 !important;box-shadow:0 -8px 24px rgba(74,89,82,.08) !important;padding:38px 24px 15px !important}
+.b{color:#65736c !important}.ic{background:#f8f7f1 !important;color:#6c7b73 !important;border:1px solid rgba(120,139,129,.18) !important}
+.tr{background:#d8e0db !important;box-shadow:inset 0 1px 2px rgba(70,85,78,.08) !important}.tr i{background:linear-gradient(90deg,#819a8e,#c1a36b) !important;color:#fff !important;box-shadow:none !important}
+.dmb{background:#f7f5ed !important;color:#65756c !important;border:1px solid rgba(120,139,129,.28) !important;border-radius:15px !important;box-shadow:0 5px 14px rgba(70,88,80,.07) !important}
+.dmb:hover{background:#e5ede8 !important;color:#536960 !important}
+#sh{background:rgba(93,108,100,.26) !important;backdrop-filter:blur(9px) !important}
+.cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;border:1px solid rgba(185,154,98,.4) !important;border-radius:18px !important;box-shadow:0 25px 65px rgba(69,82,76,.2) !important;color:#48544f !important}
+.cd h2{color:#60786e !important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,#b99a62) !important}
+.opt{background:#f4f6f2 !important;border:1px solid rgba(111,132,121,.2) !important;border-radius:12px !important;color:#4d5a54 !important}
+.opt:hover:not(:disabled){background:#718b80 !important;color:#fff !important;box-shadow:0 7px 18px rgba(80,102,92,.15) !important}
+.opt small{color:#8a948e !important}.opt:hover small{color:#edf3ef !important}
+.row{border-bottom:1px solid rgba(100,120,110,.13) !important}
+.seal{border-color:#b67b70 !important;color:#a66e64 !important}
+/* 強制覆蓋深色系統偏好，避免瀏覽器自動把整個遊戲變黑 */
+@media (prefers-color-scheme:dark){
+  html,body{background:#e9eee9 !important;color:#3d4944 !important}
+  .txt{background:rgba(255,254,249,.95) !important;color:#46534d !important}
+  .cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;color:#48544f !important}
+}
+:root[data-theme="dark"]{--s1:#eef2ed !important;--s2:#f8f4ea !important;--ink:#3d4944 !important;--cd:#fbfaf5 !important}
+:root[data-theme="dark"] body{background:#e9eee9 !important;color:#3d4944 !important}
+:root[data-theme="dark"] .txt{background:rgba(255,254,249,.95) !important;color:#46534d !important}
+:root[data-theme="dark"] .cd{background:linear-gradient(160deg,#fffdf8,#f2eee3) !important;color:#48544f !important}
+@media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(880px,calc(100% - 150px))!important}}
+
 </style></head><body><section id="seo-intro" aria-label="遊戲介紹" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
 <h1>浮生一夢・古代人生模擬器</h1>
 <p>免費線上古代人生模擬遊戲。從出生開始，你可以發展文才、武藝、財富、聲望與品德，選擇工作與仕途，經歷婚姻、孩子、房產、家族與隨機事件。</p>
