@@ -1387,3 +1387,44 @@ window.v9FactionPolitics=v9FactionPolitics;window.v9Investigation=v9Investigatio
 })();
 
 </script><noscript><div style="max-width:720px;margin:24px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.8"><h1>浮生一夢・古代人生模擬器</h1><p>這是一款免費的古代人生與家族世代養成網頁遊戲。請啟用 JavaScript 後重新整理，即可開始遊玩。</p></div></noscript></body></html>
+<style>
+/* v9.5 — 明亮精品 RPG UI */
+:root{
+ --ui-bg:#e9e5dc;--ui-paper:#fbfaf6;--ui-paper2:#f2efe7;--ui-text:#2f3935;--ui-muted:#78817b;
+ --ui-sage:#667d72;--ui-sage2:#52695f;--ui-gold:#b79a62;--ui-gold2:#d5c59d;
+ --ui-line:#ddd8cc;--ui-shadow:0 14px 40px rgba(58,58,48,.12)
+}
+html,body{background:var(--ui-bg)!important}
+body{font-family:Inter,"Noto Sans TC","Noto Serif TC",sans-serif!important;color:var(--ui-text)!important;background:
+ radial-gradient(circle at 15% 8%,rgba(255,255,255,.82),transparent 30%),
+ radial-gradient(circle at 90% 85%,rgba(204,199,183,.35),transparent 32%),var(--ui-bg)!important}
+#app{background:linear-gradient(180deg,#f8f7f2 0%,#efede6 100%)!important;box-shadow:0 18px 55px rgba(54,54,46,.15)!important}
+#app:before{inset:0!important;border:0!important}
+header{background:linear-gradient(180deg,#71877d 0%,#647a70 100%)!important;padding:18px 28px 15px!important;border-bottom:0!important}
+header:after{left:28px;right:28px;bottom:7px;height:1px;background:linear-gradient(90deg,transparent,rgba(230,218,185,.7),transparent)!important}
+.av{width:68px;height:68px!important;background:linear-gradient(145deg,#a8b7ae,#60756b)!important;box-shadow:0 0 0 3px rgba(255,255,255,.8),0 8px 18px rgba(37,55,48,.18)!important;font-size:32px!important}
+.nm{font-family:"Noto Serif TC",serif!important;font-size:28px!important;letter-spacing:.12em!important;color:#fff!important;text-shadow:none!important}
+.sbt{color:#edf0eb!important;opacity:.9;letter-spacing:.04em}
+.pills{gap:6px}.pills span{background:rgba(255,255,255,.11)!important;border:1px solid rgba(235,225,198,.55)!important;border-radius:999px!important;min-width:88px!important;color:#fff!important;box-shadow:none!important}
+.goal{color:#f1f2ee!important}
+.dm{gap:7px}.dm button{width:58px!important;height:58px!important;border-radius:14px!important;clip-path:none!important;background:rgba(255,255,255,.10)!important;border:1px solid rgba(240,233,215,.45)!important;color:#fff!important;box-shadow:none!important}
+.dm button:hover{background:rgba(255,255,255,.18)!important;transform:translateY(-2px)}
+.txt{background:rgba(255,255,255,.88)!important;border:1px solid var(--ui-line)!important;border-left:4px solid var(--ui-sage)!important;border-radius:18px!important;box-shadow:var(--ui-shadow)!important;color:var(--ui-text)!important;padding:17px 19px!important}
+.txt b{font-family:"Noto Serif TC",serif!important;color:#40564d!important;border-bottom:1px solid var(--ui-line)!important;font-size:20px!important}
+.txt p{color:#5f6863!important}
+#lifePanel{background:rgba(255,255,255,.72)!important;border:1px solid var(--ui-line)!important;border-radius:14px!important;box-shadow:0 7px 20px rgba(58,58,48,.07)!important}
+.lpTop{color:#68726d}.lpTrack{background:#deddd6!important}.lpTrack i{background:linear-gradient(90deg,#9d8860,#cdbb90)!important}
+#nx{width:94px!important;height:94px!important;background:linear-gradient(145deg,#748d80,#5b7268)!important;border:0!important;box-shadow:0 0 0 5px #f7f5ef,0 0 0 6px rgba(183,154,98,.75),0 12px 26px rgba(51,69,61,.22)!important;color:#fff!important;font-size:21px!important}
+#nx:hover{transform:translateY(-3px) scale(1.025)}
+footer{background:#647970!important;border-top:1px solid rgba(214,199,164,.7)!important;border-radius:0!important;box-shadow:none!important;padding:38px 26px 16px!important}
+.b{color:#f2f3ef!important}.ic{background:rgba(255,255,255,.11)!important;border:1px solid rgba(255,255,255,.12)!important}.tr{background:rgba(37,54,47,.22)!important;box-shadow:none!important}.tr i{background:linear-gradient(90deg,#c0a773,#dfcfaa)!important;box-shadow:none!important;color:#394038!important}
+.dmb{width:76px!important;height:76px!important;clip-path:none!important;border-radius:18px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(224,209,175,.58)!important;color:#fff!important;box-shadow:none!important}
+.dmb:hover{background:rgba(255,255,255,.15)!important;transform:translateY(-2px)}
+#sh{background:rgba(61,65,58,.30)!important;backdrop-filter:blur(10px)!important}
+.cd{background:rgba(253,252,248,.97)!important;border:1px solid #ddd7ca!important;border-radius:22px!important;box-shadow:0 24px 70px rgba(40,44,40,.20)!important;padding:24px 22px!important}
+.cd h2{font-family:"Noto Serif TC",serif!important;color:#40564d!important;letter-spacing:.14em!important}.cd h2:before,.cd h2:after{background:linear-gradient(90deg,transparent,#c5b58e)!important}
+.opt{background:#f6f5f0!important;border:1px solid #dfddd5!important;border-radius:12px!important;color:#3b4540!important;padding:12px 14px!important;transition:.18s ease!important}.opt:hover:not(:disabled){background:#647970!important;color:#fff!important;box-shadow:0 8px 20px rgba(73,91,82,.15)!important;transform:translateY(-1px)}.opt small{color:#8a908a!important}.opt:hover small{color:#e6ebe7!important}
+.row{border-bottom:1px solid #e4e0d7!important;padding:8px 2px!important}.seal{border:2px solid #a25b53!important;color:#a25b53!important}
+@media(min-width:769px){#app{width:min(1180px,100vw)!important}.txt,#lifePanel{width:min(900px,calc(100% - 150px))!important}.txt{margin-top:18px!important}.cd{max-width:740px!important}}
+@media(max-width:699px){header{padding:16px 16px 12px!important}.txt{margin-left:14px!important;margin-right:14px!important}.lifePanel{margin-left:14px!important;margin-right:14px!important}footer{padding-left:14px!important;padding-right:14px!important}}
+</style>
