@@ -334,7 +334,7 @@ footer{background:linear-gradient(135deg,#dfe9e3,#e9eee9) !important;border-top:
 </div>
 <div class="sp"></div>
 <button id="nx" onclick="nextYear()">下一年</button>
-<footer><div id="bars"></div><div class="cl2"><div class="dn"><button class="dmb" onclick="estate()"><b>🏠</b>家產</button><button class="dmb" onclick="acts('g')"><b>🎎</b>活動</button></div><div><button class="dmb" id="stg" onclick="acts('s')"></button><button class="dmb" onclick="kin()"><b>👥</b>親友</button></div></div></footer>
+<footer><div id="bars"></div><div class="cl2"><div class="dn"><button class="dmb" onclick="window.openEstate()"><b>🏠</b>家產</button><button class="dmb" onclick="acts('g')"><b>🎎</b>活動</button></div><div><button class="dmb" id="stg" onclick="acts('s')"></button><button class="dmb" onclick="kin()"><b>👥</b>親友</button></div></div></footer>
 </div><div id="sh"></div>
 <script>
 const K=[["hp","體"],["int","智"],["mar","武"],["vir","德"],["gold","財"],["fame","名"]];
@@ -589,6 +589,17 @@ E.push(
 {a:[35,65],t:"文武相輕",rep:1,q:()=>S.rank>=3||S.mrank>=4,x:"朝中文臣與武將為軍費與兵權爭得不可開交。",c:[["居中調停",{},{need:{int:6,vir:6},ok:"你兩邊都不得罪，兩派都敬重你。",okfx:{fame:3,vir:1},no:"兩邊都嫌你多事。",nofx:{fame:-1}}],["為文臣說話",{fame:1},"文臣們視你為同道，武將們冷眼相看。"],["為武將說話",{mar:1},"武將們欣賞你的耿直，文臣們暗自記恨。"]]}
 );
 const JB=[{n:"商賈",m:"int",L:["販夫","坐賈","掌櫃","大賈","鉅賈"]},{n:"裁縫",m:"chr",L:["學徒","針匠","裁匠","繡坊東家","尚衣供奉"]},{n:"鐵匠",m:"mar",L:["爐下學徒","鐵匠","匠頭","鑄坊主","軍器監匠"]},{n:"塾師",m:"int",L:["蒙師","塾師","教諭","書院山長","國子監博士"]},{n:"郎中",m:"int",L:["藥童","走方郎中","坐堂郎中","名醫","太醫"]},{n:"庖人",m:"chr",L:["灶下童","廚子","掌勺","酒樓大廚","御膳廚"]}];
+const JOB_META=[
+ {power:["只能跑腿、議價與招攬客人","可獨立買賣，能代表東家談價","掌管店帳與伙計，可決定貨物進出","可調度商隊、借貸與簽大宗契約","地方鉅賈，可動用商號、門客與人脈影響地方商路"]},
+ {power:["只能接零碎針線活","可獨立接單與交付衣物","可帶學徒、驗貨與議工價","可掌繡坊、接貴人訂單","可入內廷供奉，掌高級衣料與御用差事"]},
+ {power:["只能拉風箱、做雜活","可獨立鍛造農具","可帶學徒、驗鋼與定工價","可主持鑄坊、承接軍器訂單","可入軍器監供奉，掌軍器鑄造與工匠調度"]},
+ {power:["只能教蒙童識字","可獨立授課與收束脩","可主持學堂、考校學生","可主持書院、推薦門生","可入國子監授業，能舉薦人才與參議學政"]},
+ {power:["只能隨師採藥與抓藥","可坐堂問診、治常見病","可開堂坐診並收徒","名醫可受官府與士紳延請","太醫級可入宮診治，掌醫案與御藥差事"]},
+ {power:["只能燒火、切菜與跑堂","可獨立掌勺","可定菜單、帶廚房伙計","可掌酒樓宴席與貴客","御膳廚可承接宮廷宴饗，掌御膳差事"]}
+];
+function jobInfo(){if(!S.job)return {name:'無業',level:0,title:'無',power:'尚未入行'};let j=JB[S.job-1],lv=Math.max(1,Math.min(5,S.jl||1));return {name:j.n,level:lv,title:j.L[lv-1],power:JOB_META[S.job-1].power[lv-1]};}
+function jobMenu(){const z=jobInfo();if(!S.job){sheet('職業','<p>目前尚未投身固定行當。</p>');return}sheet('職業與權力',rows([['行當',z.name],['職業階級',z.level+'／5'],['職位',z.title],['實際權力',z.power],['升級進度',(S.jx||0)+' 年']])+`<p class="jobnote">職級不只是稱號：每升一級，你能接觸的客戶、能調度的人手、能簽的契約與能接的官府／權貴差事都會提高。</p>`)}
+
 const W=(need,ok,okfx,no,nofx,p)=>({need,ok,okfx,no,nofx,p}),ev=(a,t,q,x,c)=>({a,t,q,x,c,rep:1}),jq=(k,lo,hi)=>()=>S.job==k&&S.jl>=lo&&S.jl<=hi;
 const CA=[0,[["謄抄公文",{int:1}],["巡視街巷",{fame:1,mood:1}]],[["審理訟案",{fame:1,vir:1}],["勸課農桑",{vir:1,gold:1}]],[["巡閱屬縣",{fame:1,int:1}],["興修水利",{fame:2,gold:-1}]],[["上疏言事",{fame:2,int:1}],["會審大案",{vir:1,fame:1}]],[["參議朝政",{fame:2,int:1}],["提點百官",{fame:1,vir:1}]]];
 const MA=[0,[["守夜巡營",{mar:1}],["挖壕築壘",{hp:1,mar:1}]],[["操練伍卒",{mar:1,fame:1}],["督查器械",{int:1}]],[["演練陣法",{int:1,mar:1}],["校閱士卒",{fame:1,vir:1}]],[["籌畫糧草",{gold:1,int:1}],["巡視烽燧",{fame:1,mar:1}]],[["升帳議事",{int:1,fame:1}],["犒賞三軍",{fame:2,gold:-1,vir:1}]],[["總攬軍機",{int:1,fame:2}],["入朝面聖",{fame:1,chr:1}]]];
@@ -599,6 +610,33 @@ JA.forEach((a,k)=>a.forEach(x=>GA.push([x[1],x[2],()=>S.job==k+1&&S.jl>=x[0],12]
 JB.forEach((j,i)=>GA.push(["投身"+j.n+"之業",{job:i+1},()=>!S.job&&!S.army&&S.rank==0,12]));
 GA.push(["辭去行當",{quit:1},()=>S.job,12]);
 for(let i=GA.length-1;i>=0;i--)if(/^投身/.test(GA[i][0])||["辭去行當","應徵入伍","解甲歸田"].includes(GA[i][0]))GA.splice(i,1);
+const JOB_EVENTS=[
+ {a:[12,80],t:'掌櫃盤帳',q:()=>S.job==1&&S.jl>=2,x:'你已能獨立掌帳，東家把本月貨款與帳冊交到你手上。',c:[['整頓賬目',{int:1,gold:1,fame:1},'你查出一筆漏帳，東家開始把你當可靠的掌櫃。'],['私下挪用',{gold:3,vir:-2},{p:.35,ok:'你暫時得手，卻留下把柄。',okfx:{},no:'東家查出帳目不對，你被降職。',nofx:{fame:-2}}],['拒絕接手',{mood:-1},'你仍只想做普通夥計。']]},
+ {a:[20,80],t:'商號議價',q:()=>S.job==1&&S.jl>=3,x:'你已是掌櫃，東家允許你代表商號與布商議價。',c:[['壓價成交',{int:1,gold:2,fame:1},'你替商號省下一筆本錢，手下夥計也開始聽你的。'],['公平成交',{vir:1,gold:1,fame:1},'你保住長久商路，對方願意再合作。']]},
+ {a:[28,80],t:'商隊調度',q:()=>S.job==1&&S.jl>=4,x:'你手下已有夥計與腳夫，東家讓你決定一支商隊是否出發。',c:[['押運出發',{gold:4,fame:2},'商隊平安抵達，你第一次真正掌握一筆大生意。'],['暫緩出貨',{int:1,gold:1},'你判斷行情不佳，替商號避開損失。']]},
+ {a:[35,80],t:'鉅賈商約',q:()=>S.job==1&&S.jl>=5,x:'你已成地方鉅賈，兩州商號請你主持一紙大宗貨契。',c:[['親自主持',{gold:6,fame:3,int:1},'雙方都認你的面子，商路與信用因此擴大。'],['扶植後輩',{gold:3,vir:2,fame:2},'你把一部分商權交給後輩，商號更加穩固。']]},
+ {a:[12,70],t:'裁縫接單',q:()=>S.job==2&&S.jl>=2,x:'你已能獨立接活，鄰里富戶把一套衣裳交給你。',c:[['按期精工',{chr:1,gold:1,fame:1},'客人滿意，開始介紹更多訂單。'],['偷工減料',{gold:2,vir:-1},'你多賺一點，口碑卻有裂痕。']]},
+ {a:[20,80],t:'繡坊收徒',q:()=>S.job==2&&S.jl>=3,x:'你已有資格帶學徒，兩名年輕人來請你收下。',c:[['收一人入門',{chr:1,vir:1,fame:1},'你開始真正承擔師傅的責任。'],['收下兩人',{gold:2,chr:1,fame:1},'繡坊效率提高，你的名聲也傳開。']]},
+ {a:[28,80],t:'貴人訂衣',q:()=>S.job==2&&S.jl>=4,x:'地方貴人親自下帖，要你主持一批高級衣料。',c:[['親自監工',{chr:2,gold:3,fame:2},'成衣送到後，貴人對你的手藝大加稱讚。'],['交給徒弟',{fame:1,gold:2,vir:1},'你把機會變成培養徒弟的考驗。']]},
+ {a:[35,80],t:'內廷供奉',q:()=>S.job==2&&S.jl>=5,x:'宮中傳下差事，請你製作御用衣物。',c:[['接下供奉',{fame:4,gold:5,chr:1},'你正式列入供奉名冊，地方官也對你另眼相看。'],['謹慎辭謝',{vir:1,mood:1},'你避開宮門風險，但失去一次登天機會。']]},
+ {a:[12,70],t:'鐵匠出師',q:()=>S.job==3&&S.jl>=2,x:'你已能獨立打製農具，鄉里開始直接找你訂貨。',c:[['精鍛農具',{mar:1,gold:1,fame:1},'農戶口碑漸起。'],['偷省炭火',{gold:2,mar:-1,vir:-1},'雖省了本錢，品質卻下降。']]},
+ {a:[20,80],t:'匠頭點徒',q:()=>S.job==3&&S.jl>=3,x:'師傅讓你挑選兩名學徒，從此工坊由你帶隊。',c:[['嚴格選人',{mar:1,fame:1},'你挑中手腳勤快的人，工坊效率提升。'],['照顧窮徒',{vir:2,fame:1},'你收下一名窮孩子，他日後對你忠心耿耿。']]},
+ {a:[28,80],t:'鑄坊承軍器',q:()=>S.job==3&&S.jl>=4,x:'官府下令採辦兵器，鑄坊主讓你負責一批軍器。',c:[['按規鑄造',{mar:1,fame:3,gold:3},'官府驗收合格，你獲准承接更多軍器。'],['偷減材料',{gold:5,vir:-3},'軍器斷裂，你被官府追查責任。']]},
+ {a:[35,80],t:'軍器監供奉',q:()=>S.job==3&&S.jl>=5,x:'軍器監點名召你入監，讓你掌一批工匠與兵器鑄造。',c:[['入監掌事',{fame:4,mar:2,gold:4},'你有權調度工匠與物料，真正進入官營軍器體系。'],['留在民坊',{gold:3,vir:1},'你保留自由，卻放棄了官身般的權勢。']]},
+ {a:[12,70],t:'塾師收束脩',q:()=>S.job==4&&S.jl>=2,x:'你已能獨立授課，家長開始把孩子交給你。',c:[['耐心教學',{int:1,vir:1,fame:1},'學生進步，家長願意多送束脩。'],['敷衍度日',{gold:1,int:-1,fame:-1},'收入有了，名聲卻慢慢下降。']]},
+ {a:[20,80],t:'學堂考校',q:()=>S.job==4&&S.jl>=3,x:'你已有資格主持學堂月考，學生的升等由你評定。',c:[['公正考校',{int:1,vir:2,fame:2},'士子開始敬重你的公正。'],['偏袒門生',{fame:1,vir:-2},'你讓一名門生得利，卻留下口實。']]},
+ {a:[28,80],t:'書院延聘',q:()=>S.job==4&&S.jl>=4,x:'地方書院請你主持教務，並允許你推薦優秀學生。',c:[['接受山長之職',{int:2,fame:3,vir:1},'你可以決定課程與推薦名額，門生遍及鄉里。'],['只做講師',{int:1,fame:1,mood:1},'你少了權力，但也少了許多俗務。']]},
+ {a:[35,80],t:'國子監薦才',q:()=>S.job==4&&S.jl>=5,x:'上級學官來信，請你推薦人才入國子監。',c:[['秉公薦才',{int:2,fame:4,vir:2},'你的推薦能改變一名士子的前途，朝廷開始記住你的名字。'],['薦自己門生',{fame:3,vir:-1},'門生得勢，你也因此擴大了學脈。']]},
+ {a:[12,70],t:'郎中坐堂',q:()=>S.job==5&&S.jl>=2,x:'你已能獨立問診，今日病人特別多。',c:[['仔細診治',{int:1,vir:2,fame:1},'病人痊癒後，鄰里開始信任你的醫術。'],['草草開方',{gold:1,fame:-1},'雖快些收錢，口碑卻受損。']]},
+ {a:[20,80],t:'名醫會診',q:()=>S.job==5&&S.jl>=3,x:'兩位醫者請你共同會診一名重病士紳。',c:[['慎重會診',{int:2,fame:2,vir:1},'你的判斷救回病人，地方士紳對你十分看重。'],['推給前輩',{mood:1},'你避開風險，但也少了成名機會。']]},
+ {a:[28,80],t:'官府延醫',q:()=>S.job==5&&S.jl>=4,x:'縣府邀你處理疫病與官署醫療，並給你調配藥材的權限。',c:[['主持防疫',{int:1,vir:2,fame:3,gold:2},'你可以調配藥材與醫者，地方疫情很快穩定。'],['只看貴人',{gold:3,fame:-1,vir:-1},'你賺到錢，卻失去百姓信任。']]},
+ {a:[35,80],t:'太醫召入',q:()=>S.job==5&&S.jl>=5,x:'宮中召你入內診治，御藥房願意把藥材與醫案交給你。',c:[['入宮任職',{fame:4,gold:4,int:2},'你開始掌理御前醫案，醫者的權力與責任都大幅提高。'],['留守民間',{vir:2,mood:1,fame:1},'你不願涉入宮廷，選擇繼續救治百姓。']]},
+ {a:[12,70],t:'廚房掌勺',q:()=>S.job==6&&S.jl>=2,x:'你已能獨立掌勺，酒樓把一桌宴席交給你。',c:[['穩定出菜',{chr:1,gold:1,fame:1},'客人稱讚菜色，掌櫃願意給你更多工錢。'],['偷減食材',{gold:2,fame:-1,vir:-1},'你省下成本，卻被客人察覺。']]},
+ {a:[20,80],t:'大廚定席',q:()=>S.job==6&&S.jl>=3,x:'你已能帶廚房伙計，酒樓把整場宴席交由你決定菜單。',c:[['親自定席',{chr:1,gold:2,fame:2},'你可以決定菜單與人手，名聲逐漸傳開。'],['讓徒弟試手',{vir:1,chr:1,fame:1},'你把廚房當成培養後輩的地方。']]},
+ {a:[28,80],t:'貴客宴席',q:()=>S.job==6&&S.jl>=4,x:'地方豪族設宴，點名要你主持後廚。',c:[['精心設宴',{chr:2,gold:4,fame:3},'豪族記住你的手藝，往後常有貴客訂席。'],['簡辦宴席',{gold:2,mood:1},'你省下工夫，名聲只小有增加。']]},
+ {a:[35,80],t:'御膳差事',q:()=>S.job==6&&S.jl>=5,x:'宮中宴饗將開，御膳房點名請你掌一席御膳。',c:[['入宮掌膳',{fame:4,gold:5,chr:2},'你可調度御膳房人手與食材，正式接觸宮廷權力。'],['婉拒宮門差事',{mood:1,vir:1},'你保留民間自由，避免宮廷風險。']]}
+];
+E.push(...JOB_EVENTS);
 const cv=r=>()=>S.rank==r&&!S.army,mv=m=>()=>S.army&&S.mrank==m;
 E.push(
 ev([22,60],"捕盜安民",cv(1),"境內盜賊猖獗，縣令命你緝捕。",[["率差役夜捕",{},W({mar:5},"賊人落網，縣令嘉許。",{fame:2,mar:1},"賊人遁走，你還掛了彩。",{hp:-2})],["訪查賊窩再動手",{},W({int:5},"你摸清賊巢，一網打盡。",{fame:3},"消息走漏，撲了個空。",{mood:-1})],["推給縣令定奪",{vir:-1},"你落得清閒，同僚微有譏言。"]]),
@@ -821,286 +859,12 @@ function kin(){
   sheet("親友",rows(l)+`<button class="opt" ${S.acted>=2?"disabled":""} onclick="visit()">探望親友<small>心情↑</small></button>`);
 }
 function estate(){const g=S.s.gold;sheet("家產",rows([["銅錢",g*100+" 文"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["居所",g<3?"茅屋":g<6?"瓦房":g<10?"大宅":"府邸"],["文職",S.rank?cnp()+(S.army?"・休職":""):"無"],["武職",S.mrank?mnp()+(S.army?"・現役":"・退役"):"無"],["文俸",S.rank&&!S.army?Math.round((cf()+1)*3.4)+" 石/年":"無"],["軍餉",S.army?Math.round((mf()+1)*3.6)+" 石/年":"無"]]))}
-function personMenu(){sheet("人物",rows([["姓名",S.name],["年齡",S.age+"歲"],["身分",tt()],["家族",S.family?.name||S.fam?.n||"—"],["家門背景",familyCareerLabel()],["家人職業影響",(()=>{const f=familyCareerInfo();return `文官${f.civil||0}級・武職${f.military||0}級・商業${f.trade||0}級`})()],["配偶",S.spouse||"未婚"],["子女",(S.kids||0)+"人"],["名望",S.s.fame],["心情",S.s.mood],["體魄",S.s.hp],["才學",S.s.int],["武勇",S.s.mar],["仁德",S.s.vir],["家財",S.s.gold+" 貫"]])+`<button class="opt" onclick="book()">查看生平紀錄</button>`)}
-function familyMenu(){sheet("家族",rows([["家族",S.family?.name||S.fam?.n||"—"],["家族聲望",S.family?.rep??"—"],["家族身分",S.family?.ext?.status||"—"],["家門背景",familyCareerLabel()],["官場助力",(S.famOfficeAid||0)+"級"],["商業助力",(S.famTradeAid||0)+"級"],["家宅",["茅舍","瓦房","深宅","府邸","豪門","世家祖宅"][S.estate?.lv||0]],["子女",(S.kids||0)+"人"],["配偶",S.spouse||"未婚"]])+`<button class="opt" onclick="kin()">查看親友</button><button class="opt" onclick="estate()">查看家產</button>`)}
-function cart(){sheet("車馬",rows([["代步",["徒步","一頭毛驢","一匹良馬","雕花馬車"][Math.min(3,S.s.gold>>2)]]]))}
-function bag(){sheet("行囊",rows(K.map(([k,n])=>[n,Math.round(S.s[k]/12*100)]).concat([["行業",S.job?jn():"無"],["文職",S.rank?cn():"無"],["武職",S.mrank?mn()+(S.army?"":"（退役）"):"無"]])))}
-function book(){sheet("賬本",S.hist.length?S.hist.slice().reverse().map(x=>`<p>${x}</p>`).join(""):"<p>還沒有任何記錄。</p>")}
-function goals(){sheet("目標",G.map(([n,f])=>`<p>${f()?"✅":"⬜"} ${n}</p>`).join(""))}
-function jobs(){const B=(t,d,f,ok)=>`<button class="opt" ${S.acted>=2||!ok?"disabled":""} onclick="work(${f})">${t}<small>${d}</small></button>`,free=!S.job&&!S.army&&!S.rank&&S.age>=12;
-sheet("工作",rows([["文官（科舉入仕）",S.rank?cn()+(S.army?"・休職":""):"尚未入仕"],["武官（從軍・武舉）",S.mrank?mn()+(S.army?"":"(退)"):"尚未從軍"],["行業",S.job?JB[S.job-1].n+"・"+jn():"無"],["下次考績",S.rank&&!S.army?(3-(S.rx||0))+" 年後（文官）":S.army&&S.mrank?(2-(S.mx||0))+" 年後（武官）":"—"]])+`<p>${S.acted?"今年已行動過，下一年再來。":"轉換工作會用掉今年的行動。文官須經科舉、蔭補等正途，且需有足夠才學、名望或家門背景；武官亦需具備相當武藝或軍旅背景。"}</p>`+JB.map((j,i)=>B(j.n,S.job==i+1?"現職":"投身",i,free)).join("")+B("從軍","應徵入伍",-1,!S.army&&S.age>=16&&S.age<=45)+B("解甲歸田","退伍",-2,S.army)+B("辭去行當","辭業",-3,S.job))}
-function work(i){if(S.acted>=2)return;S.acted=(S.acted||0)+1;let m;if(i>=0){apply({job:i+1});m="你投身"+JB[i].n+"之業，從"+JB[i].L[0]+"做起。"}else if(i==-1){apply({enlist:1});m="你應徵入伍，成了一名士卒。"}else if(i==-2){apply({discharge:1,mood:1});m="你解甲歸田，卸下一身重擔。"}else{apply({quit:1});m="你辭去行當，另作打算。"}S.cur.push(m);S.hist.push(S.age+"歲 "+m);cls();render()}
-
-function lifeScore(){
-  return Math.round(S.s.hp+S.s.int+S.s.mar+S.s.vir+S.s.gold+S.s.fame+S.s.mood+S.s.chr+
-    (S.rank||0)*3+(S.mrank||0)*3+(S.jl||0)*2+(S.kids||0)*2+(S.spouse?2:0)+(S.king?8:0));
-}
-function lifeInfo(){
-  const fam=S.fam?.n||"未知";
-  const status=tt();
-  const goalsDone=G.filter(x=>x[1]()).length;
-  const relatives=(S.kin?.filter(k=>!k.x).length||0)+(S.spouse?1:0)+(S.kids||0);
-  sheet("人物誌",
-    `<div class="seal">${S.king?"天子":status}</div>
-     ${rows([
-       ["姓名",S.name],["年齡",S.age+" 歲"],["朝代",DY[S.dyn].n+"朝・"+S.emp.nh],
-       ["出身",fam],["籍貫",S.prov],["目前身份",status],
-       ["家人",relatives+" 人"],["人生評分",lifeScore()],["目標",goalsDone+"/"+G.length]
-     ])}
-     <p style="margin-top:12px">核心能力：${["hp","int","mar","vir","gold","fame","mood","chr"].map(k=>NM[k]+" "+S.s[k]).join(" ・ ")}</p>`
-  );
-}
-function saveGame(){
-  try{
-    const copy=JSON.parse(JSON.stringify(S,(k,v)=>v instanceof Set?[...v]:v));
-    copy.__done=[...S.done];copy.__ik={...S.ik};
-    localStorage.setItem("fusheng_v4_save",JSON.stringify(copy));
-    sheet("存檔成功","<p>這一世已暫存在本機瀏覽器。下次開啟仍可讀取。</p>");
-  }catch(e){sheet("存檔失敗","<p>瀏覽器不允許本機存檔。</p>")}
-}
-function loadGame(){
-  try{
-    const raw=localStorage.getItem("fusheng_v4_save");
-    if(!raw){sheet("沒有存檔","<p>目前找不到可讀取的本世。</p>");return}
-    const x=JSON.parse(raw);x.done=new Set(x.__done||[]);x.ik=x.__ik||{};S=x;cls();render();
-    S.cur=["<b>存檔讀取</b>","你重新回到這一世的人生。"];
-    render();
-  }catch(e){sheet("讀取失敗","<p>存檔資料無法讀取。</p>")}
-}
-
-function menu(){
-  const done=G.filter(x=>x[1]()).length;
-  const score=Math.round(S.s.hp+S.s.int+S.s.mar+S.s.vir+S.s.gold+S.s.fame+S.s.mood+S.s.chr+(S.rank||0)*3+(S.mrank||0)*3+(S.kids||0)*2);
-  sheet("遊戲選單",
-    `<p>這一世已走過 <b>${S.age}</b> 年，完成 ${done}/${G.length} 個人生目標。</p>
-     <button class="opt" onclick="lifeInfo()">🪪 人物誌<small>查看身世與成長</small></button>
-     <button class="opt" onclick="goals()">🎯 人生目標<small>${done}/${G.length}</small></button>
-     <button class="opt" onclick="book()">📜 生平紀錄<small>${S.hist.length} 筆</small></button>
-     <button class="opt" onclick="saveGame()">💾 暫存本世<small>瀏覽器本機</small></button>
-     <button class="opt" onclick="loadGame()">↩️ 讀取本世<small>有存檔才可用</small></button>
-     <button class="opt" onclick="cls();setTimeout(()=>{if(confirm("確定要放棄這一世並重新投胎嗎？"))start()},50)">🔄 重新投胎<small>放棄目前人生</small></button>
-     <p style="text-align:center;color:var(--mute)">本世評分 ${score}</p>`
-  )
-}
-function __v5BaseEnd(){
-  const s=S.s,T=[["vir","一代賢士"],["fame","名垂青史"],["gold","富甲一方"],["mar","沙場名將"],["int","滿腹經綸"],["hp","長壽翁"]];
-  const top=T.slice().sort((a,b)=>s[b[0]]-s[a[0]])[0],tot=s.hp+s.int+s.mar+s.vir+s.gold+s.fame;
-  S.cur.push(S.fall||(S.s.hp<=0?"你積勞成疾，病逝。":"你壽終正寢。"));render();
-  sheet("",`<div style="text-align:center"><div class="seal">${S.king?(S.ns+S.pp>=16?"一代明君":S.ns+S.pp>=9?"守成之君":"亡國之君"):tot<20?"碌碌一生":S.rank>=5?"一代名相":S.mrank>=5?"一代名將":S.jl>=5?"行業魁首":top[1]}</div><p>${S.king?"登基稱帝，":""}${S.name}，享年 ${S.age} 歲。文職${S.rank?cn():"無"}，武職${S.mrank?mn():"無"}，行業${S.job?jn():"無"}，${S.spouse?"成家":"終身未娶"}，子女${S.kids}人。<br>綜合評分 ${tot+S.rank*3+S.mrank*3+S.kids}</p><p>${S.deeds.length?"生平大事："+S.deeds.join("、"):"一生平淡。"}</p><button class="opt" onclick="start()">再活一世</button></div>`,0);
-}
-
-/* ===== 新增：皇帝系統 / 家人事件 / 更多活動 ===== */
-const par=()=>S.kin.filter(k=>(k.r=="父親"||k.r=="母親")&&k.a+S.age<=70&&!k.x),sib=()=>S.kin.filter(k=>(k.r=="兄長"||k.r=="姐姐")&&k.a+S.age<=75&&!k.x),kd=()=>(S.kc||[]).filter(d=>S.age-d.b>=3);
-const TR=[["明君","勵精圖治，朝野清明。"],["昏君","沉迷享樂，奸佞當道。"],["暴君","刑罰嚴苛，人人自危。"],["仁君","輕徭薄賦，與民休息。"],["好戰","窮兵黷武，邊釁頻開。"],["崇文","重用文臣，大開科場。"]];
-function newEmp(f){const len=8+R(22),tr=P(TR);return{n:P(["昭","章","德","明","靖","景","惠","武","宣","哀"])+P(["宗","帝"]),nh:P(NH),tr,len,t:f?R(len>>1):0}}
-const empB=m=>{const k=S.emp.tr[0];return(m?{好戰:1,崇文:-1,昏君:-1,明君:1}:{崇文:1,好戰:-1,昏君:-1,明君:1})[k]||0};
-function empYear(){const e=S.emp,k=e.tr[0],r=Math.random(),m=t=>S.cur.push(t);if(S.king){e.t++;return kingYear()}if(S.royal&&Math.random()<.25){S.s.gold++;m("宗室歲祿發下，家財添了一筆。（家財↑）")}e.t++;
- if(e.t>=e.len){
-   const wasCrownPrince=S.royal==2;
-   const father=wasCrownPrince?S.kin.find(k=>k.r==="父親"&&!k.x):null;
-   if(wasCrownPrince&&father){father.x=1; m(`${father.n}駕崩，舉國縞素。你失去父皇，宮中鐘聲徹夜不絕。`);}else{m(`${e.nh}年間，${e.n}駕崩，舉國縞素。`);}
-   apply({mood:-1});
-   if(wasCrownPrince&&S.age>=10){const sc=S.fav+(S.s.fame+S.s.int+S.s.mar)/3+R(5);S.royal=1;if(sc>=18){m("先帝遺詔傳位於你！");becomeKing();return}else if(sc<13){apply({fame:-2,mood:-3});m("新君即位，你因奪嫡失利被圈禁高牆。（處世↓ 心情↓）")}else m("新君即位，你被封為郡王，遠離了權力中心。")}S.emp=newEmp();const n=S.emp;m(`新帝${n.n}登基，改元${n.nh}。（${n.tr[0]}：${n.tr[1]}）`);if(Math.random()<.5&&S.rank>=2){apply({fame:1});m("新君廣施恩澤，你受了加封。（處世↑）")}return}
- if(r<.2){const o={仁君:["朝廷減免賦稅，百姓得以喘息。",{gold:1,mood:1}],昏君:["權臣橫徵暴斂，家家叫苦。",{gold:-1,mood:-1}],暴君:["朝中興起大獄，人心惶惶。",{mood:-1,fame:-1}],好戰:["邊關烽火再起，各地徵發糧草。",S.army?{mar:1,fame:1}:{gold:-1}],崇文:["天子廣設學館，文風大盛。",{int:1}],明君:["天下升平，市井繁榮。",{mood:1,gold:1}]}[k];m(o[0]+"（"+fxT(o[1])+"）");apply(o[1])}
- else if(r>.93){m("天子下詔大赦天下，四海同慶。（心情↑）");apply({mood:1})}}
-const fv=(t,a,q,x,c)=>({g:1,rep:1,a,t,q,x,c}),nm=(l,d)=>l[0]?l[0].r?l[0].r+l[0].n:"孩子"+l[0].n:d;
-E.push(
-fv("天子巡幸",[14,70],0,()=>`聖駕巡幸至${S.prov.slice(0,2)}，官道戒嚴，百姓夾道圍觀${S.emp.n}。`,[["擠到前排瞻仰天顏",{},W({chr:6},"天子目光掃過，對你頷首一笑。",{fame:3,mood:2},"你被侍衛推搡開來，鞋也擠掉了。",{mood:-1})],["獻上本地土產",{gold:-1},"官員記下了你的名字。"],["閉門不出",{},"你嫌人多，在家睡了一天。"]]),
-fv("開恩科",[16,40],()=>!S.rank&&!S.army,()=>`${S.emp.n}下詔加開恩科，各地舉子紛紛赴京。`,[["赴京應試",{},W({int:8},"你金榜題名，入朝為官。",{rank:1,fame:3},"你名落孫山，黯然而歸。",{mood:-2,int:1})],["再讀三年",{int:1},"你決定苦讀，待下一科。"]]),
-fv("天子召見",[30,75],()=>S.rank>=3,()=>`${S.emp.n}召你入宮問政，殿中百官屏息。`,[["直言進諫",{},W({vir:7,int:6},"天子默然良久，終於納了你的諫言。",{fame:3,vir:1},"龍顏不悅，你被冷落了一陣。",{fame:-2,mood:-2})],["順著聖意附和",{vir:-1},W({},"天子龍心大悅，賞你錦緞百匹。",{gold:2,fame:1},"你說得太過諂媚，同僚暗中鄙夷。",{fame:-1},.6)],["謹言慎行",{mood:-1},"你答得滴水不漏，平安退下。"]]),
-fv("朝廷徵兵",[16,40],()=>!S.army&&!S.mrank,()=>`${S.emp.n}下詔徵兵，縣衙貼出榜文，每戶需出一丁。`,[["應徵入伍",{enlist:1},"你背起行囊，隨隊遠赴邊關。"],["出錢免役",{gold:-2},"你破財消災，保住了清靜。"],["躲到外鄉",{},W({},"你在外鄉躲過風頭，平安歸來。",{mood:-1},"差役尋到你，你被打了二十板子。",{hp:-2,fame:-1},.5)]]),
-fv("天子命將",[25,65],()=>S.army&&S.mrank>=3,()=>`${S.emp.n}命你統兵出征，糧草已備，只待一聲令下。`,[["領命出征",{},W({mar:8,int:5},"你運籌帷幄，大破敵軍，天子親賜金帶。",{mrank:1,fame:3},"你兵敗而回，朝野譁然。",{fame:-3,hp:-2,mood:-2})],["上書請求緩兵",{},W({int:7},"天子准奏，你避開了一場險局。",{fame:1,vir:1},"天子斥你畏戰，記了你一筆。",{fame:-2})]]),
-fv("文字獄",[16,70],()=>S.emp.tr[0]=="暴君",()=>"朝中興起文字獄，有人告發你昔日的詩句影射朝政。",[["上書自辯",{},W({int:7,fame:5},"官員查明是誣告，你全身而退。",{fame:2},"你辯不過告發者，被關進牢裡吃了苦頭。",{hp:-2,fame:-2,mood:-3})],["花錢打點",{gold:-2},"你破財免災，事情不了了之。"],["燒毀文稿",{vir:-1},"你連夜燒了所有文稿，心有餘悸。"]]),
-fv("父母壽辰",[16,70],()=>par().length,()=>`${nm(par(),"父母")}壽辰將至，家人都在商量如何慶賀。`,[["大辦壽宴",{gold:-1,vir:2,mood:1},"賓客盈門，老人家笑得合不攏嘴。"],["親手下廚做長壽麵",{vir:1,mood:2},"老人吃著你煮的麵，眼眶微紅。"],["託人送份賀禮",{vir:-1},"老人嘴上說無妨，神色卻有些落寞。"]]),
-fv("父母催婚",[18,36],()=>!S.spouse&&par().length,()=>"母親在你耳邊念了半年，這回連父親也開了口，要替你說門親事。",[["聽從安排相親",{},W({chr:5},"對方端莊賢淑，與你一見投緣，婚事就此談妥。",{wed:1,mood:2},"相親對象與你話不投機，不歡而散。",{mood:-1})],["婉拒，說想先立業",{mood:-1},"父母嘆了口氣，也只得由你。"],["藉口外出躲清靜",{mood:1},"你溜出門去，耳根子清靜了一陣。"]]),
-fv("父母病重",[28,72],()=>par().length,()=>`${nm(par(),"父母")}病倒在床，湯藥不進。`,[["侍奉床前",{hp:-1,vir:3},"你衣不解帶守了數日，老人終於好轉。"],["重金請名醫",{gold:-2,vir:1},W({},"名醫妙手回春，老人轉危為安。",{mood:2},"藥石無靈，老人病情時好時壞。",{mood:-2},.7)],["託兄弟照料",{vir:-2},"你忙於正事，心中卻始終不安。"]]),
-fv("兄弟爭產",[22,55],()=>sib().length&&S.s.gold>=3,()=>`${nm(sib(),"兄姐")}為了分家之事與親戚鬧得不可開交。`,[["出面主持公道",{},W({vir:6,fame:4},"你一碗水端平，兄弟冰釋前嫌。",{vir:2,fame:1},"兩邊都不領情，你裡外不是人。",{mood:-2,fame:-1})],["讓出自己那一份",{gold:-2,vir:3},"家人感念你的胸懷，風波就此平息。"],["袖手旁觀",{mood:-1},"你不願摻和，家裡冷了好一陣。"]]),
-fv("手足求助",[18,55],()=>sib().length,()=>`${nm(sib(),"兄姐")}上門，吞吞吐吐地說想借些錢周轉。`,[["借錢相助",{gold:-1,vir:2},W({},"對方日後連本帶利歸還，還送來謝禮。",{gold:2,mood:1},"對方一去音訊全無，你只得苦笑。",{mood:-1},.6)],["陪他想辦法",{int:1,vir:1},"你們商量了一夜，總算尋到出路。"],["說自己手頭也緊",{vir:-1},"對方悻悻離去，兄弟間生了隔閡。"]]),
-fv("夫妻齟齬",[20,65],()=>S.spouse,()=>`你與${S.spouse}為了一件小事越吵越兇，已三日不說話。`,[["主動道歉",{vir:1,mood:1},"對方噗哧一笑，氣早消了。"],["據理力爭",{},W({int:6},"你講得有理有據，對方無話可說，卻也沒給你好臉色。",{fame:1,mood:-1},"越吵越僵，家中冷了數日。",{mood:-3})],["冷戰到底",{mood:-2},"兩人僵持數日，才勉強和好。"]]),
-fv("配偶染病",[25,70],()=>S.spouse,()=>`${S.spouse}忽然病倒，臥床不起。`,[["悉心照料",{hp:-1,vir:2},W({},"經你悉心照料，對方漸漸痊癒，夫妻情更篤。",{vir:1,mood:2},"藥石罔效，對方終究撒手人寰。",{lose:1,mood:-5},.85)],["重金延醫",{gold:-2},W({},"名醫對症下藥，不日便見起色。",{mood:2},"病勢沉重，終究沒能留住。",{lose:1,mood:-5},.85)]]),
-fv("添丁之喜",[20,45],()=>S.spouse&&S.kids<4,()=>`${S.spouse}近來面色紅潤，郎中診脈後笑著向你道喜。`,[["欣喜迎接",{},W({},"十月懷胎，家中添了一個白胖娃娃。",{kid:1,mood:3},"終是一場空歡喜，夫妻倆相互寬慰。",{mood:-1},.8)],["廣為張羅，請穩婆",{gold:-1},W({},"在穩婆照料下，母子平安，家中添丁。",{kid:1,mood:3,vir:1},"孩子未能保住，你們黯然神傷。",{mood:-3},.9)]]),
-fv("教子讀書",[26,65],()=>kd().length,()=>`${nm(kd(),"孩子")}近來功課荒疏，先生登門告狀。`,[["嚴加督促",{vir:1,mood:-1},"孩子被你管得老實了，只是見你有些怕。"],["耐心開導",{vir:2,mood:1},"孩子低頭認錯，從此用功了許多。"],["親自教導",{int:1,vir:1},"父子對燈夜讀，倒也其樂融融。"]]),
-fv("子女生病",[24,60],()=>kd().length,()=>`${nm(kd(),"孩子")}夜裡高燒不退，哭鬧不止。`,[["徹夜守護",{hp:-1,vir:2,mood:1},"天亮時燒退了，孩子安然入睡。"],["連夜請郎中",{gold:-1,mood:1},"郎中開了藥，孩子喝下便好了。"],["拜神祈福",{},W({},"天明時燒果然退了，你長舒一口氣。",{mood:2,vir:1},"燒遲遲不退，終究還是請了郎中。",{gold:-1,mood:-1},.4)]]),
-fv("子女婚事",[40,72],()=>kd().some(d=>S.age-d.b>=18),()=>`${nm(kd(),"孩子")}到了婚配年紀，媒人踏破了門檻。`,[["風風光光操辦",{gold:-2,fame:2,mood:2},"十里紅妝，鄉里無不稱羨。"],["簡簡單單成禮",{gold:-1,vir:1,mood:1},"婚事雖簡，小兩口卻和和美美。"],["讓孩子自己選",{mood:1,vir:1},"孩子感念你的開明，親事自己定了。"]]),
-fv("清明祭祖",[16,80],0,()=>"清明時節，族中老少都要回祠堂祭掃祖先。",[["主持祭禮",{vir:2,fame:1},"你誦讀祭文，族人皆肅然起敬。"],["隨眾掃墓",{vir:1,mood:1},"你在祖墳前添了土，心中安定許多。"],["在外未能歸鄉",{vir:-1},"你遠在他鄉，只能遙遙一拜。"]]),
-fv("除夕團圓",[10,80],()=>par().length||sib().length||S.spouse,()=>"除夕夜，一家人圍坐桌前，爆竹聲聲辭舊歲。",[["守歲談心",{mood:3},"燈火通明，笑語不斷，這一夜暖到了心裡。"],["給長輩磕頭拜年",{vir:1,mood:2},"長輩笑著遞上壓歲錢，直說你懂事。"],["獨自在書房看書",{int:1},"屋外歡聲笑語，你卻覺得有些孤單。"]])
-);
-GA.push(["釣魚垂綸",{mood:1,hp:1},0,6],["登高望遠",{hp:1,mood:1},0,6],["下棋對弈",{int:1,mood:1},0,8],["撫琴吹簫",{chr:1,mood:1},0,8],["臨帖習字",{int:1,chr:1},0,8],["遊歷山川",{fame:1,mood:2,gold:-1},0,16],["逛集市",{mood:1,gold:-1},0,6],["廟中祈福",{vir:1,mood:1},0,6],["飲茶會友",{fame:1,mood:1},0,12],["種花養草",{mood:1,chr:1},0,10],["上山打獵",{mar:1,gold:1,hp:-1},0,14],["遠行拜師",{int:2,gold:-2},0,14],["看戲聽曲",{mood:2,gold:-1},0,8],["修繕屋舍",{gold:1,hp:-1},()=>S.s.gold>=3,16],
-["陪伴父母",{vir:1,mood:1},()=>par().length,6],["教導弟妹",{vir:1,int:1},()=>sib().length,12],["與配偶出遊",{mood:2,chr:1},()=>S.spouse,16],["陪孩子嬉戲",{mood:2,hp:1},()=>kd().length,16],["給父母添置衣物",{vir:2,gold:-1},()=>par().length,16]);
-function court(){const e=S.emp;if(S.king)return sheet("朝廷",rows([["年號",e.nh],["在位",e.t+" 年"],["國力",Math.round(S.ns/12*100)],["民心",Math.round(S.pp/12*100)]])+"<p>國力或民心歸零，王朝便會傾覆。</p>");const B=(t,d,f,ok=1)=>`<button class="opt" ${S.acted>=2||!ok?"disabled":""} onclick="ca(${f})">${t}<small>${d}</small></button>`;
- sheet("朝廷",rows([["當朝天子",e.n+"（"+e.nh+"年間）"],["在位",e.t+" 年"],["聖主品性",e.tr[0]+"："+e.tr[1]],["國勢",e.len-e.t>8?"國祚安穩":"帝體欠安"]])+B("遙望宮闕，關心時政","處世↑",0)+B("上疏進言","需任文職",1,S.rank>=2&&!S.army)+B("獻上珍玩討好權貴","家財↓ 處世↑",2,S.s.gold>=2))}
-function ca(i){if(S.acted>=2)return;S.acted=(S.acted||0)+1;let m;
- if(i==0){apply({fame:1});m="你留心朝廷動向，眼界開闊了些。（處世↑）"}
- else if(i==1){const ok=(S.s.int>=6&&S.s.vir>=5&&S.emp.tr[0]!="暴君")||Math.random()<.15;if(ok){apply({fame:2,vir:1});m="你的奏疏被天子留中詳閱，朝野稱頌。（處世↑ 德行↑）"}else{apply({fame:-1,mood:-1});m="奏疏石沉大海，反惹來同僚側目。（處世↓）"}}
- else{apply({gold:-1,fame:1});m="你四處打點，總算在權貴面前露了臉。（家財↓ 處世↑）"}
- S.cur.push(m);S.hist.push(S.age+"歲 "+m);cls();render()}
-$("sb").onclick=court;$("sb").style.cursor="pointer";
-
-/* ===== v3：身分系統 / 皇室 / 登基 / 親人離世 ===== */
-FAM.push({n:"官宦之家",d:"父親在衙門當差，家中僕婢成群。",s:{hp:5,int:6,mar:3,vir:5,gold:6,fame:6}},{n:"皇親國戚",d:"祖上與皇室沾親，府邸朱門高牆。",s:{hp:5,int:6,mar:4,vir:4,gold:10,fame:9}},{n:"皇室",d:"你生於深宮，是天子的親生骨肉。",s:{hp:5,int:7,mar:5,vir:4,gold:12,fame:10}});
-FJC.push(C(1,6),C(0,0,0,"王爺"),C(0,0,0,"天子"));FMC.push(C(0,0,0,"操持家務"),C(0,0,0,"王妃"),C(0,0,0,"後宮妃嬪"));
-const pickFam=()=>{const r=Math.random();return r<.04?6:r<.12?5:r<.27?4:R(4)};
-function becomeKing(){S.king=1;S.rank=0;S.mrank=0;S.army=0;S.job=0;S.jl=0;S.emp={n:S.name+"（朕）",nh:P(NH),tr:["在位",""],len:99,t:0,self:1};
- S.ns=Math.max(4,Math.min(9,Math.round((S.s.int+S.s.fame)/3)+2));S.pp=Math.max(4,Math.min(9,Math.round(S.s.vir/2)+3));S.cur.push(`你登上大寶，改元${S.emp.nh}，君臨天下！（開啟「國力」與「民心」）`);S.hist.push(S.age+"歲 登基為帝");S.deeds.push("登基為帝")}
-function kingYear(){S.ns+=[-1,0,0,1][R(4)];if(Math.random()<.4)S.pp+=S.ns>=8?1:S.ns<=3?-1:0;S.ns=Math.max(0,Math.min(12,S.ns));S.pp=Math.max(0,Math.min(12,S.pp));
- if(S.ns<=0)S.fall="國力衰竭，外敵攻破京城，你自盡殉國，國祚斷絕。";else if(S.pp<=0)S.fall="民變四起，義軍攻入京城，你成了亡國之君。";else if(Math.random()<.4)S.cur.push(S.ns>=9?"國泰民安，四方來朝。":S.ns<=3?"國庫空虛，邊患日重。":S.pp<=3?"民間怨聲載道，各地盜匪蜂起。":"朝政平穩，並無大事。")}
-function famDeath(){S.kin.forEach(k=>{const a=k.a+S.age;if(k.x||a>75||a<50)return;if(Math.random()<(a-48)*.007){k.x=1;const p=k.r=="父親"||k.r=="母親";S.cur.push(`${k.r}${k.n}以${a}歲高齡病逝，${p?"你守孝盡禮，悲痛難抑":"你在靈前哭了許久"}。（心情↓${p?" 德行↑":""}）`);apply(p?{mood:-3,vir:1}:{mood:-2});S.hist.push(S.age+"歲 "+k.r+"去世")}});
- const sa=S.age+S.so;if(S.spouse&&S.sc&&sa>=60&&Math.random()<(sa-58)*.01){S.cur.push(`${S.spouse}年事已高，安然離世，你悲痛萬分。（心情↓）`);S.hist.push(S.age+"歲 配偶去世");apply({lose:1,mood:-4})}}
-const KA=[["批閱奏摺",{int:1,ns:1},0,0],["輕徭薄賦",{pp:2,ns:-1},0,0],["整頓吏治",{ns:1,fame:1},0,0],["微服私訪",{pp:1,vir:1,hp:-1},0,0],["校閱禁軍",{mar:1,ns:1},0,0],["興修宮室",{mood:2,pp:-1,ns:-1,gold:-1},0,0],["開倉賑濟",{pp:2,gold:-1},0,0],["大赦天下",{pp:1,ns:-1},0,0],["遊獵宮苑",{mood:2,hp:1},0,0],["召見大臣",{fame:1,int:1},0,0]],
-AL=s=>s=="s"?SA[stage()]:S.king?KA.concat(GA.filter(it=>!it[2])):GA;
-const e2=(t,a,q,x,c,o)=>Object.assign({g:1,rep:1,a,t,q,x,c},o);
-E.forEach(e=>{if(/^(父母|兄弟|手足|夫妻|配偶|添丁|教子|子女|清明祭|除夕團)/.test(e.t))e.fam=1});
-const KV=(t,q,x,c)=>E.push(e2(t,[10,95],q,x,c,{kg:1}));
-E.push(
-e2("太傅授課",[6,14],()=>S.royal==2&&!S.king,"太傅為皇嗣們講授帝王之學，殿中鴉雀無聲。",[["專心聽講",{int:2,fav:1},"太傅連連點頭，把你的功課呈給了父皇。"],["偷偷溜出宮玩耍",{mar:1,mood:2,fav:-1},"你在宮外撒了歡，回宮後被罰抄書。"],["與兄弟爭辯策論",{},W({int:6},"你辯得兄弟啞口無言，太傅大為稱許。",{fame:1,fav:1},"你被駁得面紅耳赤。",{mood:-1})]],{rep:0}),
-e2("奪嫡之爭",[14,45],()=>S.royal==2&&!S.king,"父皇年事漸高，諸皇子各自結黨，朝中暗流湧動。",[["拉攏朝臣",{gold:-1},W({fame:6,chr:5},"你廣結朝中重臣，聲望日隆。",{fav:2,fame:1},"拉攏之事被告到御前，父皇有些不悅。",{fav:-2})],["上策論討好父皇",{},W({int:6},"你呈上的策論深得聖心。",{fav:2,mood:1},"父皇覺得你言之無物。",{fav:-1})],["韜光養晦",{mood:1},"你閉門讀書，不爭不搶，落得清靜。"]]),
-e2("兄弟暗算",[16,45],()=>S.royal==2&&!S.king,"你察覺有兄弟暗中在父皇面前說你的壞話。",[["暗中防備",{},W({int:5},"你識破了暗算，反讓對方栽了跟頭。",{fav:1,fame:1},"你中了圈套，被父皇申斥。",{fav:-2,mood:-2})],["直接向父皇申訴",{vir:-1},W({},"父皇還了你清白。",{fav:1},"父皇斥你不顧兄弟之情。",{fav:-2},.5)],["一笑置之",{vir:1,mood:-1},"你不願摻和，只覺心寒。"]]),
-e2("宮宴",[16,70],()=>S.royal>=1&&!S.king,"宮中大宴宗親，百官列席，絲竹聲聲。",[["獻上厚禮",{gold:-1,fame:2},"天子龍顏大悅，記下了你的名字。"],["席間作詩助興",{},W({int:6},"你的詩贏得滿座喝彩。",{fame:2,chr:1,fav:1},"詩句平庸，被人客氣地點了點頭。",{mood:-1})],["推病不去",{mood:1},"你在府中樂得清閒。"]]),
-e2("蔭補入仕",[16,24],()=>familyCareerInfo().civil>=5&&!S.rank&&!S.army,"父親的同僚上門道賀，說可以憑父親的官蔭，替你補一個官職。",[["接受蔭補，入衙為官",{rank:1,fame:1},"你憑著父親的官蔭，補了個九品小官。"],["堅持科舉入仕",{int:2},"你婉拒蔭補，決心憑真才實學出頭。"],["不願為官",{mood:1},"你謝過好意，只想自在度日。"]],{rep:0}),
-e2("父親遭彈劾",[14,45],()=>S.fi==4,"父親被政敵彈劾，家中人心惶惶，賓客也少了。",[["四處奔走疏通",{gold:-2},W({fame:5},"你託人疏通，父親有驚無險。",{fame:1,vir:1},"疏通無果，父親被貶官一級。",{fame:-1,mood:-2})],["閉門讀書以待",{int:1},"風波過後，父親只是被申斥一頓。"],["與父親共擔責任",{vir:2,mood:-1},"你陪父親跪在堂前，傳為孝名。"]]),
-e2("黃袍加身",[30,70],()=>S.army&&S.mrank>=5&&S.s.fame>=8&&!S.king,"你手握重兵，部下們暗中勸你：「這天下，該換個姓了。」",[["舉兵稱帝",{},W({mar:9,fame:8,int:6},"你兵臨城下，百官開城跪迎，黃袍加身。",{king:1},"你兵敗被擒，身死族滅。",{doom:1})],["斥退勸進者，效忠朝廷",{vir:2,fame:1},"你拒絕了部下勸進，傳為忠義佳話。"],["按兵不動",{mood:-1},"你壓下此事，夜裡卻久久難眠。"]]),
-);
-KV("邊關告急",0,"八百里加急軍報送入宮中，北境敵騎犯邊。",[["發兵迎敵",{gold:-1},W({},"大軍告捷，邊境安定。",{ns:1,fame:2},"戰事膠著，耗費錢糧。",{ns:-1,pp:-1},.6)],["遣使議和",{pp:1,fame:-1},"歲幣換得數年太平，朝中有人不滿。"],["御駕親征",{},W({mar:7},"你親冒矢石，三軍用命，大破敵軍。",{ns:2,pp:1,fame:3},"你身中流矢，狼狽而還。",{hp:-3,ns:-1})]]);
-KV("水旱災荒",0,"數省大旱，田地龜裂，流民湧向京畿。",[["開倉賑濟",{gold:-1,pp:2},"流民感念皇恩，騷亂平息。"],["減免賦稅",{pp:2,ns:-1},"百姓稱頌，國庫卻吃緊了。"],["置之不理",{pp:-2,vir:-1},"流民四散，史官記下了你的失德。"]]);
-KV("權臣專權",0,"宰相結黨營私，朝中半數官員都出自他門下。",[["雷霆誅殺",{},W({int:6,fame:6},"你一舉剷除奸黨，朝綱肅然。",{ns:2,fame:2},"事機不密，反被權臣掣肘。",{ns:-2,mood:-2})],["拉攏制衡",{int:1},"你以術馭人，朝局暫穩。"],["放任不管",{ns:-1,mood:1},"你樂得清閒，朝政卻日漸荒廢。"]]);
-KV("立儲之議",()=>S.kids>=1,"大臣們紛紛上疏，請你早日冊立太子。",[["立長子為太子",{ns:1,mood:1},"朝野稱善，國本已定。"],["擇賢能者立之",{ns:1,vir:1},"你另立賢能，引來一些議論。"],["遲遲不立",{ns:-1},"儲位未定，朝臣們暗中站隊。"]]);
-KV("科舉取士",0,"又到三年大比之年，天下舉子雲集京城。",[["親自殿試策問",{int:1,ns:1},"你選拔了一批棟樑之才。"],["交由禮部主持",{},"科舉平穩進行，並無差池。"],["增設恩科",{pp:1,gold:-1},"天下士子歡欣鼓舞。"]]);
-KV("選秀之議",0,"禮部請求廣選秀女，充實後宮。",[["廣選秀女",{mood:2,pp:-1,gold:-1},"後宮充盈，民間卻怨聲不小。"],["婉言拒絕",{vir:1,pp:1},"你的節儉傳為美談。"]]);
-KV("祭天大典",0,"冬至將至，禮官請你主持祭天大典。",[["舉行隆重大典",{gold:-1,pp:1,fame:1},"萬民仰望，皇威大振。"],["輕車簡從，從簡而行",{vir:1},"你以身作則，朝臣們面露敬佩。"]]);
-sheet("浮生一夢",'<p>投胎轉世，重活一世。每年一步，選擇改寫結局。</p><button class="opt" onclick="start()">投胎</button>',0);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")cls()});
-document.addEventListener("click",e=>{if(e.target.id==="sh")cls()});
-
-/* ===== v5 世代養成系統 ===== */
-(function(){
-const V5TALENTS=[
- {id:'慧眼',n:'慧眼',d:'洞察力強，事件判斷更容易成功。',e:{int:2,fame:1}},
- {id:'仁心',n:'仁心',d:'重情重義，親友關係更容易提升。',e:{vir:2,mood:1}},
- {id:'武骨',n:'武骨',d:'天生勇武，習武與戰事更有優勢。',e:{mar:2,hp:1}},
- {id:'商才',n:'商才',d:'精於算計，家財成長更快。',e:{gold:2,int:1}},
- {id:'天命',n:'天命',d:'人生容易遇到轉機，特殊事件機率提升。',e:{fame:1,chr:2}},
- {id:'長壽',n:'長壽',d:'體魄強健，晚年較不易早逝。',e:{hp:2}}
-];
-const V5PERS=[
- ['仁厚','你待人寬厚，親友容易親近你。'],['謹慎','你做事穩重，風險事件較容易化解。'],['豪爽','你重義氣，朋友與部屬更容易信任你。'],['野心','你不甘平凡，更容易走向權力巔峰。'],['清高','你不愛逢迎，但容易獲得名望。'],['精明','你擅長權衡利弊，經商與理財更有利。'],['浪漫','你重視感情，婚姻事件會更多。'],['孤傲','你不喜依附他人，但獨立能力更強。']
-];
-const V5ACH=[
- ['初入江湖',()=>S.age>=16,'年滿十六'],['金榜題名',()=>S.rank>=1,'考取功名'],['青雲直上',()=>S.rank>=4,'官至高位'],['沙場老將',()=>S.mrank>=5,'成為將軍'],['富甲一方',()=>S.s.gold>=12,'家財達十二'],['兒孫滿堂',()=>S.kids>=4,'養育四名子女'],['琴瑟和鳴',()=>S.spouse&&S.rel&&S.rel.spouse>=9,'夫妻感情深厚'],['名滿天下',()=>S.s.fame>=11,'名望達十一'],['大善人',()=>S.s.vir>=11,'德行達十一'],['百年家業',()=>S.estate&&S.estate.lv>=5,'宅邸升至五級'],['一代帝王',()=>S.king&&S.age>=40,'統治四十年'],['開枝散葉',()=>S.legacy&&S.legacy.gens>=2,'完成兩代傳承'],['傳世家族',()=>S.legacy&&S.legacy.gens>=4,'完成四代傳承']
-];
-const V5EST=[
- ['茅舍','一間遮風避雨的小屋',0,0],['瓦房','有院有廳的普通宅院',3,1],['深宅','三進院落，家中開始有僕役',7,2],['府邸','朱門大院，足以彰顯家世',14,4],['豪門','亭臺樓閣、良田僕役俱全',25,7],['世家祖宅','一族興衰所繫的祖宅',40,12]
-];
-const V5TASK=[
- ['濟民善行','幫助三名陌生人',3,()=>S.s.vir>=1,()=>{S.s.vir++;S.s.fame++;}],
- ['讀書求學','本年進行三次學習活動',3,()=>((S.v5act||{}).study||0)>=3,()=>{S.s.int+=2;}],
- ['家和萬事興','本年讓兩名家人關係提升',2,()=>((S.v5act||{}).kin||0)>=2,()=>{S.s.mood+=2;}],
- ['勤儉持家','本年累積五枚家財',5,()=>((S.v5act||{}).gold||0)>=5,()=>{S.s.gold+=3;}],
- ['建功立業','完成兩次工作行動',2,()=>((S.v5act||{}).work||0)>=2,()=>{S.s.fame++;S.s.gold++;}]
-];
-function v5Init(){
- if(!S.talents){S.talents=[];while(S.talents.length<2){let t=P(V5TALENTS);if(!S.talents.includes(t.id))S.talents.push(t.id)}}
- if(!S.personality){S.personality=P(V5PERS)[0]}
- if(!S.rel)S.rel={spouse:6,parents:7,friends:4,children:5};
- if(!S.family)S.family={name:(S.name||'李氏').slice(0,1)+'氏',rep:3,members:[],heir:null};
- if(!S.estate)S.estate={lv:0,xp:0};
- if(!S.v5ach)S.v5ach={};
- if(!S.v5act)S.v5act={study:0,kin:0,gold:0,work:0};
- if(!S.quests)S.quests=[];
- if(!S.legacy)S.legacy={gens:0,renown:0,wealth:0,heirs:0};
- if(S.talents.length)S.talents.forEach(id=>{let t=V5TALENTS.find(x=>x.id===id);if(t&&!S.v5TalentApplied){baseApply(t.e)}});
- S.v5TalentApplied=1;
-}
-function v5Stat(k,n=1){S.s[k]=Math.max(0,Math.min(12,(S.s[k]||0)+n));}
-function v5Rel(k,n){S.rel[k]=Math.max(0,Math.min(10,(S.rel[k]||0)+n));}
-function v5Task(){
- if(!S.quests.length||Math.random()<.45){let q=P(V5TASK);S.quests=[{n:q[0],d:q[1],need:q[2],ok:q[3],reward:q[4],done:0}]}
-}
-function v5Ach(){V5ACH.forEach(a=>{if(!S.v5ach[a[0]]&&a[1]()){S.v5ach[a[0]]=S.age;S.cur.push(`🏆 成就解鎖：${a[0]}！`);S.legacy.renown++}})}
-function v5EstateCost(){return V5EST[Math.min(5,S.estate.lv+1)][2]||0}
-function upgradeEstate(){
- let nx=Math.min(5,S.estate.lv+1),need=V5EST[nx][2];if(nx===S.estate.lv)return;if(S.s.gold<need){S.cur.push(`家產不足，需要 ${need} 枚家財才能升級。`);render();return}
- S.s.gold-=need;S.estate.lv=nx;S.estate.xp=0;S.cur.push(`🏠 家宅升級為「${V5EST[nx][0]}」！家族聲望提升。`);S.family.rep=Math.min(12,S.family.rep+V5EST[nx][3]);v5Ach();render();
-}
-function v5Marriage(){
- if(S.spouse){sheet('婚姻',`<p>配偶：${S.spouse}</p><p>夫妻感情：${S.rel.spouse}/10</p>`+
- `<button class="opt" onclick="v5Rel('spouse',1);S.v5act.kin++;S.cur.push('你耐心陪伴配偶，夫妻感情更深。');render();cls()">陪伴配偶<small>感情↑</small></button>`+
- `<button class="opt" onclick="v5Rel('spouse',-1);S.cur.push('你與配偶因小事爭執，關係冷淡。');render();cls()">冷落配偶<small>感情↓</small></button>`);return;}
- if(S.age<18){sheet('婚姻','<p>尚未到適婚年齡。</p>');return}
- sheet('婚姻選擇',`<p>你已到了適婚年齡。不同選擇會影響日後的家庭。</p>
- <button class="opt" onclick="v5Marry('世家小姐',7,1)">門當戶對<small>家族聲望↑、感情穩定</small></button>
- <button class="opt" onclick="v5Marry('青梅竹馬',9,0)">青梅竹馬<small>初始感情高</small></button>
- <button class="opt" onclick="v5Marry('才女佳人',8,1)">才情相投<small>智力與名望較有利</small></button>
- <button class="opt" onclick="v5Marry('普通人家',6,0)">平民婚姻<small>花費低、家庭樸實</small></button>`);
-}
-function v5Marry(type,rel,cost){if(S.spouse)return;S.spouse=P(SUR)+type;S.sc=genC(1);S.so=R(5)-2;S.rel.spouse=rel;S.s.chr++;if(cost)S.s.gold=Math.max(0,S.s.gold-cost);S.family.rep=Math.min(12,S.family.rep+1);S.cur.push(`💍 你迎娶${S.spouse}，正式成家。`);S.hist.push(`${S.age}歲 成婚：${S.spouse}`);render();cls();}
-function v5Children(){
- let kc=S.kc||[];let b=kc.map((d,i)=>`<div class="row"><span>${d.n}</span><span>${S.age-d.b}歲・${d.c?cj(d.c):'待培養'}</span></div>`).join('');
- sheet('孩子培養',`<p>子女：${S.kids} 人。每年可選擇培養一名孩子。</p>${b||'<p>目前還沒有子女。</p>'}`+(kc.length?`<button class="opt" onclick="v5ChildTrain()">教導孩子<small>智力／德行／感情</small></button>`:'')+(S.spouse&&S.kids<6?`<button class="opt" onclick="v5HaveChild()">規劃添丁<small>需要配偶</small></button>`:''));
-}
-function v5HaveChild(){if(!S.spouse||S.kids>=6)return;S.kids++;S.kc=S.kc||[];S.kc.push({n:P(SUR)+P(GIV),b:S.age,c:null,talent:P(V5TALENTS).id});S.rel.children=Math.min(10,S.rel.children+1);S.s.gold=Math.max(0,S.s.gold-1);S.cur.push('👶 家中添丁，新的生命來到世上。');render();cls()}
-function v5ChildTrain(){let d=(S.kc||[]).find(x=>S.age-x.b>=3);if(!d)return;let opts=[['讀書',{int:2},'study'],['習武',{mar:2},'work'],['學藝',{chr:2},'kin'],['教孝',{vir:2},'kin']];let o=P(opts);apply(o[1]);S.v5act[o[2]]=(S.v5act[o[2]]||0)+1;d.c=d.c||{int:0,mar:0,vir:0,chr:0};let key=Object.keys(o[1])[0];d.c[key]=(d.c[key]||0)+2;S.cur.push(`👨‍👩‍👧 你教導${d.n}「${o[0]}」，孩子有所成長。`);render();cls()}
-function v5Family(){
- let kin=(S.kin||[]).map(k=>[k.r+k.n,k.x?'已故':(k.a+S.age)+'歲・'+(k.c?cj(k.c):'')]);let kids=(S.kc||[]).map(k=>['子女 '+k.n,(S.age-k.b)+'歲']);
- sheet('家族',rows([['家族',S.family.name],['家族聲望',S.family.rep+'/12'],['家宅',V5EST[S.estate.lv][0]],['家族傳承',S.legacy.gens+' 代'],['家族名望',S.legacy.renown]] )+'<h3>親族</h3>'+rows(kin.concat(kids))+`<button class="opt" onclick="v5Marriage()">婚姻與配偶</button><button class="opt" onclick="v5Children()">孩子培養</button>`);
-}
-function v5Quest(){let q=S.quests[0];if(!q){v5Task();q=S.quests[0]}sheet('隨機任務',`<div class="quest"><h3>「${q.n}」</h3><p>${q.d}</p><p>進度：${q.done?'已完成':'進行中'}</p><button class="opt" ${q.done?'disabled':''} onclick="v5QuestDo()">檢查任務</button></div>`)}
-function v5QuestDo(){let q=S.quests[0];if(!q)return;if(q.ok()){q.done=1;q.reward();S.cur.push(`📜 任務完成：「${q.n}」！獲得獎勵。`);v5Ach();v5Task()}else S.cur.push(`任務尚未完成：「${q.n}」。`);render();cls()}
-function v5Inheritance(){
- const kids=(S.kc||[]).filter(d=>S.age-d.b>=18);let heir=kids[0];if(!heir&&S.kids)heir=(S.kc||[])[0];
- S.legacy.gens++;S.legacy.wealth=Math.max(S.legacy.wealth,Math.round(S.s.gold+S.estate.lv*4));S.legacy.heirs=kids.length;
- if(heir){S.legacy.heir=heir.n;S.legacy.wealth+=S.estate.lv*2;}
- localStorage.setItem('fusheng_legacy',JSON.stringify(S.legacy));
- return heir;
-}
-function v5ContinueAfterDeath(){
- let heir=v5Inheritance();
- if(!heir){sheet('家族終結','<p>你此生沒有留下合適的繼承人。</p><button class="opt" onclick="start()">重新投胎</button>',0);return}
- sheet('家族繼承',`<div class="seal">${heir.n} 繼承家業</div><p>你的家族並未終結。${heir.n}將接過祖宅、家名與一部分資產。</p><p>家族已延續 ${S.legacy.gens} 代，家族資產價值 ${S.legacy.wealth}。</p><button class="opt" onclick="startHeir('${heir.n.replace(/'/g,"\\'")}')">以繼承人開啟下一代</button><button class="opt" onclick="start()">重新投胎</button>`,0)
-}
-function startHeir(n){let old=S;start();S.name=n;S.family=old.family;S.legacy=old.legacy;S.estate={lv:Math.max(0,old.estate.lv-1),xp:0};S.s.gold=Math.max(1,Math.floor(old.s.gold*.35));S.s.fame=Math.min(12,Math.floor(old.s.fame*.45));S.s.vir=Math.min(12,Math.floor(old.s.vir*.45));S.s.int=Math.min(12,Math.floor(old.s.int*.45));S.s.mar=Math.min(12,Math.floor(old.s.mar*.45));S.s.hp=6;S.kids=0;S.kc=[];S.spouse=0;S.age=18;S.legacy.gens=old.legacy.gens;S.cur=[`<b>新一代・十八歲</b>`,`你繼承了${S.family.name}的家名與祖業。上一代留下的故事，將成為你新的起點。`];render();}
-function v5Hidden(){
- if(S.king&&S.age>=60&&S.ns>=10&&S.pp>=10)return'千秋明君';
- if(S.king&&S.ns<=1)return'亡國之君';
- if(S.s.vir>=12&&S.legacy.gens>=3)return'聖賢世家';
- if(S.s.gold>=12&&S.estate.lv>=5&&S.legacy.gens>=2)return'富可敵國';
- if(S.s.fame>=12&&S.rank>=5)return'名相千古';
- if(S.mrank>=5&&S.s.fame>=11&&S.s.vir>=9)return'忠武傳家';
- if(S.rel&&S.rel.spouse>=10&&S.kids>=3&&S.estate.lv>=3)return'琴瑟百年';
- if(S.talents.includes('天命')&&S.age>=70)return'天命所歸';
- return null;
-}
-function v5End(){
- const hidden=v5Hidden();v5Ach();let heir=v5ContinueAfterDeath;S.fall=S.fall|| (S.s.hp<=0?'積勞成疾，病逝。':'壽終正寢。');
- S.cur.push(S.fall);render();
- const score=lifeScore()+S.family.rep+S.estate.lv*3+S.legacy.renown;let title=hidden||((S.king)?'一代帝王':score>=80?'傳奇人生':score>=60?'顯赫一生':score>=40?'安穩一生':'平凡一生');
- sheet('此生結算',`<div class="seal">${title}</div><p>${S.name}享年 ${S.age} 歲。</p><p>人生評分：${score}　家族：${S.family.name}</p><p>家宅：${V5EST[S.estate.lv][0]}　子女：${S.kids}　家族傳承：${S.legacy.gens}代</p>${hidden?`<p>✨ 隱藏結局：${hidden}</p>`:''}<button class="opt" onclick="v5ContinueAfterDeath()">查看家族繼承</button>`,0)
-}
-/* 保存原本邏輯，再在其上疊加 v5 系統 */
-const baseApply=__v5BaseApply, baseStart=__v5BaseStart, baseNextYear=__v5BaseNextYear, baseEnd=__v5BaseEnd;
-function apply(fx){
- let clean={};for(const k in fx){if(['fav','king','doom'].includes(k))clean[k]=fx[k];else clean[k]=fx[k]}
- baseApply(clean);
- if(fx.fav)v5Rel('parents',fx.fav);
- if(fx.wed)v5Rel('spouse',2);
- if(fx.kid)v5Rel('children',1);
- if(fx.gold>0)S.v5act.gold=(S.v5act.gold||0)+fx.gold;
-}
-function start(){baseStart();v5Init();v5Task();S.cur.push(`✨ 天賦：${S.talents.join('、')}　性格：${S.personality}`);S.family.members=S.kin.map(k=>k.n);render()}
-function nextYear(){
- v5Init();S.v5act={study:0,kin:0,gold:0,work:0};baseNextYear();
- if(S.age%3===0){S.estate.xp++;}
- if(S.spouse&&Math.random()<.35){v5Rel('spouse',Math.random()<.65?1:-1)}
- if(S.kids&&Math.random()<.35){v5Rel('children',1)}
- if(Math.random()<.18){let f=['parents','friends'];v5Rel(P(f),1)}
- v5Ach();v5Task();
- if((S.fall||S.s.hp<=0||S.age>=95)&&!$('sh').classList.contains('on')){v5End();return}
-}
-function end(){v5End()}
-function v5Profile(){sheet('人物誌',`<div class="profile"><h3>${S.name}</h3><p>年齡 ${S.age}歲・${tt()}</p><p>出身：${S.fam?.n||FAM[S.fi]?.n||'未知'}　性格：${S.personality}</p><p>天賦：${S.talents.map(id=>{let t=V5TALENTS.find(x=>x.id===id);return t?t.n:id}).join('、')}</p><p>${V5PERS.find(x=>x[0]===S.personality)?.[1]||''}</p></div>`+rows(K.map(([k,n])=>[n,S.s[k]]).concat([['心情',S.s.mood],['魅力',S.s.chr],['家族聲望',S.family.rep],['宅邸',V5EST[S.estate.lv][0]]])));}
+function personMenu(){sheet("人物",rows([["姓名",S.name],["年齡",S.age+"歲"],["身分",tt()],["家族",S.family?.name||S.fam?.n||"—"],["家門背景",familyCareerLabel()],["家人職業影響",(()=>{const f=familyCareerInfo();return `文官${f.civil||0}級・武職${f.military||0}級・商業${f.trade||0}級`})()],["職業",S.job?`${jobInfo().name}・${jobInfo().title}`:"未入行"],["配偶",S.spouse||"未婚"],["子女",(S.kids||0)+"人"],["名望",S.s.fame],["心情",S.s.mood],["體魄",S.s.hp],["才學",S.s.int],["武勇",S.s.mar],["仁德",S.s.vir],["家財",S.s.gold+" 貫"]])+`<button class="opt" onclick="jobMenu()">查看職業權力</button><button class="opt" onclick="book()">查看生平紀錄</button>`)}
 function v5AchSheet(){sheet('成就',V5ACH.map(a=>`<p>${S.v5ach[a[0]]?'🏆':'⬜'} ${a[0]} <small>${a[2]}</small></p>`).join(''))}
 function v5Book(){sheet('生平紀錄',(S.hist||[]).slice().reverse().map(x=>`<p>${x}</p>`).join('')||'<p>尚無紀錄。</p>')}
+function openEstate(){try{if(!S.estate)S.estate={lv:0,xp:0};if(!S.family)S.family={name:S.fam?.n||'—',rep:0};v5Estate()}catch(err){console.error('openEstate failed',err);sheet('家產',rows([["家財",S?.s?.gold??0],["家宅",['茅舍','瓦房','深宅','府邸','豪門','世家祖宅'][S?.estate?.lv||0]],["提示","家產資料已重新整理。"]]))}}
 function v5Estate(){let e=V5EST[S.estate.lv],nx=V5EST[Math.min(5,S.estate.lv+1)];sheet('家產',rows([['家宅',e[0]],['家宅介紹',e[1]],['家族聲望',S.family.rep+'/12'],['家財',S.s.gold],['下一級',S.estate.lv<5?nx[0]:'最高級'],['升級需求',S.estate.lv<5?nx[2]+' 家財':'已達最高']])+`<button class="opt" onclick="upgradeEstate()" ${S.estate.lv>=5?'disabled':''}>升級房產<small>打造家族基業</small></button>`)}
-function menu(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)}
+function menu(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)}
 function v5Save(){let x={...S,done:[...S.done],ik:{...S.ik}};localStorage.setItem('fusheng_save_v5',JSON.stringify(x));S.cur.push('💾 此生已儲存。');render();cls()}
 function v5Load(){let x=localStorage.getItem('fusheng_save_v5');if(!x){S.cur.push('目前沒有 v5 存檔。');render();cls();return}S=JSON.parse(x);S.done=new Set(S.done||[]);render();cls()}
 /* 擴充主介面 */
@@ -1120,7 +884,7 @@ try{$('dm')?.insertAdjacentHTML('beforeend','');}catch(e){}
 })();
 /* v5 global entry overrides */
 window.menu=function(){
-  sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻選擇</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)
+  sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻選擇</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)
 };
 window.estate=function(){v5Estate()};
 window.kin=function(){v5Family()};
@@ -1319,8 +1083,8 @@ apply=function(fx){let old=S?.s?.gold||0;if(S&&!S.v5act)S.v5act={study:0,kin:0,g
 start=function(){__v6Start();v6Init();render()};
 nextYear=function(){v6Init();let old=S?.s?.gold||0;__v6Next();v6SyncFromGold(old);v6Year();render()};
 render=function(){__v6Render();if(!S)return;v6Init();$('coin').textContent=v6MoneyFmt(S.v6.money);$('prov').textContent=(S.territory?.name||S.prov||'本鄉').slice(0,5);};
-menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`) }
-window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;window.v5Children=v5Children;window.v5ChildTrain=v5ChildTrain;window.v5HaveChild=v5HaveChild;window.v5Marriage=v5Marriage;window.v5Marry=v5Marry;window.v5Family=v5Family;window.v5Quest=v5Quest;window.v5QuestDo=v5QuestDo;window.v5AchSheet=v5AchSheet;window.v5Book=v5Book;window.v5Estate=v5Estate;window.upgradeEstate=upgradeEstate;window.v5Profile=v5Profile;window.v5Save=v5Save;window.v5Load=v5Load;window.v5ContinueAfterDeath=v5ContinueAfterDeath;window.v5Inheritance=v5Inheritance;window.estate=estate;window.kin=kin;window.acts=acts;window.menu=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`) }
+window.jobMenu=jobMenu;window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;window.v5Children=v5Children;window.v5ChildTrain=v5ChildTrain;window.v5HaveChild=v5HaveChild;window.v5Marriage=v5Marriage;window.v5Marry=v5Marry;window.v5Family=v5Family;window.v5Quest=v5Quest;window.v5QuestDo=v5QuestDo;window.v5AchSheet=v5AchSheet;window.v5Book=v5Book;window.v5Estate=v5Estate;window.upgradeEstate=upgradeEstate;window.v5Profile=v5Profile;window.v5Save=v5Save;window.v5Load=v5Load;window.v5ContinueAfterDeath=v5ContinueAfterDeath;window.v5Inheritance=v5Inheritance;window.estate=estate;window.kin=kin;window.acts=acts;window.menu=menu;window.openEstate=openEstate;
 })();
 
 
@@ -1378,7 +1142,7 @@ function v7Year(){v7Init();S.v7.officeYears=(S.v7.officeYears||0)+((S.rank||0)>0
 const oldNext=nextYear;
 nextYear=function(){oldNext();v7Year();render();};
 const oldMenu=menu;
-menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
 window.v7Court=v7Court;window.v7SeekOffice=v7SeekOffice;window.v7Serve=v7Serve;window.v7Mobilize=v7Mobilize;window.v7ImperialDecree=v7ImperialDecree;window.v7Decree=v7Decree;window.v7AppointMinister=v7AppointMinister;window.v7War=v7War;window.v7Battle=v7Battle;window.v7Retreat=v7Retreat;window.v7Territory=v7Territory;window.v7Contest=v7Contest;window.v7DevelopBorder=v7DevelopBorder;window.v7CountryStatus=v7CountryStatus;window.v7CountryCollapse=v7CountryCollapse;window.v7AfterCollapse=v7AfterCollapse;window.v7Year=v7Year;
 })();
 
@@ -1408,7 +1172,7 @@ function v8Mission(){v8Init();if(!S.v8.faction){v8Faction();return}let f=FACTION
 function v8Promotion(){v8Init();if(!S.v8.faction){v8Faction();return}let req=S.v8.rank*3+2;if(S.v8.rep<req){sheet('尚未符合晉升條件',`<p>目前勢力聲望 ${S.v8.rep}，晉升至少需要 ${req}。</p>`);return}if(S.v8.rank>=5){sheet('已達最高階','<p>你已成為此勢力的核心人物。</p>');return}S.v8.rank++;S.v8.rep-=req;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`🎖️ 你在「${FACTIONS[S.v8.faction].name}」晉升為第 ${S.v8.rank} 階。`);render();cls();}
 function v8Leave(){v8Init();if(!S.v8.faction)return;let n=FACTIONS[S.v8.faction].name;S.v8.faction=null;S.v8.rank=0;S.v8.rep=0;S.v8.heat=0;S.cur.push(`🚪 你離開了「${n}」，從此不再受其差遣。`);render();cls();}
 const oldMenu8=menu;
-menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
 window.v8Faction=v8Faction;window.v8Join=v8Join;window.v8Mission=v8Mission;window.v8Promotion=v8Promotion;window.v8Leave=v8Leave;
 })();
 
@@ -1482,7 +1246,7 @@ v8Mission=function(){oldV8Mission();v9Init();if(S.v8.faction&&Math.random()<.35)
 const oldNext9=nextYear;
 nextYear=function(){oldNext9();v9Rivalry();};
 const oldMenu9=menu;
-menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v9FactionPolitics()">⚔️ 特殊勢力權力鬥爭</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v9FactionPolitics()">⚔️ 特殊勢力權力鬥爭</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
 window.v9FactionPolitics=v9FactionPolitics;window.v9Investigation=v9Investigation;window.v9PowerStruggle=v9PowerStruggle;window.v9Appoint=v9Appoint;
 })();
 
