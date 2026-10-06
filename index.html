@@ -881,7 +881,6 @@ window.v5Rel=v5Rel;
 window.apply=apply;window.start=start;window.nextYear=nextYear;window.end=end;
 /* footer / menu 快速入口改為新版 */
 try{$('dm')?.insertAdjacentHTML('beforeend','');}catch(e){}
-})();
 /* v5 global entry overrides */
 window.menu=function(){
   sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v5Family()">👪 家族系統</button><button class="opt" onclick="v5Marriage()">💍 婚姻選擇</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="window.openEstate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)
