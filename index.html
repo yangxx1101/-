@@ -1000,7 +1000,170 @@ start=function(){__v6Start();v6Init();render()};
 nextYear=function(){v6Init();let old=S?.s?.gold||0;__v6Next();v6SyncFromGold(old);v6Year();render()};
 render=function(){__v6Render();if(!S)return;v6Init();$('coin').textContent=v6MoneyFmt(S.v6.money);$('prov').textContent=(S.territory?.name||S.prov||'本鄉').slice(0,5);};
 menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`) }
-window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;
+window.v6Family=v6Family;window.v6Nation=v6Nation;window.v6Economy=v6Economy;window.v6Pick=v6Pick;window.v5Children=v5Children;window.v5ChildTrain=v5ChildTrain;window.v5HaveChild=v5HaveChild;window.v5Marriage=v5Marriage;window.v5Marry=v5Marry;window.v5Family=v5Family;window.v5Quest=v5Quest;window.v5QuestDo=v5QuestDo;window.v5AchSheet=v5AchSheet;window.v5Book=v5Book;window.v5Estate=v5Estate;window.upgradeEstate=upgradeEstate;window.v5Profile=v5Profile;window.v5Save=v5Save;window.v5Load=v5Load;window.v5ContinueAfterDeath=v5ContinueAfterDeath;window.v5Inheritance=v5Inheritance;window.estate=estate;window.kin=kin;window.acts=acts;window.menu=menu;
+})();
+
+
+/* ===== v7 朝廷・官職・皇帝・戰爭・國家存亡・領土爭奪 ===== */
+(function(){
+const OFFICES=['平民','縣丞','縣令／知縣','知府／刺史','六部尚書','宰相'];
+const MILOFF=['無','什長','校尉','將軍','大將軍','統帥'];
+const WAR_TYPES=['邊境衝突','爭奪關隘','攻城戰','大規模國戰'];
+function v7Init(){
+ if(!S.v7)S.v7={office:0,officeYears:0,war:null,enemy:null,conquests:0,rebellion:0,royalBlood:!!S.royal};
+ if(!S.nation){S.nation={name:'大梁',stability:6,treasury:5000,pop:18000,power:6,diplomacy:5,year:1}}
+ if(!S.territory){S.territory={name:'本鄉',level:0,land:20,people:180,fields:8,tax:70,loyalty:6,renovation:0}}
+ if(!S.nation.neighbors)S.nation.neighbors=[{name:'北燕',power:5,stability:6,land:3},{name:'南楚',power:5,stability:7,land:3},{name:'西涼',power:4,stability:5,land:2}];
+ if(S.king&&!S.v7.office)S.v7.office=5;
+}
+function v7OfficeName(){v7Init();return S.king?'皇帝':(OFFICES[Math.max(0,Math.min(5,S.rank||S.v7.office||0))]||'平民')}
+function v7MilitaryName(){return MILOFF[Math.max(0,Math.min(5,S.mrank||0))]}
+function v7Power(){v7Init();return Math.max(1,(S.nation.power||0)+(S.rank||0)+(S.mrank||0)+Math.floor((S.family?.ext?.influence||0)/5))}
+function v7Court(){v7Init();let n=S.nation,e=S.emp||{};
+ const office=v7OfficeName(), mil=v7MilitaryName();
+ let b='';
+ if(!S.king){
+  b+=`<button class="opt" onclick="v7SeekOffice()">📜 謀求官職<small>依功名、名望與家族影響力晉升</small></button>`;
+  if((S.rank||0)>=1)b+=`<button class="opt" onclick="v7Serve()">🏛️ 處理政務<small>增加政績，也可能消耗體力與家財</small></button>`;
+  if((S.mrank||0)>=1)b+=`<button class="opt" onclick="v7Mobilize()">⚔️ 調兵備戰<small>軍功越高，戰爭越有利</small></button>`;
+ }
+ if(S.king){
+  b+=`<button class="opt" onclick="v7ImperialDecree()">👑 頒布國策<small>治理國家、調整國力與民心</small></button>`;
+  b+=`<button class="opt" onclick="v7AppointMinister()">🏯 任用大臣<small>提升朝廷效率</small></button>`;
+ }
+ sheet('朝廷與官職',rows([['國家',n.name],['身分',S.king?'皇帝':(S.royal?'宗室／皇族':office)],['文官職',office],['武官職',mil],['官職年資',(S.v7.officeYears||0)+' 年'],['國家穩定',(n.stability||0)+'/10'],['國力',(n.power||0)+'/10'],['國庫',v6MoneyFmt(n.treasury||0)],['民心',(S.pp??S.territory.loyalty??0)+'/12'],['在位／帝年',S.king?((S.emp?.t||0)+' 年'):'非皇帝']])+b+`<p>官職會影響俸祿、事件與家族身分；文官以功名、德行、名望為主，武官以軍功與武力為主。</p>`)
+}
+function v7SeekOffice(){v7Init();if(S.king)return;let r=S.rank||0,score=r*3+(S.s.fame||0)/2+(S.s.vir||0)/3+(S.family?.ext?.influence||0)/4;
+ if(r>=5){sheet('官至極品','<p>你已位極人臣，若再進一步便可能觸及帝位與攝政之爭。</p>');return}
+ let need=(r+1)*4;if(score<need){sheet('暫未授官',`<p>目前仕途評分 ${score.toFixed(1)}，約需 ${need}。</p><p>提升功名、名望、德行或家族影響力後再來。</p>`);return}
+ S.rank=Math.min(5,r+1);S.v7.office=S.rank;S.v7.officeYears=0;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);v6FamilyRecalc();S.cur.push(`🏛️ 朝廷授你「${OFFICES[S.rank]}」，家族身分提升。`);S.hist.push(`${S.age}歲 授官：${OFFICES[S.rank]}`);render();cls();}
+function v7Serve(){v7Init();if(!S.rank||S.acted>=2)return;S.acted++;let roll=(S.s.int||0)+(S.s.vir||0)+R(5),need=8+S.rank*2;if(roll>=need){S.nation.stability=Math.min(10,S.nation.stability+1);S.s.fame=Math.min(12,S.s.fame+1);S.v7.officeYears++;S.cur.push(`📜 你處理政務有功，${OFFICES[S.rank]}聲望上升。`)}else{S.s.hp=Math.max(0,S.s.hp-1);S.nation.stability=Math.max(0,S.nation.stability-1);S.cur.push('📜 政務繁重，你一時失誤，地方百姓頗有怨言。')}v6FamilyRecalc();render();cls();}
+function v7Mobilize(){v7Init();if(S.mrank<1){sheet('尚未掌兵','<p>先取得武職或從軍，才能調兵備戰。</p>');return}S.nation.power=Math.min(10,S.nation.power+1);S.nation.treasury=Math.max(0,S.nation.treasury-150);S.cur.push('⚔️ 你整軍備戰，國庫支出 150 文記帳單位，軍備提升。');render();cls();}
+function v7ImperialDecree(){v7Init();if(!S.king)return;let opts=[['輕徭薄賦',()=>{S.pp=Math.min(12,(S.pp||0)+2);S.nation.treasury=Math.max(0,S.nation.treasury-400);S.nation.stability=Math.min(10,S.nation.stability+1)}],['整頓吏治',()=>{S.nation.stability=Math.min(10,S.nation.stability+2);S.nation.power=Math.max(1,S.nation.power-1)}],['擴軍備戰',()=>{S.nation.power=Math.min(10,S.nation.power+2);S.nation.treasury=Math.max(0,S.nation.treasury-500);S.pp=Math.max(0,(S.pp||0)-1)}],['開倉賑濟',()=>{S.pp=Math.min(12,(S.pp||0)+3);S.nation.treasury=Math.max(0,S.nation.treasury-600)}]];sheet('皇帝國策',opts.map((o,i)=>`<button class="opt" onclick="v7Decree(${i})">${o[0]}</button>`).join(''))}
+function v7Decree(i){let a=[['輕徭薄賦',()=>{S.pp=Math.min(12,(S.pp||0)+2);S.nation.treasury=Math.max(0,S.nation.treasury-400);S.nation.stability=Math.min(10,S.nation.stability+1)}],['整頓吏治',()=>{S.nation.stability=Math.min(10,S.nation.stability+2);S.nation.power=Math.max(1,S.nation.power-1)}],['擴軍備戰',()=>{S.nation.power=Math.min(10,S.nation.power+2);S.nation.treasury=Math.max(0,S.nation.treasury-500);S.pp=Math.max(0,(S.pp||0)-1)}],['開倉賑濟',()=>{S.pp=Math.min(12,(S.pp||0)+3);S.nation.treasury=Math.max(0,S.nation.treasury-600)}]][i];if(!a)return;a[1]();S.cur.push(`👑 皇帝頒布「${a[0]}」國策。`);S.hist.push(`${S.age}歲 國策：${a[0]}`);render();cls();}
+function v7AppointMinister(){if(!S.king)return;S.nation.stability=Math.min(10,S.nation.stability+1);S.nation.power=Math.min(10,S.nation.power+1);S.nation.treasury=Math.max(0,S.nation.treasury-200);S.cur.push('🏯 你任用賢能大臣，朝廷運作更加穩定。');render();cls();}
+function v7War(){v7Init();let w=S.v7.war;
+ if(!w){let en=P(S.nation.neighbors);w={enemy:en.name,progress:0,enemyPower:en.power,year:0,type:P(WAR_TYPES),won:false};S.v7.war=w;sheet('⚔️ 戰爭爆發',`<p>「${en.name}」與${S.nation.name}邊境衝突升級。</p><p>戰事：${w.type}</p><p>我方戰力：${v7Power()}　敵方：${en.power}</p><button class="opt" onclick="v7Battle(1)">出兵決戰</button><button class="opt" onclick="v7Battle(0)">守城固守</button><button class="opt" onclick="v7Retreat()">暫避鋒芒</button>`,0);return}
+ sheet('⚔️ 戰爭狀態',rows([['敵國',w.enemy],['戰事',w.type],['戰爭年數',w.year],['我方戰果',w.progress+'/3'],['我方戰力',v7Power()],['敵方戰力',w.enemyPower]])+`<button class="opt" onclick="v7Battle(1)">再次出兵</button><button class="opt" onclick="v7Battle(0)">守城</button><button class="opt" onclick="v7Retreat()">議和／撤軍</button>`)}
+function v7Battle(attack){v7Init();let w=S.v7.war;if(!w)return;w.year++;let own=v7Power()+(attack?R(4):1),enemy=w.enemyPower+R(4);if(own>=enemy){w.progress++;S.nation.power=Math.min(10,S.nation.power+(attack?1:0));S.nation.stability=Math.min(10,S.nation.stability+1);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.s.hp=Math.max(0,S.s.hp-(attack?1:0));S.cur.push(`⚔️ ${attack?'主動出擊':'固守城池'}成功，${w.enemy}軍退卻。`)}else{w.progress=Math.max(0,w.progress-1);S.nation.power=Math.max(0,S.nation.power-1);S.nation.stability=Math.max(0,S.nation.stability-1);S.s.hp=Math.max(0,S.s.hp-1);S.cur.push(`⚔️ ${w.enemy}軍突破防線，戰局不利。`)}if(w.progress>=3){v7WinWar();return}if(S.nation.power<=0||S.nation.stability<=0){v7CountryCollapse(w.enemy);return}render();cls();}
+function v7Retreat(){v7Init();if(!S.v7.war)return;S.nation.stability=Math.max(0,S.nation.stability-1);S.nation.power=Math.max(1,S.nation.power);S.cur.push(`🕊️ 你與${S.v7.war.enemy}暫時議和，邊境留下戰後裂痕。`);S.v7.war=null;render();cls();}
+function v7WinWar(){let w=S.v7.war;S.cur.push(`🏆 ${S.nation.name}在與${w.enemy}的戰爭中獲勝！`);S.s.fame=Math.min(12,(S.s.fame||0)+2);S.nation.power=Math.min(10,S.nation.power+2);S.nation.stability=Math.min(10,S.nation.stability+1);S.v7.war=null;render();cls();}
+function v7Territory(){v7Init();let t=S.territory;sheet('🗺️ 領土爭奪',rows([['目前領地',V6_TERR[t.level]?.[0]||'無'],['領地名稱',t.name],['領地等級',t.level+'/5'],['田產',t.land+' 畝'],['人口',t.people+' 人'],['民心',t.loyalty+'/10'],['已奪取領地',S.v7.conquests||0]])+`<button class="opt" onclick="v7Contest()" ${t.level>=5?'disabled':''}>⚔️ 爭奪鄰境</button><button class="opt" onclick="v7DevelopBorder()">🌾 經營新領土</button><p>領土爭奪會受到軍功、官職、家族影響力與國力影響；失敗可能降低民心與國力。</p>`)}
+function v7Contest(){v7Init();let t=S.territory;if(t.level>=5){sheet('疆域已達上限','<p>你已經掌握一方重鎮。</p>');return}let target=P(S.nation.neighbors),score=v7Power()+t.loyalty/2+R(6),need=8+t.level*2+target.power;if(score>=need){t.level++;t.name=['本鄉','新授村','安民鄉','本縣','本州','鎮守一方'][t.level];t.land+=40+t.level*10;t.people+=180;t.fields+=30;t.loyalty=Math.min(10,t.loyalty+1);S.v7.conquests++;S.nation.power=Math.min(10,S.nation.power+1);S.family.rep=Math.min(12,S.family.rep+1);S.s.fame=Math.min(12,(S.s.fame||0)+2);S.cur.push(`🗺️ 你擊退${target.name}勢力，取得新的領地，晉升為「${V6_TERR[t.level][0]}」。`);S.hist.push(`${S.age}歲 領土擴張：取得${V6_TERR[t.level][0]}`)}else{S.nation.power=Math.max(0,S.nation.power-1);t.loyalty=Math.max(0,t.loyalty-2);S.s.hp=Math.max(0,S.s.hp-1);S.cur.push(`🗺️ 爭奪${target.name}失敗，邊境軍民受損。`)}v6FamilyRecalc();render();cls();}
+function v7DevelopBorder(){v7Init();let t=S.territory;if(S.v6.money<200){sheet('資金不足','<p>至少需要 200 文投入邊境。</p>');return}S.v6.money-=200;t.fields+=20;t.people+=80;t.loyalty=Math.min(10,t.loyalty+1);S.family.ext.land=Math.max(S.family.ext.land,t.land+Math.round(t.fields*.15));S.cur.push('🌾 你投入資金經營新領土，耕地與人口增加。');render();cls();}
+function v7CountryStatus(){v7Init();let n=S.nation;let collapse=(n.stability<=0||n.power<=0||(S.pp!==undefined&&S.pp<=0));if(collapse){v7CountryCollapse('內亂／外敵');return}sheet('👑 國家存亡',rows([['國家',n.name],['穩定',n.stability+'/10'],['國力',n.power+'/10'],['國庫',v6MoneyFmt(n.treasury)],['外交',n.diplomacy+'/10'],['民心',((S.pp!==undefined?S.pp:S.territory.loyalty)||0)+'/12'],['疆域',V6_TERR[S.territory.level][0]],['戰爭',S.v7.war?`與 ${S.v7.war.enemy} 交戰`:'目前無大戰']])+`<button class="opt" onclick="v7War()">⚔️ 戰爭／軍情</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button>`)}
+function v7CountryCollapse(reason){v7Init();let old=S.nation.name;S.nation.stability=0;S.nation.power=0;S.v7.war=null;S.cur.push(`💀 ${old}國祚終結：${reason}。`);S.hist.push(`${S.age}歲 ${old}滅亡`);if(S.king){S.fall=`${old}國破山河，${S.name}成為亡國之君。`}else{S.s.fame=Math.max(0,(S.s.fame||0)-2);S.family.rep=Math.max(0,(S.family.rep||0)-2)}sheet('國家滅亡',`<div class="seal">國祚終結</div><p>${old}因${reason}而滅亡。</p><p>你的家族將面臨流亡、改朝換代與重新立足的選擇。</p><button class="opt" onclick="v7AfterCollapse()">面對亂世</button>`,0)}
+function v7AfterCollapse(){S.nation={name:P(['新梁','新周','南朝','北朝']),stability:5,treasury:2500,pop:12000,power:4,diplomacy:4,year:1,neighbors:[{name:'舊敵',power:4,stability:5,land:2}]};S.v7.rebellion=0;S.cur.push('🕊️ 新朝建立，你的家族在亂世中重新尋找立足之地。');render();cls();}
+function v7Year(){v7Init();S.v7.officeYears=(S.v7.officeYears||0)+((S.rank||0)>0?1:0);if(S.king){S.emp=S.emp||{t:0};S.emp.t=(S.emp.t||0)+1;let drift=R(4)-1;S.nation.stability=Math.max(0,Math.min(10,S.nation.stability+drift));S.nation.power=Math.max(0,Math.min(10,S.nation.power+(Math.random()<.45?1:-1)));if(Math.random()<.18)v7War();}else if(Math.random()<.08&&S.rank>=2){S.nation.stability=Math.max(0,S.nation.stability-1);S.cur.push('🏛️ 朝中黨爭加劇，你的仕途受到波及。')}if(Math.random()<.07&&S.territory.level>=2){S.territory.loyalty=Math.max(0,S.territory.loyalty-1);S.cur.push('🗺️ 邊地民情不穩，地方官府需要加強治理。')}if(S.nation.stability<=0||S.nation.power<=0||((S.pp||99)<=0&&S.king))v7CountryCollapse('國力或民心崩潰');v6FamilyRecalc();}
+const oldNext=nextYear;
+nextYear=function(){oldNext();v7Year();render();};
+const oldMenu=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v7Court=v7Court;window.v7SeekOffice=v7SeekOffice;window.v7Serve=v7Serve;window.v7Mobilize=v7Mobilize;window.v7ImperialDecree=v7ImperialDecree;window.v7Decree=v7Decree;window.v7AppointMinister=v7AppointMinister;window.v7War=v7War;window.v7Battle=v7Battle;window.v7Retreat=v7Retreat;window.v7Territory=v7Territory;window.v7Contest=v7Contest;window.v7DevelopBorder=v7DevelopBorder;window.v7CountryStatus=v7CountryStatus;window.v7CountryCollapse=v7CountryCollapse;window.v7AfterCollapse=v7AfterCollapse;window.v7Year=v7Year;
+})();
+
+
+/* ===== v8 特殊勢力／錦衣衛類勢力 ===== */
+(function(){
+const FACTIONS={
+  jinwei:{name:'錦衣衛',icon:'🛡️',desc:'皇帝親軍與密探勢力，負責巡查、護駕、緝捕與秘密差事。',need:1,power:5},
+  dongchang:{name:'東廠',icon:'🕯️',desc:'宮廷情報與監察勢力，擅長偵查、監視與查辦官員。',need:2,power:6},
+  jinyi:{name:'羽林衛',icon:'⚔️',desc:'宮禁宿衛與精銳軍府，重視武勇、軍功與護衛。',need:1,power:5},
+  anbu:{name:'玄衣司',icon:'🌑',desc:'架空王朝的秘密情報機構，專辦暗查、反間與邊境密使。',need:2,power:7}
+};
+function v8Init(){
+ if(!S.v8)S.v8={faction:null,rep:0,rank:0,missions:0,heat:0};
+}
+function v8Faction(){v8Init();let f=S.v8.faction?FACTIONS[S.v8.faction]:null;
+ let list=Object.entries(FACTIONS).map(([id,x])=>{
+   const joined=S.v8.faction===id;
+   const can=(S.king||((S.rank||0)>=x.need)||((S.mrank||0)>=x.need));
+   return `<button class="opt" ${joined?'disabled':''} ${(!can&&!joined)?'disabled':''} onclick="v8Join('${id}')">${x.icon} ${x.name}<small>${x.desc}${can?'':'（需要一定官職／軍職）'}</small></button>`;
+ }).join('');
+ let status=f?rows([['所屬勢力',f.icon+' '+f.name],['勢力聲望',S.v8.rep+'/20'],['勢力階級',S.v8.rank+'/5'],['完成密令',S.v8.missions+' 次'],['皇權警戒',S.v8.heat+'/10']])+`<p>${f.desc}</p><button class="opt" onclick="v8Mission()">📜 接受秘密任務<small>成功可提升勢力聲望與個人名望，失敗可能增加警戒</small></button><button class="opt" onclick="v8Promotion()">🎖️ 申請晉升<small>勢力聲望達標後提升階級</small></button><button class="opt" onclick="v8Leave()">🚪 脫離勢力</button>`:'';
+ sheet('特殊勢力',status+`<h3>可加入勢力</h3>${list}<p style="margin-top:10px">勢力會影響官場、人脈、家族聲望與部分事件；皇帝與高階官員可接觸更多勢力。</p>`);
+}
+function v8Join(id){v8Init();let f=FACTIONS[id];if(!f)return;if(S.v8.faction)return;if(!(S.king||((S.rank||0)>=f.need)||((S.mrank||0)>=f.need))){sheet('資格不足',`<p>加入「${f.name}」需要至少 ${f.need} 級文官或武官身分。</p>`);return}S.v8.faction=id;S.v8.rep=2;S.v8.rank=1;S.v8.heat=0;S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`${f.icon} 你正式加入「${f.name}」，開始接觸朝廷機密與特殊任務。`);S.hist.push(`${S.age}歲 加入特殊勢力：${f.name}`);render();cls();}
+function v8Mission(){v8Init();if(!S.v8.faction){v8Faction();return}let f=FACTIONS[S.v8.faction],kind=P(['暗查官員','護送密詔','緝拿要犯','護駕巡查','邊境密使','查抄貪墨','查探敵情','保護朝臣']);let stat=(S.v8.faction==='jinyi'||S.v8.faction==='anbu')?(S.s.int||0)+(S.s.fame||0)+(S.mrank||0):((S.s.int||0)+(S.s.vir||0)+(S.rank||0));let need=7+S.v8.rank*2+R(5);let success=stat>=need;if(success){S.v8.rep=Math.min(20,S.v8.rep+2);S.v8.missions++;S.v8.heat=Math.max(0,S.v8.heat-1);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.v6.money=(S.v6?.money||0)+30+S.v8.rank*15;S.cur.push(`${f.icon} 密令完成：「${kind}」。你在「${f.name}」中的聲望提升。`);S.hist.push(`${S.age}歲 完成${f.name}密令：${kind}`)}else{S.v8.heat=Math.min(10,S.v8.heat+1);S.s.hp=Math.max(0,S.s.hp-1);S.v8.rep=Math.max(0,S.v8.rep-1);S.cur.push(`⚠️ 密令「${kind}」失敗，你的行蹤引起${f.name}注意。`);if(S.v8.heat>=8){S.family.rep=Math.max(0,(S.family.rep||0)-1);S.nation.stability=Math.max(0,(S.nation.stability||0)-1)}}render();cls();}
+function v8Promotion(){v8Init();if(!S.v8.faction){v8Faction();return}let req=S.v8.rank*3+2;if(S.v8.rep<req){sheet('尚未符合晉升條件',`<p>目前勢力聲望 ${S.v8.rep}，晉升至少需要 ${req}。</p>`);return}if(S.v8.rank>=5){sheet('已達最高階','<p>你已成為此勢力的核心人物。</p>');return}S.v8.rank++;S.v8.rep-=req;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`🎖️ 你在「${FACTIONS[S.v8.faction].name}」晉升為第 ${S.v8.rank} 階。`);render();cls();}
+function v8Leave(){v8Init();if(!S.v8.faction)return;let n=FACTIONS[S.v8.faction].name;S.v8.faction=null;S.v8.rank=0;S.v8.rep=0;S.v8.heat=0;S.cur.push(`🚪 你離開了「${n}」，從此不再受其差遣。`);render();cls();}
+const oldMenu8=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v8Faction=v8Faction;window.v8Join=v8Join;window.v8Mission=v8Mission;window.v8Promotion=v8Promotion;window.v8Leave=v8Leave;
+})();
+
+
+/* ===== v9 特殊勢力權力鬥爭擴充 ===== */
+(function(){
+const REL={
+ jinwei:{dongchang:-2,anbu:1,jinyi:2},
+ dongchang:{jinwei:-2,anbu:2,jinyi:-1},
+ jinyi:{jinwei:2,dongchang:-1,anbu:0},
+ anbu:{jinwei:1,dongchang:2,jinyi:0}
+};
+const TITLES={jinwei:['校尉','千戶','副指揮使','指揮使','都督'],dongchang:['檔頭','掌班','掌刑千戶','提督太監','東廠提督'],jinyi:['校尉','百戶','千戶','鎮撫使','指揮使'],anbu:['密探','司使','副司正','司正','玄衣令']};
+function v9Init(){
+ v8Init();
+ if(!S.v9)S.v9={relations:{jinwei:0,dongchang:0,jinyi:0,anbu:0},appointed:false,appointedTitle:'',investigations:0,power:0,scandals:0};
+ if(!S.v9.relations)S.v9.relations={jinwei:0,dongchang:0,jinyi:0,anbu:0};
+}
+function v9FactionPower(id){v9Init();return (S.v9.relations[id]||0)+(S.v8.faction===id?S.v8.rep:0)+(S.v8.faction===id?S.v8.rank*2:0);}
+function v9Rivalry(){
+ v9Init();
+ if(!S.v8.faction)return;
+ const id=S.v8.faction, rival=Object.keys(FACTIONS).filter(x=>x!==id).sort((a,b)=>v9FactionPower(b)-v9FactionPower(a))[0];
+ if(!rival)return;
+ const rel=REL[id]?.[rival]||0;
+ if(rel<0 && Math.random()<.28){
+   S.v9.relations[rival]=Math.max(-10,(S.v9.relations[rival]||0)-1);
+   S.v8.heat=Math.min(10,S.v8.heat+1);
+   S.cur.push(`⚔️ ${FACTIONS[id].name}與${FACTIONS[rival].name}暗中爭權，你被捲入派系角力。`);
+ }
+ if(Math.random()<.10 && (S.rank||0)>=3){S.v9.power++;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.cur.push('🏛️ 朝中派系對你示好，你在權力核心的影響力上升。');}
+}
+function v9Investigation(){
+ v9Init();
+ if(!(S.v8.faction||S.king||(S.rank||0)>=3)){sheet('資格不足','<p>需要加入特殊勢力，或至少達到較高官職。</p>');return;}
+ const targets=['貪墨縣令','私通外敵的武官','侵吞軍餉的糧官','結黨營私的權臣','勾結豪強的地方官','疑似通敵的使者'];
+ const target=P(targets);
+ let score=(S.s.int||0)+(S.s.fame||0)+(S.rank||0)+(S.v8?.rank||0)*2+R(6);
+ let need=9+R(6);
+ if(score>=need){S.v9.investigations++;S.v9.power++;S.s.fame=Math.min(12,(S.s.fame||0)+1);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.nation.stability=Math.min(10,(S.nation.stability||0)+1);S.cur.push(`🔎 密查成功：你查明「${target}」的罪證，案件震動朝廷。`);S.hist.push(`${S.age}歲 查辦：${target}`);}
+ else{S.v9.scandals++;S.v8.heat=Math.min(10,(S.v8.heat||0)+2);S.cur.push(`⚠️ 查辦「${target}」未能取得完整證據，反而得罪了權貴。`);if(S.v8.heat>=8)S.family.rep=Math.max(0,(S.family.rep||0)-1);}
+ render();cls();
+}
+function v9Appoint(){
+ v9Init();
+ if(!S.king){sheet('尚無任命權','<p>只有皇帝或最高統治者能正式任命特殊勢力首長。</p>');return;}
+ if((S.v8.rank||0)<4){sheet('資歷不足','<p>需要在所屬特殊勢力達到第 4 階以上。</p>');return;}
+ const id=S.v8.faction;
+ if(!id){sheet('尚未加入勢力','<p>先加入一個特殊勢力。</p>');return;}
+ S.v9.appointed=true;S.v9.appointedTitle=TITLES[id][Math.min(4,(S.v8.rank||1)-1)];S.v9.power+=3;S.s.fame=Math.min(12,(S.s.fame||0)+2);S.family.rep=Math.min(12,(S.family.rep||0)+1);S.cur.push(`👑 皇帝任命你為${FACTIONS[id].name}「${S.v9.appointedTitle}」，正式掌握實權。`);S.hist.push(`${S.age}歲 奉詔出任${FACTIONS[id].name}${S.v9.appointedTitle}`);render();cls();
+}
+function v9PowerStruggle(){
+ v9Init();
+ if(!S.v8.faction){sheet('尚未加入勢力','<p>先加入特殊勢力才能參與派系鬥爭。</p>');return;}
+ const id=S.v8.faction;
+ const rivals=Object.keys(FACTIONS).filter(x=>x!==id);
+ const rival=P(rivals);
+ const my=v9FactionPower(id)+(S.v9.appointed?4:0)+R(8), enemy=v9FactionPower(rival)+R(8);
+ if(my>=enemy){S.v9.relations[rival]=Math.min(10,(S.v9.relations[rival]||0)+1);S.v9.power+=2;S.v8.rep=Math.min(20,S.v8.rep+2);S.s.fame=Math.min(12,(S.s.fame||0)+1);S.cur.push(`⚔️ 派系鬥爭中，你代表${FACTIONS[id].name}壓制了${FACTIONS[rival].name}，勢力地位上升。`);}
+ else{S.v8.heat=Math.min(10,S.v8.heat+2);S.v9.power=Math.max(0,S.v9.power-1);S.family.rep=Math.max(0,(S.family.rep||0)-1);S.cur.push(`⚠️ 派系鬥爭失利，${FACTIONS[rival].name}在朝中的話語權增加。`);}
+ render();cls();
+}
+function v9FactionPolitics(){
+ v9Init();let id=S.v8.faction;
+ const rels=Object.keys(FACTIONS).map(k=>[FACTIONS[k].name,(S.v9.relations[k]||0)>0?'友好':(S.v9.relations[k]||0)<0?'敵對':'中立']);
+ const title=S.v9.appointed?(S.v9.appointedTitle+'（奉詔）'):'尚未奉詔掌權';
+ sheet('⚔️ 特殊勢力權力鬥爭',rows([['本派',FACTIONS[id]?.name||'無'],['勢力職位',TITLES[id]?.[Math.max(0,(S.v8.rank||1)-1)]||'—'],['朝廷職權',title],['權力影響',S.v9.power],['查案次數',S.v9.investigations],['政治風險',S.v9.scandals]])+`<h3>四方關係</h3>`+rows(rels)+`<button class="opt" onclick="v9Investigation()">🔎 密查官員<small>調查貪腐、通敵與黨爭案件</small></button><button class="opt" onclick="v9PowerStruggle()">⚔️ 派系鬥爭<small>與其他特殊勢力爭奪朝廷影響力</small></button><button class="opt" onclick="v9Appoint()">👑 皇帝任命<small>皇帝可任命你掌握更高權力</small></button>`);
+}
+const oldV8Mission=v8Mission;
+v8Mission=function(){oldV8Mission();v9Init();if(S.v8.faction&&Math.random()<.35){S.v9.relations[S.v8.faction]=Math.min(10,(S.v9.relations[S.v8.faction]||0)+1);}};
+const oldNext9=nextYear;
+nextYear=function(){oldNext9();v9Rivalry();};
+const oldMenu9=menu;
+menu=function(){sheet('遊戲選單',`<button class="opt" onclick="v5Profile()">👤 人物誌</button><button class="opt" onclick="v6Family()">👪 家族制度</button><button class="opt" onclick="v7Court()">🏛️ 朝廷／官職</button><button class="opt" onclick="v8Faction()">🕵️ 特殊勢力／錦衣衛</button><button class="opt" onclick="v9FactionPolitics()">⚔️ 特殊勢力權力鬥爭</button><button class="opt" onclick="v7CountryStatus()">👑 國家存亡</button><button class="opt" onclick="v7War()">⚔️ 戰爭</button><button class="opt" onclick="v7Territory()">🗺️ 領土爭奪</button><button class="opt" onclick="v6Nation()">🏯 國家與領土</button><button class="opt" onclick="v6Economy()">🪙 古代帳房</button><button class="opt" onclick="v5Marriage()">💍 婚姻</button><button class="opt" onclick="v5Children()">👶 孩子培養</button><button class="opt" onclick="v5Quest()">📜 隨機任務</button><button class="opt" onclick="v5AchSheet()">🏆 成就</button><button class="opt" onclick="v5Book()">📖 生平紀錄</button><button class="opt" onclick="v5Estate()">🏠 房產升級</button><button class="opt" onclick="v5Save()">💾 儲存此生</button><button class="opt" onclick="v5Load()">📂 讀取存檔</button>`)};
+window.v9FactionPolitics=v9FactionPolitics;window.v9Investigation=v9Investigation;window.v9PowerStruggle=v9PowerStruggle;window.v9Appoint=v9Appoint;
 })();
 
 </script><noscript><div style="max-width:720px;margin:24px auto;padding:20px;font-family:system-ui,sans-serif;line-height:1.8"><h1>浮生一夢・古代人生模擬器</h1><p>這是一款免費的古代人生與家族世代養成網頁遊戲。請啟用 JavaScript 後重新整理，即可開始遊玩。</p></div></noscript></body></html>
